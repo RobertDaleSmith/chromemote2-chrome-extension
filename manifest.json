@@ -1,0 +1,25 @@
+{
+  "name": "Chromemote",
+  "version": "2.1309.29",
+  "manifest_version": 2,
+  "incognito": "spanning",
+  "minimum_chrome_version": "18",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com; object-src 'self'",
+  
+  "description": "A better way to control Google TV. Fling videos, links, images, launch apps, plus full remote control of all your Google TVs.",
+  
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Chromemote - The Google TV Remote for Chrome" 
+  },
+  
+  "options_page" : "index.html",
+  
+  "permissions": [
+    "http://*/*", "https://*/*", "tabs", "background", "contextMenus","storage"
+  ],
+  "homepage_url": "http://Chromemote.com/",
+  "offline_enabled": true
+ 
+
+}

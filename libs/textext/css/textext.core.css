@@ -1,0 +1,40 @@
+.text-core {
+  position: relative;
+}
+.text-core .text-wrap {
+    position: absolute;
+    background-color: transparent;    
+    
+    
+}
+.text-core .text-wrap textarea,
+.text-core .text-wrap input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e8e9e9;
+  
+  outline: none;
+  resize: none;
+  position: absolute;
+  z-index: 1;
+  background: none;
+  overflow: hidden;
+  margin: 0;
+  
+  white-space: nowrap;
+  line-height: 13px;
+  height: auto;
+}
+
+.text-core .text-wrap textarea:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}

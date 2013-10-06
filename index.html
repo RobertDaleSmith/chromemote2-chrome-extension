@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	    <title>Chromemote</title>
+
+       <!--jQuery Lib and Plugins | START -->
+        <script type="text/javascript" src="libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.caret.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.ipaddress.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.sortable.js"></script>
+       <!--jQuery Lib and Plugins | END   -->
+
+       <!--Gridster Lib | START | prereq:jQuery-->
+        <link type="text/css" rel="stylesheet" href="libs/gridster/css/jquery.gridster.css">
+        <script type="text/javascript" src="libs/gridster/js/jquery.gridster.min.js"></script>
+       <!--Gridster Lib | END | prereq:jQuery  -->
+
+       <!--Textext Lib | START | prereq:jQuery-->
+        <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.core.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.tags.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.autocomplete.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.focus.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.prompt.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.arrow.css" />
+	    <script type="text/javascript" src="libs/textext/js/textext.core.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.tags_mod.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.autocomplete.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.suggestions.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.filter.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.focus.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.prompt.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.ajax.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.arrow.js" charset="utf-8"></script>
+       <!--Textext Lib | END | prereq:jQuery  -->
+    
+       <!--Chromemote's CSS and JS source | START -->
+        <link type="text/css" rel="stylesheet" href="css/fonts/Roboto-stylesheet.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="css/global_style.css" media="all" />
+        <script type="text/javascript" src="libs/colorpicker.min.js"></script>
+        <script type="text/javascript" src="js/main_script.js"></script>
+       <!--Chromemote's CSS and JS source | END   -->
+
+    </head>
+    <body>
+        <!--<div id="anymote_testing">
+            Welcome to GoogleTV Remote Web Server
+            <br><br>
+            <button onclick="discoverDevices();">discoverDevices</button>
+            <button onclick="isDiscovering();">isDiscovering</button>
+            <button onclick="getDeviceList();">getDeviceList</button>
+
+            <br><br>
+            <input type="text" id="ip_address_box">
+            <button onclick="connectDevice(document.getElementById('ip_address_box').value);">connectDevice</button>
+            <br>
+            <button onclick="isConnectingNow();">isConnectingNow</button>
+            <button onclick="isAwaitingPin();">isAwaitingPin</button>
+
+            <br><br>
+            <input type="text" id="pin_input_box">
+            <button onclick="sendPairCode(document.getElementById('pin_input_box').value);">sendPairCode</button>
+            <br>
+            <button onclick="cancelPairCode();">cancelPairCode</button>
+            <button onclick="connectSuccessOrFail();">connectSuccessOrFail</button>
+
+            <br><br>
+            <input type="text" id="keycode_input_box">
+            <button onclick="sendKeyCode(document.getElementById('keycode_input_box').value);">sendKeyCode</button>
+
+            <br><br>
+            <button onclick="sendKeyCode('KEYCODE_STB_POWER');">KEYCODE_STB_POWER</button>
+            <button onclick="sendKeyCode('KEYCODE_AVR_POWER');">KEYCODE_AVR_POWER</button>
+            <br>
+            <button onclick="sendKeyCode('KEYCODE_HOME');">KEYCODE_HOME</button>
+            <button onclick="sendKeyCode('KEYCODE_BACK');">KEYCODE_BACK</button>
+
+            <br><br>
+            <input type="text" id="url_input_box">
+            <button onclick="fling(document.getElementById('url_input_box').value);">sendUrl</button>
+
+            <br><br>
+            <input type="text" id="mote_server_ip_input_box">
+            <button onclick="setMoteServer(document.getElementById('mote_server_ip_input_box').value);">setMoteServer</button>
+
+            <br><br>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');">Chrome</button>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');">Netflix</button>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
+        </div>-->
+    
+
+        <div id="main_container">
+            <div id="title_bar_container">
+                <div class="menu_button"></div>
+            
+                <div id="title_bar_title" class="unselectable">remote</div>
+            
+                <div id="options_close_button"></div>
+                <div id="lock_mouse_button" class="title_mouse_unlocked_button"></div>
+                <div id="alt_panel_button" class="title_open_alt_button"></div>
+                <div id="touch_pad_open_button" class="title_open_touch_button"></div>
+            
+            </div>
+
+        
+
+            <div id="remote_button_panels" class="unselectable">
+                <div id="remote_button_panel_main" class="gridster">
+                    <ul id="main_button_list" class="sortable grid">
+                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_home">
+                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tv_power">
+                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_avr_power">
+                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_power">
+                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_search">
+
+                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_rewind">
+                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_previous">
+                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_play">
+                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_next">
+                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_fast_forward">
+                    
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down"></div></li>
+                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_stop">
+                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_pause">
+                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_live">
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down"></div></li>
+                    
+                        <!--channel_down-->
+                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_escape">
+                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_up">
+                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_menu">
+                        <!--volume down-->
+
+                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">PG<div class="remote_button keycode rocker_up" id="keycode_page_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_page_down"></div></li>
+                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_left">
+                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_center">
+                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_right">
+                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_mute">
+
+                        <!--page down-->
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_back">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_down">
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bookmark">
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_window">
+
+                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tab">
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_info">
+                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_guide">
+                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dvr">
+                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_record">
+
+                    </ul>
+            
+            
+                </div>
+            
+
+                <div id="remote_button_panel_alt" class="gridster">
+                    <ul id="alt_button_list" class="sortable grid">
+                     
+                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_menu">            
+                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tv_input">
+                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_avr_input">
+                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_input">
+                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_settings">    
+
+                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_eject">
+                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_audio">
+                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_popup_menu">
+                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_top_menu">
+                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_input">
+                    
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_all_power">
+                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_yellow">
+                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_blue">
+                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_red">
+                        <li data-row="3" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_green">
+
+                        <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_1">
+                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_2">
+                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_3">
+                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_4">
+                        <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_5">
+
+                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_6">
+                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_7">
+                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_8">
+                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_9">
+                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_0">
+                    
+
+                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out"></div></li>
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">                    
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
+
+                        <!-- keycode_zoom_out -->
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
+
+                    </ul>
+                </div>
+
+
+                <div id="remote_button_panel_touch" class="gridster">
+                    <div id="remote_touch_pad"></div>
+                    <ul id="touch_button_list" class="sortable grid">
+                        <li data-row="1" data-col="1" data-sizex="5" data-sizey="5" class="touch_pad_filler">
+                    
+                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_home">
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_menu">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="2" class="remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="KEYCODE_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_channel_down"></div></li>
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="2" class="remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="KEYCODE_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_volume_down"></div></li>
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="2" class="remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="KEYCODE_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_zoom_out"></div></li>
+                    
+                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_back">
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_search">
+                        <!--keycode_channel_down-->
+                        <!--keycode_volume_down-->
+                        <!--keycode_zoom_out-->
+                    </ul>
+                </div>
+
+            </div>
+
+            <div id="options_panel_container" class="unselectable">
+                <div id="options_button_panel">
+                    <div id="options_button_devices" class="options_button" title="Discover and connect to Google TV devices.">DEVICES<div id="device_selected" class="options_button_selected"></div></div>
+                    <div id="options_button_apps" class="options_button" title="Sync and launch Google TV apps.">APPS<div id="options_button_seperator"></div><div id="apps_selected" class="options_button_selected"></div></div>
+                    <div id="options_button_channels" class="options_button" title="TV channel listing and macros.">CHANNELS<div id="channels_selected" class="options_button_selected"></div></div>
+                </div>
+                <div id="options_panels">
+                    <div id="options_panel_devices" class="options_panel">
+                        <div id="device_settings_controls">
+                            <div id="devices_refresh_button" title="Discover Google TV devices."></div>
+                            <div id="loaderImage" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                            <div id="devices_status_label"></div>
+                            <div id="devices_add_button" title="Manually add a device by IP address."></div>
+                        </div>
+                        <div id="devices_list"></div>                    
+                    </div>
+                    <div id="options_panel_apps" class="options_panel">
+
+                        <div id="apps_settings_controls">
+                            <div id="apps_sync_button" title="Sync list of installed apps."></div>
+                            <div id="loaderImage2" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                            <div id="apps_status_label"></div>
+                            <div id="intent_add_button" title="Add custom URI/Intent to fling."></div>
+                        </div>
+
+                        <div id="apps_lists">
+                            <!--<div id="add_new_fling">
+                                <div id="custom_intent_cancel_button">cancel</div>
+                                <input id="custom_intent_name_input" placeholder="name">
+                                <input id="custom_intent_uri_input" placeholder="uri ex: http:// ">
+                                <div id="custom_intent_save_button">save</div>
+                            </div>-->
+                            <div id="apps_list">
+                                <div id="app_clock"    class="app_icon_item" title="Clock"></div>
+                                <div id="app_downloads"class="app_icon_item" title="Downloads"></div>
+                                <div id="app_chrome"   class="app_icon_item" title="Google Chrome"></div>
+                                <div id="app_movies"   class="app_icon_item" title="Google Play Movies & TV"></div>
+                                <div id="app_music"    class="app_icon_item" title="Google Play Music"></div>
+
+                                <div id="app_store"    class="app_icon_item" title="Google Play Store"></div>
+                                <div id="app_search"   class="app_icon_item" title="Google Search"></div>
+                                <div id="app_netflix"  class="app_icon_item" title="Netflix"></div>                            
+                                <div id="app_pandora"  class="app_icon_item" title="Pandora"></div>
+                                <div id="app_photos"   class="app_icon_item" title="Photos"></div>
+
+                                <div id="app_primetime"class="app_icon_item" title="PrimeTime"></div>
+                                <div id="app_tv"       class="app_icon_item" title="TV"></div>
+                                <div id="app_settings" class="app_icon_item" title="Settings"></div>
+                                <div id="app_twitter"  class="app_icon_item" title="Twitter"></div>
+                                <div id="app_youtube"  class="app_icon_item" title="YouTube"></div>
+                            </div>
+                            <div id="custom_intent_list"></div>
+                            <div id="apps_installed_list"></div>
+                        </div>
+
+
+
+                    </div>
+                    <div id="options_panel_channels" class="options_panel">
+                        <div id="apps_settings_controls">
+                            <div id="update_channels_button" title="Sync TV channels list."></div>
+                            <div id="loaderImage3" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                            <div id="channels_status_label"></div>
+                            <div id="macro_add_button" title="Add custom macros."></div>
+                        </div>
+                        <div id="channels_list">
+                            <!--<div id="add_new_macro">
+                                <div id="custom_macro_textarea_holder"><textarea id="custom_macro_textarea" rows="1" placeholder="add keycodes..."></textarea></div>
+                                <div id="custom_macro_textarea_overflow_hider_holder"><div id="custom_macro_textarea_overflow_hider">d</div></div>
+                                <div id="custom_macro_save_button_wrapper"><div id="custom_macro_save_button">save</div></div>
+                                <div id="custom_macro_cancel_button">cancel</div>
+                                <input id="custom_macro_name_input" placeholder="macro name">
+                            </div>-->
+                            <div id="custom_macro_list"></div>
+                            <div id="system_channels_list">
+                                <!--<div class="system_channels_list_item">
+                                    <div class="channels_list_item_callsign">KTHF</div>
+                                    <div class="channels_list_item_number">8</div>
+                                    <div class="channels_list_item_name">PBS Channel</div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ad_block"></div>
+
+            <div id="apps_context_menu" tabindex="-1">
+                <div class="apps_context_menu_option" id="apps_context_menu_edit">Edit</div>
+                <div class="apps_context_menu_option bottom" id="apps_context_menu_delete">Delete</div>
+            </div>
+        </div>
+
+
+    
+        <div id="color_picker" class="cp-default"></div>
+
+    
+    
+         
+    </body>
+</html>

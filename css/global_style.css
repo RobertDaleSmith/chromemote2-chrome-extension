@@ -1,0 +1,2801 @@
+body {
+    margin: 0px;
+    padding: 0px;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+/* Scroll Bar CSS*/
+    
+::-webkit-scrollbar {
+    width: 5px;
+    height: 4px;
+    cursor: ew-resize;
+    
+} 
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,.1); 
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: rgba(0,0,0,.01);
+    cursor: pointer;
+    margin-left: 4px;
+    margin-right: 4px;
+    
+} 
+
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+
+    background: #9f9fa0;
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.5); 
+    cursor: ew-resize;
+    
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	/*background: #545454;*/
+}
+
+
+.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+body::-webkit-scrollbar { 
+    display: none; 
+}
+body::-scrollbar { 
+    display: none; 
+}
+
+#anymote_testing {
+    display: block;
+    position: relative;
+    float: right;
+}
+
+
+#main_container {
+    display: block;
+    position: relative;
+    width: 320px;
+    height: 480px;
+    
+    background-color: #000;
+    overflow: hidden;
+}
+
+#title_bar_container {
+    display: block;
+    position: absolute;
+    top:  0px;
+    left: 0px;
+        
+    width: 320px;
+    height: 48px;
+    
+    z-index: 4;
+}
+
+#ad_block {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 320px;
+    height: 50px;
+    
+    background-image: url("../images/ad_1.png");
+    z-index: 2;
+}
+
+#remote_button_panels {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 320px;
+    height: 480px;
+    z-index: 1;
+    
+    overflow: hidden;    
+}
+
+#remote_button_panel_main {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    margin: 0px;
+    padding: 0px;
+    
+    padding-top: 48px;
+    width: 320px;
+    height: 336px; 
+    
+    background-image: url("../images/bg_main.png");
+    background-size:320px 480px;
+    background-repeat:no-repeat;    
+}
+#remote_button_panel_alt {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 320px;
+    padding-top: 48px;
+    padding-bottom: 96px;
+    width: 320px;
+    height: 336px;
+    
+    background-image: url("../images/bg_alt.png");
+    background-size:320px 480px;
+    background-repeat:no-repeat; 
+}
+#remote_button_panel_touch {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 320px;
+    padding-top: 48px;
+    padding-bottom: 0px;
+    width: 320px;
+    height: 336px;
+    
+    background-image: url("../images/bg_touch.png");
+    background-size:320px 480px;
+    background-repeat:no-repeat; 
+}
+
+#main_button_list {
+    padding: 0px;
+    margin: 0px;
+    width: 320px;
+}
+
+#alt_button_list {
+    padding: 0px;
+    margin: 0px;
+    width: 320px;
+}
+
+#touch_button_list {
+    padding: 0px;
+    margin: 0px;
+    width: 320px;
+    height: 96px;
+    position: absolute;
+    top: 0px;
+    z-index: 0;
+}
+
+.remote_button {
+    display: block;
+    position: absolute;
+    width: 62px;
+    height: 46px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.25);
+    border-left-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.25);  
+    
+    border-bottom-width: 1px;
+    border-bottom-color: transparent;    
+    border-right-width: 1px;
+    border-right-color: transparent;
+    
+    text-align: center;
+    line-height: 48px;
+    color: #bbbfc3;
+    font-size: 11px;
+    font-family: RobotoBold;
+    
+    overflow: hidden;
+}
+.remote_button:active {
+    color: #fff;
+}
+
+.remote_button_no_border {
+    border-top-color: transparent;
+}
+
+.remote_button_rocker {
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 96px;
+    
+    float:left;
+    clear:none;
+        
+    border-style: solid;
+    border-width: 0px;
+    
+    border-top-width: 0px;
+    border-top-color: rgba(0, 0, 0, 0.25);
+    border-left-width: 0px;
+    border-left-color: rgba(0, 0, 0, 0.25);
+    
+    border-bottom-width: 0px;
+    border-bottom-color: transparent;    
+    border-right-width: 0px;
+    border-right-color: transparent;
+    
+    cursor: pointer;
+    
+    line-height: 98px;
+    
+    text-align: center;
+    color: #bbbfc3;
+    font-size: 11px;
+    font-family: RobotoBold;
+    
+    z-index: 2;
+}
+.remote_button_rocker:active {
+    color: #f6f6f6;
+    text-shadow: 0 0 1.25em #f6f6f6;
+}
+
+.rocker_up {
+    top: 0px;
+}
+.rocker_down {
+    top: 48px;
+}
+
+#options_panel_container {
+    display: block;
+    position: absolute;
+    bottom: -286px;
+    left: 0px;
+    
+    width: 320px;
+    height: 382px;   
+    
+    background-color: #f4f6f6;
+    
+    z-index: 2;
+}
+
+#options_button_panel {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 320px;
+    height: 46px;   
+    
+    background-color: #dcdee0;
+    
+    overflow: hidden;
+}
+
+
+.options_button_selected {
+
+    display: none;
+    position: absolute;
+    bottom: -10px;
+    left: 47px;
+    
+    background-color: #f4f6f6;
+    
+    width: 14px;
+    height: 14px;
+    
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg); /* IE 9 */
+    -webkit-transform:rotate(45deg); /* Safari and Chrome */
+}
+
+
+.options_button {
+    display: block;
+    position: relative;
+    float: left;
+    clear:none;
+    
+    width: 33.333%;
+    height: 46px;
+    
+    
+    background-color: transparent;
+        
+    cursor: pointer;
+    
+    color: #79797a;
+    font-family: RobotoBold;
+    font-size: 12px;
+    text-align: center;
+    line-height: 46px;
+}
+.options_button:active {
+    background-color: #c6c7c9;
+}
+
+#options_button_seperator {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 100%;
+    height: 32px;
+    
+    margin-top: 7px;   
+    margin-bottom: 7px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    border-right-width:1px;
+    border-right-color: #c6c7c9;
+    border-left-width:1px;
+    border-left-color: #c6c7c9;
+    
+    padding-left: -1px;
+    padding-right: -1px;
+    
+}
+
+
+#options_panels {
+    display: inline-block;
+    position: absolute;
+    top: 46px;
+    left: 0px;
+
+    width: 320px;
+    height: 336px;
+}
+
+.options_panel {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+
+    width: 320px;
+    height: 336px;
+    
+    background-color: #f4f6f6;
+}
+
+
+#device_settings_controls {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 320px;
+    height: 35px;
+    
+    background-color: #f5f6f6;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e9e9e9;
+}
+
+#apps_settings_controls {
+    
+    position: relative;
+    display: inline-block;
+    
+    float:left;
+    
+    width: 100%;
+    height: 35px;
+    
+    background-color: #f5f6f6;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e9e9e9;
+}
+
+
+
+
+.keycode {
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    background-position:0px 48px; 
+    cursor: pointer;
+}
+
+#keycode_volume_rocker {
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    background-position:0px 48px; 
+    background-position:-256px -96px; 
+}
+#keycode_volume_rocker:active {
+    background-position:-256px -432px; 
+}
+
+
+#keycode_home {
+    background-position:0px 0px; 
+}
+#keycode_home:active {
+    background-position:0px -336px; 
+}
+
+#keycode_tv_power {
+    background-position:-64px 0px; 
+}
+#keycode_tv_power:active {
+    background-position:-64px -336px; 
+}
+
+#keycode_avr_power {
+    background-position:-128px 0px; 
+}
+#keycode_avr_power:active {
+    background-position:-128px -336px; 
+}
+
+#keycode_stb_power {
+    background-position:-192px 0px; 
+}
+#keycode_stb_power:active {
+    background-position:-192px -336px; 
+}
+
+#keycode_search {
+    background-position:-256px 0px; 
+}
+#keycode_search:active {
+    background-position:-256px -336px; 
+}
+
+
+#keycode_media_rewind {
+    background-position:0px -48px; 
+}
+#keycode_media_rewind:active {
+    background-position:0px -384px; 
+}
+
+#keycode_media_previous {
+    background-position:-64px -48px; 
+}
+#keycode_media_previous:active {
+    background-position:-64px -384px; 
+}
+
+#keycode_media_play {
+    background-position:-128px -48px; 
+}
+#keycode_media_play:active {
+    background-position:-128px -384px; 
+}
+
+#keycode_media_next {
+    background-position:-192px -48px; 
+}
+#keycode_media_next:active {
+    background-position:-192px -384px; 
+}
+
+#keycode_media_fast_forward {
+    background-position:-256px -48px; 
+}
+#keycode_media_fast_forward:active {
+    background-position:-256px -384px; 
+}
+
+
+
+#keycode_channel_up {
+    background-position:0px -96px; 
+}
+#keycode_channel_up:active {
+    background-position:0px -432px; 
+}
+
+#KEYCODE_channel_up {
+    background-position:0px -96px; 
+}
+#KEYCODE_channel_up:active {
+    background-position:0px -432px; 
+}
+
+#keycode_media_stop {
+    background-position:-64px -96px; 
+}
+#keycode_media_stop:active {
+    background-position:-64px -432px; 
+}
+
+#keycode_pause {
+    background-position:-128px -96px; 
+}
+#keycode_pause:active {
+    background-position:-128px -432px; 
+}
+
+#keycode_live {
+    background-position:-192px -96px; 
+}
+#keycode_live:active {
+    background-position:-192px -432px; 
+}
+
+#keycode_volume_up {
+    background-position:0px -96px; 
+}
+#keycode_volume_up:active {
+    background-position:0px -432px; 
+}
+
+#KEYCODE_volume_up {
+    background-position:0px -96px; 
+}
+#KEYCODE_volume_up:active {
+    background-position:0px -432px; 
+}
+
+
+
+#keycode_channel_down {
+    background-position:0px -144px; 
+}
+#keycode_channel_down:active {
+    background-position:0px -480px; 
+}
+
+#KEYCODE_channel_down {
+    background-position:0px -144px; 
+}
+#KEYCODE_channel_down:active {
+    background-position:0px -480px; 
+}
+
+#keycode_escape {
+    background-position:-64px -144px; 
+}
+#keycode_escape:active {
+    background-position:-64px -480px; 
+}
+
+#keycode_dpad_up {
+    background-position:-128px -144px; 
+}
+#keycode_dpad_up:active {
+    background-position:-128px -480px; 
+}
+
+#keycode_menu {
+    background-position:-192px -144px; 
+}
+#keycode_menu:active {
+    background-position:-192px -480px; 
+}
+
+#keycode_volume_down {
+    background-position:0px -144px; 
+}
+#keycode_volume_down:active {
+    background-position:0px -480px; 
+}
+
+#KEYCODE_volume_down {
+    background-position:0px -144px; 
+}
+#KEYCODE_volume_down:active {
+    background-position:0px -480px; 
+}
+
+#keycode_channel_down {
+    background-position:0px -144px; 
+}
+#keycode_channel_down:active {
+    background-position:0px -480px; 
+}
+
+#KEYCODE_channel_down {
+    background-position:0px -144px; 
+}
+#KEYCODE_channel_down:active {
+    background-position:0px -480px; 
+}
+
+
+
+.title_close_alt_button {
+    background-position:0px -192px; 
+}
+.title_close_alt_button:active {
+    background-position:0px -528px; 
+}
+
+.title_open_alt_button {
+    background-position:0px -240px; 
+}
+.title_open_alt_button:active {
+    background-position:0px -576px; 
+}
+
+
+.title_open_touch_button {
+    background-position:-448px -288px; 
+}
+.title_open_touch_button:active {
+    background-position:-448px -624px; 
+}
+
+
+
+.title_mouse_unlocked_button {
+    background-position:-512px -288px; 
+}
+.title_mouse_unlocked_button:active {
+    background-position:-512px -624px; 
+}
+
+.title_mouse_locked_button {
+    background-position:-576px -288px; 
+}
+.title_mouse_locked_button:active {
+    background-position:-576px -624px; 
+}
+
+
+#keycode_page_up {
+    background-position:0px -96px; 
+}
+#keycode_page_up:active {
+    background-position:0px -432px;  
+}
+
+#keycode_dpad_left {
+    background-position:-64px -192px; 
+}
+#keycode_dpad_left:active {
+    background-position:-64px -528px; 
+}
+
+#keycode_dpad_center {
+    background-position:-128px -192px; 
+}
+#keycode_dpad_center:active {
+    background-position:-128px -528px; 
+}
+
+#keycode_dpad_right {
+    background-position:-192px -192px; 
+}
+#keycode_dpad_right:active {
+    background-position:-192px -528px; 
+}
+
+#keycode_mute {
+    background-position:-256px -192px; 
+}
+#keycode_mute:active {
+    background-position:-256px -528px; 
+}
+
+
+#keycode_page_down {
+    background-position:0px -144px; 
+}
+#keycode_page_down:active {
+    background-position:0px -480px; 
+}
+
+#keycode_back {
+    background-position:-64px -240px; 
+}
+#keycode_back:active {
+    background-position:-64px -576px; 
+}
+
+#keycode_dpad_down {
+    background-position:-128px -240px; 
+}
+#keycode_dpad_down:active {
+    background-position:-128px -576px; 
+}
+
+#keycode_bookmark {
+    background-position:-192px -240px; 
+}
+#keycode_bookmark:active {
+    background-position:-192px -576px; 
+}
+
+#keycode_window {
+    background-position:-256px -240px; 
+}
+#keycode_window:active {
+    background-position:-256px -576px; 
+}
+
+
+
+#keycode_tab {
+    background-position:0px -288px; 
+}
+#keycode_tab:active {
+    background-position:0px -624px; 
+}
+
+#keycode_info {
+    background-position:-64px -288px; 
+}
+#keycode_info:active {
+    background-position:-64px -624px; 
+}
+
+#keycode_guide {
+    background-position:-128px -288px; 
+}
+#keycode_guide:active {
+    background-position:-128px -624px; 
+}
+
+#keycode_dvr {
+    background-position:-192px -288px; 
+}
+#keycode_dvr:active {
+    background-position:-192px -624px; 
+}
+
+#keycode_media_record {
+    background-position:-256px -288px; 
+}
+#keycode_media_record:active {
+    background-position:-256px -624px; 
+}
+
+
+
+/*Alt Panel Button Sprites*/
+#keycode_settings {
+    background-position:-320px 0px; 
+}
+#keycode_settings:active {
+    background-position:-320px -336px; 
+}
+
+#keycode_stb_menu {
+    background-position:-384px 0px; 
+}
+#keycode_stb_menu:active {
+    background-position:-384px -336px; 
+}
+
+#keycode_tv_input {
+    background-position:-576px 0px; 
+}
+#keycode_tv_input:active {
+    background-position:-576px -336px; 
+}
+
+#keycode_avr_input {
+    background-position:-448px 0px; 
+}
+#keycode_avr_input:active {
+    background-position:-448px -336px; 
+}
+
+#keycode_stb_input {
+    background-position:-512px 0px; 
+}
+#keycode_stb_input:active {
+    background-position:-512px -336px; 
+}
+
+
+
+#keycode_eject {
+    background-position:-320px -48px; 
+}
+#keycode_eject:active {
+    background-position:-320px -384px; 
+}
+
+#keycode_audio {
+    background-position:-384px -48px; 
+}
+#keycode_audio:active {
+    background-position:-384px -384px; 
+}
+
+#keycode_bd_popup_menu {
+    background-position:-448px -48px; 
+}
+#keycode_bd_popup_menu:active {
+    background-position:-448px -384px; 
+}
+
+#keycode_bd_top_menu {
+    background-position:-512px -48px; 
+}
+#keycode_bd_top_menu:active {
+    background-position:-512px -384px; 
+}
+
+#keycode_bd_input {
+    background-position:-576px -48px; 
+}
+#keycode_bd_input:active {
+    background-position:-576px -384px; 
+}
+
+
+
+
+
+#keycode_1 {
+    background-position:-320px -96px; 
+}
+#keycode_1:active {
+    background-position:-320px -432px; 
+}
+
+#keycode_2 {
+    background-position:-384px -96px; 
+}
+#keycode_2:active {
+    background-position:-384px -432px; 
+}
+
+#keycode_3 {
+    background-position:-448px -96px; 
+}
+#keycode_3:active {
+    background-position:-448px -432px; 
+}
+
+#keycode_prog_yellow {
+    background-position:-512px -96px; 
+}
+#keycode_prog_yellow:active {
+    background-position:-512px -432px; 
+}
+
+#keycode_prog_blue {
+    background-position:-576px -96px; 
+}
+#keycode_prog_blue:active {
+    background-position:-576px -432px; 
+}
+
+
+#keycode_4 {
+    background-position:-320px -144px; 
+}
+#keycode_4:active {
+    background-position:-320px -480px; 
+}
+
+#keycode_5 {
+    background-position:-384px -144px; 
+}
+#keycode_5:active {
+    background-position:-384px -480px; 
+}
+
+#keycode_6 {
+    background-position:-448px -144px; 
+}
+#keycode_6:active {
+    background-position:-448px -480px; 
+}
+
+#keycode_prog_red {
+    background-position:-512px -144px; 
+}
+#keycode_prog_red:active {
+    background-position:-512px -480px; 
+}
+
+#keycode_prog_green {
+    background-position:-576px -144px; 
+}
+#keycode_prog_green:active {
+    background-position:-576px -480px; 
+}
+
+
+#keycode_7 {
+    background-position:-320px -192px; 
+}
+#keycode_7:active {
+    background-position:-320px -528px; 
+}
+
+#keycode_8 {
+    background-position:-384px -192px; 
+}
+#keycode_8:active {
+    background-position:-384px -528px; 
+}
+
+#keycode_9 {
+    background-position:-448px -192px; 
+}
+#keycode_9:active {
+    background-position:-448px -528px; 
+}
+
+#keycode_zoom_in {
+    background-position:-512px -192px; 
+}
+#keycode_zoom_in:active {
+    background-position:-512px -528px; 
+}
+
+#KEYCODE_zoom_in {
+    background-position:-512px -192px; 
+}
+#KEYCODE_zoom_in:active {
+    background-position:-512px -528px; 
+}
+
+#keycode_all_power {
+    background-position:-576px -192px; 
+}
+#keycode_all_power:active {
+    background-position:-576px -528px; 
+}
+
+
+
+
+
+#keycode_pound {
+    background-position:-320px -240px; 
+}
+#keycode_pound:active {
+    background-position:-320px -576px; 
+}
+
+#keycode_0 {
+    background-position:-384px -240px; 
+}
+#keycode_0:active {
+    background-position:-384px -576px; 
+}
+
+#keycode_star {
+    background-position:-448px -240px; 
+}
+#keycode_star:active {
+    background-position:-448px -576px; 
+}
+
+#keycode_zoom_out {
+    background-position:-512px -240px; 
+}
+#keycode_zoom_out:active {
+    background-position:-512px -576px; 
+}
+
+#KEYCODE_zoom_out {
+    background-position:-512px -240px; 
+}
+#KEYCODE_zoom_out:active {
+    background-position:-512px -576px; 
+}
+
+
+
+#devices_status_label {
+    display: block;
+    position: absolute;
+    left: 64px;
+    top: 0px;
+    
+    width: 192px;
+    height: 25px;
+    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-left-width: 1px;    
+    border-right-width: 1px;
+    
+    border-color: #e9e9e9;
+
+    line-height: 30px;
+    text-align: center;
+    
+    font-family: RobotoRegular;
+    font-size: 12px;
+        
+    color: #868787;
+    overflow: hidden;
+}
+
+#apps_status_label {
+    display: block;
+    position: absolute;
+    left: 64px;
+    top: 0px;
+    
+    width: 60%;
+    height: 25px;
+    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-left-width: 1px;    
+    border-right-width: 1px;
+    
+    border-color: #e9e9e9;
+
+    line-height: 30px;
+    text-align: center;
+    
+    font-family: RobotoRegular;
+    font-size: 12px;
+        
+    color: #868787;
+    overflow: hidden;
+}
+
+#apps_list {
+    display: block;
+    position: relative;
+    
+    max-width: 315px;    
+    height: auto;
+
+    border-style: solid;
+    border-width: 0px;
+     
+    
+    float: left;
+    clear:none;
+    
+    border-style: solid;
+    border-width: 0px;
+    border-color: transparent;
+        
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+}
+
+#apps_installed_list {
+    display: block;
+    position: relative;
+    
+    width: 100%;
+    height: auto;
+    
+    float: left;
+    clear:none;
+}
+
+#channels_status_label {
+    display: block;
+    position: absolute;
+    left: 64px;
+    top: 0px;
+    
+    width: 60%;
+    height: 25px;
+    
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-left-width: 1px;    
+    border-right-width: 1px;
+    
+    border-color: #e9e9e9;
+
+    line-height: 30px;
+    text-align: center;
+    
+    font-family: RobotoRegular;
+    font-size: 12px;
+        
+    color: #868787;
+    overflow: hidden;
+}
+
+#custom_intent_list {
+    display: block;
+    position: relative;
+    
+    width: 100%;
+    height: auto;
+    
+    float: left;
+    clear:none;
+}
+
+#options_panel_apps {
+    
+    overflow: hidden;
+}
+
+#apps_lists {
+    display: inline-block;
+    position: relative;
+    
+    width: 320px;
+    height: 300px;
+    
+    overflow-x: hidden;
+    text-align: center;
+    
+    float: left;
+    clear:none;
+}
+
+
+#loaderImage {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 64px;
+    height: 25px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    text-align: center;
+    
+    padding-top: 10px;
+}
+
+#loaderImage2 {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 64px;
+    height: 25px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    text-align: center;
+    
+    padding-top: 10px;
+}
+#loaderImage3 {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 64px;
+    height: 25px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    text-align: center;
+    
+    padding-top: 10px;
+}
+
+.loaderImage img {
+    width: 16px;
+    height: 16px;
+}
+
+
+#devices_refresh_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:0px -672px; 
+    
+}
+#devices_refresh_button:active {
+    background-position:-128px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+
+#devices_add_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-64px -672px; 
+}
+#devices_add_button:active {
+    background-position:-192px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+
+#apps_sync_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:0px -672px; 
+    
+}
+#apps_sync_button:active {
+    background-position:-128px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+#update_channels_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:0px -672px; 
+    
+}
+#update_channels_button:active {
+    background-position:-128px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+#intent_add_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-64px -672px; 
+}
+#intent_add_button:active {
+    background-position:-192px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+#macro_add_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 35px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-64px -672px; 
+}
+#macro_add_button:active {
+    background-position:-192px -672px; 
+    background-color: rgba(53, 168, 184, 0.10);
+}
+
+#devices_list {
+
+    display: block;
+    position: absolute;
+    top: 35px;
+    left: 0px;
+    
+    width: 320px;
+    height: 300px;
+    
+    background-color: transparent;
+
+    overflow-x: hidden;
+}
+
+.device_found {
+    display: block;
+    position: relative;
+    
+    width: 318px;
+    height: 48px;
+    
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    cursor: pointer;
+    
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-640px -288px; 
+    
+    color: #545454;
+}
+.device_found:hover {
+    
+    background-color: #e0f5fa;
+    background-color: rgba(53, 168, 184, 0.10);
+        
+}
+.device_found:active {
+    color: #3ea8b8;
+    background-position:-640px -624px; 
+    border-style: solid;    
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+}
+
+
+.device_found_active {
+    display: block;
+    position: relative;
+    
+    width: 318px;
+    height: 48px;
+        
+    border-style: solid;    
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+
+    cursor: pointer;
+    
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-640px -624px;  
+    
+    color: #3ea8b8;
+}
+
+
+
+
+.installed_app_item {
+    display: block;
+    position: relative;
+    
+    width: 239px;
+    height: 36px;
+    
+    line-height: 36px;
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+        
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    cursor: pointer;
+    
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-576px -672px; 
+    
+    color: #545454;
+    
+    font-family: RobotoRegular;
+    font-size: 16px;
+    
+    text-align: left;
+    
+    padding-left: 64px;
+    padding-right:10px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
+.installed_app_item:hover {
+    
+    background-color: #e0f5fa;
+    background-color: rgba(53, 168, 184, 0.10);
+        
+}
+.installed_app_item:active {
+    color: #3ea8b8;
+    background-position:-256px -672px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+}
+
+
+.custom_intent_item {
+    display: block;
+    position: relative;
+    
+    width: 239px;
+    height: 36px;
+    
+    line-height: 36px;
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+        
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    cursor: pointer;
+    
+    background-image: url("../images/options_icons.png");
+    background-size:64px 336px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-0px -0px; 
+    
+    color: #545454;
+    
+    font-family: RobotoRegular;
+    font-size: 16px;
+    
+    text-align: left;
+    
+    padding-left: 64px;
+    padding-right:10px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
+.custom_intent_item:hover {
+    
+    background-color: #e0f5fa;
+    background-color: rgba(53, 168, 184, 0.10);
+        
+}
+.custom_intent_item:active {
+    color: #3ea8b8;
+    background-position:-0px -35px; 
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+}
+
+
+.custom_macro_item {
+    display: block;
+    position: relative;
+    
+    width: 239px;
+    height: 36px;
+    
+    line-height: 36px;
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+        
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    cursor: pointer;
+    
+    background-image: url("../images/options_icons.png");
+    background-size:64px 336px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-0px -64px; 
+    
+    color: #545454;
+    
+    font-family: RobotoRegular;
+    font-size: 16px;
+    
+    text-align: left;
+    
+    padding-left: 64px;
+    padding-right:10px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
+.custom_macro_item:hover {
+    
+    background-color: #e0f5fa;
+    background-color: rgba(53, 168, 184, 0.10);
+        
+}
+.custom_macro_item:active {
+    color: #3ea8b8;
+    background-position:-0px -94px; 
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+}
+
+
+
+
+#add_new_device {
+    display: block;
+    position: relative;
+    
+    width: 318px;
+    height: 48px;
+    
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-640px -288px; 
+    
+    color: #545454;
+    
+    
+}
+#add_new_device:hover {
+                
+}
+#add_new_device:active {
+    
+}
+
+
+#add_new_fling {
+    display: block;
+    position: relative;
+        
+    width: auto;
+    height: 48px;    
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    overflow: hidden;
+    
+    color: #545454;    
+}
+#add_new_fling:hover {
+                
+}
+#add_new_fling:active {
+    
+}
+
+#add_new_macro {
+    display: block;
+    position: relative;
+    
+    width: auto;
+    min-height: 96px;    
+        
+    border-style: solid;
+    border-width: 0px;
+    border-color: transparent;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    color: #545454;
+}
+#add_new_macro:hover {
+                
+}
+#add_new_macro:active {
+    
+}
+
+
+
+#enter_pin_code_container {
+    display: block;
+    position: relative;
+    
+    width: 318px;
+    height: 48px;
+    
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+        
+    /*background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-640px -288px;*/ 
+    
+    color: #545454;
+    
+    
+}
+#enter_pin_code_container:hover {
+                
+}
+#enter_pin_code_container:active {
+    
+}
+
+.new_device_ip_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 192px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+.new_device_ip_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+
+.pair_code_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 188px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+.pair_code_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+#custom_intent_name_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 89px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+#custom_intent_name_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+
+#custom_intent_uri_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 160px;
+    
+    width: 94px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+#custom_intent_uri_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+
+
+.ip_container {
+  
+  display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 188px;
+    height: 30px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    
+    
+    
+}
+.ip_octet {
+    
+    color: #545454;
+    border: 0;
+    text-align: center;
+    width: 42px;
+    height: 28px;
+    font-family: RobotoBold;
+    font-size: 14px;
+    background-color: transparent;
+}
+.ip_octet:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+.ip_octet::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #e9e9e9;
+}
+.ip_octet:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #e9e9e9;
+}
+.ip_octet::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #e9e9e9;
+}
+.ip_octet:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #e9e9e9;
+}
+
+
+.device_found_name {
+    display: block;
+    position: absolute;
+    top: 12px;
+    left: 64px;
+    
+    
+    font-family: RobotoBold;
+    font-size: 14px;
+
+    max-width: 235px;
+}
+
+.device_found_ip {
+    display: block;
+    position: absolute;
+    top: 28px;
+    left: 64px;
+    
+    font-family: RobotoRegular;
+    font-size: 11px;
+
+    max-width: 235px;
+}
+
+
+
+
+
+
+.menu_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-320px -288px; 
+}
+.menu_button:active {
+    background-position:-320px -624px; 
+}
+
+#alt_panel_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+}
+
+.back_to_main_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:0px -192px;  
+}
+.back_to_main_button:active {
+    background-position:0px -528px; 
+}
+
+
+#touch_pad_open_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    
+}
+
+
+#lock_mouse_button {
+    display: none;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+}
+
+
+#options_close_button {
+    display: none;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:right;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+
+    background-position:0px -149px; 
+}
+#options_close_button:active {
+    background-position:0px -485px; 
+}
+
+
+#title_bar_title {
+    display: block;
+    position: relative;
+    width: 128px;
+    height: 48px;
+    
+    float:left;
+    clear:none;
+    
+    text-align: center;
+    line-height: 48px;
+    color: #f6f6f6;
+    font-size: 28px;
+    font-family: RobotoThin;
+    
+    font-weight: 200;
+    cursor: default;
+}
+
+#remote_touch_pad {
+    display: block;
+    position: absolute;
+    width: 320px;
+    height: 239px;
+    
+    top: 48px;
+    left: 0px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    border-top-width: 1px;
+    border-top-color: #222f3a;    
+    
+    
+    cursor: pointer;    
+    
+    text-align: center;
+    line-height: 48px;
+    color: #bbbfc3;
+    font-size: 11px;
+    font-family: RobotoBold;
+
+    background-image: url("../images/bg_touch_pad.png");
+    background-size:320px 240px;
+    background-repeat:no-repeat;
+    
+    z-index: 3;
+    
+    /*background-color: #3ea8b8;*/
+}
+
+.touch_pad_filler {
+    display: none;
+    position: absolute;
+    width: 320px;
+    height: 240px;    
+        
+    background-color: transparent;
+    overflow: hidden;
+    
+}
+
+#connect_new_button {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#connect_new_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#connect_new_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+
+#custom_intent_save_button {
+    display: block;
+    position: absolute;
+    left: 256px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#custom_intent_save_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#custom_intent_save_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+
+#send_pair_code_button {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#send_pair_code_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#send_pair_code_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+#cancel_pair_button {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#cancel_pair_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#cancel_pair_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+
+
+#custom_intent_cancel_button {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#custom_intent_cancel_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#custom_intent_cancel_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+
+#color_picker{
+    display: block;
+    position: absolute;
+    
+    right: 120px;
+    top: 440px;
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* IE 9 */
+    -webkit-transform:rotate(90deg); /* Safari and Chrome */
+}
+.picker { 
+    width: 96px; 
+    height: 320px 
+    
+}
+.slide { 
+    width: 32px; 
+    height: 320px 
+    
+}
+
+.picker-wrapper {
+    width: 96px;
+    height: 320px;
+    position: relative;
+    display: inline-block;
+    transform:rotate(-180deg);
+    -ms-transform:rotate(-180deg); /* IE 9 */
+    -webkit-transform:rotate(-180deg); /* Safari and Chrome */
+}
+.slide-wrapper {
+    width: 32px;
+    height: 320px;
+    position: relative;
+    display: inline-block;
+}
+.picker-indicator {
+    width: 3px;
+    height: 3px;
+    position: absolute;
+    border: 1px solid white;
+}
+.slider-indicator {
+    width: 100%;
+    height: 10px;
+    position: absolute;
+    border: 1px solid black;
+}
+
+.app_icon_item {
+    position: relative;
+    display: inline-block;
+    width: 61px;
+    height:62px;
+    
+    background-color: transparent;
+    
+    float:left;
+    clear:none;
+    
+    background-image: url("../images/app_icon_sprites.png");
+    background-size:320px 320px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    cursor: pointer;
+    
+    border-style: solid;    
+    border-width: 1px;
+    border-color: transparent;
+}
+.app_icon_item:hover {
+    background-color: #e8e9e9;
+}
+.app_icon_item:active {
+    background-color: #e0f5fa;
+    
+    border-style: solid;    
+    border-width: 1px;
+    border-color: #3ea8b8;
+}
+
+
+#app_amazon {
+    background-position:-1px -1px; 
+}
+#app_chrome {
+    background-position:-65px -1px;
+}
+#app_cnbc {
+    background-position:-129px -1px; 
+}
+#app_search {
+    background-position:-193px -1px; 
+}
+#app_mgo {
+    background-position:-257px -1px; 
+}
+
+#app_movies {
+    background-position:-1px -65px; 
+}
+#app_music {
+    background-position:-65px -65px; 
+}
+#app_nba {
+    background-position:-129px -65px; 
+}
+#app_netflix {
+    background-position:-193px -65px; 
+}
+#app_onlive {
+    background-position:-257px -65px; 
+}
+
+#app_pandora {
+    background-position:-1px -129px; 
+}
+#app_photos {
+    background-position:-65px -129px; 
+}
+#app_plex {
+    background-position:-129px -129px; 
+}
+#app_primetime {
+    background-position:-193px -129px; 
+}
+#app_twitter {
+    background-position:-257px -129px 
+}
+
+#app_youtube {
+    background-position:-1px -193px; 
+}
+#app_clock {
+    background-position:-65px -193px; 
+}
+#app_downloads {
+    background-position:-129px -193px; 
+}
+#app_store {
+    background-position:-193px -193px; 
+}
+#app_tv {
+    background-position:-257px -193px 
+}
+#app_settings {
+    background-position:-257px -257px 
+}
+
+
+#apps_context_menu {
+    display: none;
+    position: absolute;
+    top: 200px;
+    left: 50px;
+    
+    width: 100px;
+    height: auto;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(151, 151, 151, 1);
+    
+    background-color: rgba(240, 240, 240, 1);
+    box-shadow: 2px 2px 5px rgba(136, 136, 136, 0.62);
+    
+    z-index: 40;
+    
+    padding: 4px;
+}
+#apps_context_menu:focus { outline: none; }
+
+.apps_context_menu_option {
+    display: block;
+    position: relative;
+    
+    
+    width: auto;
+    height: 32px;
+    
+    line-height: 36px;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+    background-color: rgba(240, 240, 240, 1);
+    
+    border-bottom-color: rgba(215, 215, 215, 1);
+    
+    text-align: left;
+    padding-left: 20px;
+    
+    cursor: default;
+    
+    
+    
+    font-family: RobotoRegular;
+    font-size: 16px;
+}
+.apps_context_menu_option:hover {    
+    border-color: #3ea8b8;
+    background-color: rgba(62, 168, 184, 0.15);
+}
+.apps_context_menu_option:active {    
+    border-color: #3ea8b8;
+    background-color: rgba(62, 168, 184, 1);
+    color: #e8e9e9;
+}
+
+#apps_context_menu .bottom {
+    border-bottom-color: transparent;
+}
+#apps_context_menu .bottom:hover {
+    border-color: #3ea8b8;
+}
+#apps_context_menu .bottom:active {
+    border-color: #3ea8b8;
+    background-color: rgba(62, 168, 184, 1);
+    color: #e8e9e9;
+}
+
+#channels_list {
+    display: inline-block;
+    position: relative;
+    
+    width: 320px;
+    height: 300px;
+    
+    overflow-x: hidden;
+    text-align: center;
+    
+    float: left;
+    clear:none;
+}
+
+#system_channels_list {
+    display: block;
+    position: relative;
+    
+    width: 100%;
+    height: auto;
+    
+    float: left;
+    clear:none;
+}
+
+#custom_macro_list {
+    display: block;
+    position: relative;
+    
+    width: 100%;
+    height: auto;
+    
+    float: left;
+    clear:none;
+}
+
+
+
+.system_channels_list_item {
+    display: block;
+    position: relative;
+    
+    width: 293px;
+    height: 36px;
+    
+    line-height: 36px;
+        
+    border-style: solid;
+    border-width: 1px;
+    border-color: transparent;
+        
+    border-bottom-width: 1px;
+    border-bottom-color: #e8e9e9;
+    
+    cursor: pointer;
+    
+    /*background-image: url("../images/remote_button_icons.png");*/
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+    
+    background-position:-576px -672px; 
+    
+    color: #545454;
+    
+    font-family: RobotoRegular;
+    font-size: 16px;
+    
+    text-align: left;
+    
+    padding-left: 10px;
+    padding-right:10px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
+.system_channels_list_item:hover {
+    
+    background-color: #e0f5fa;
+    background-color: rgba(53, 168, 184, 0.10);
+        
+}
+.system_channels_list_item:active {
+    color: #3ea8b8;
+    background-position:-256px -672px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3ea8b8;
+    background-color: #e0f5fa;
+}
+
+.channels_list_item_callsign{
+    display: inline-block;
+    position: relative;
+
+
+    font-size: 18px;
+
+    height:38px;
+    line-height: 38px;
+
+    font-family: RobotoBold;
+
+
+
+}
+.channels_list_item_number{
+    display: inline-block;
+    position: relative;
+
+
+    font-size: 16px;
+
+    height:38px;
+    line-height: 38px;
+
+    font-family: RobotoThin;
+
+    padding-left: 8px;
+}
+.channels_list_item_name{
+    display: inline-block;
+    position: relative;
+
+
+    height:38px;
+    line-height: 38px;
+
+
+    padding-left: 8px;
+}
+
+#custom_macro_textarea_holder {
+
+    display: inline-block;
+    position: relative;
+    
+    margin-top: 48px;    
+    margin-left: 8px;
+    margin-right: 8px;
+    
+    width: 287px;
+    min-height: 40px;
+
+    text-align: left;
+    padding: 3px 5px 4px 5px;
+}
+
+#custom_macro_textarea {
+    
+    width: 287px;
+    min-height: 40px;
+    
+    background-color: transparent;
+    padding-bottom: 4px;
+}
+
+
+
+
+#custom_macro_cancel_button {
+    display: block;
+    position: absolute;
+    left: 0px;
+    top: 9px;
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#custom_macro_cancel_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#custom_macro_cancel_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+#custom_macro_name_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 188px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+#custom_macro_name_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+#custom_macro_save_button {
+    display: block;
+    position: relative;
+       
+    width: 64px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+    
+    
+    text-align: center;
+    line-height: 30px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+    
+    margin-left: 254px;
+}
+#custom_macro_save_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#custom_macro_save_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
+#custom_macro_save_button_wrapper {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 9px;
+    
+    width: 100%;    
+        
+    background-color: transparent;
+
+    overflow: hidden;
+}
+
+
+
+
+#custom_macro_textarea_overflow_hider_holder {
+    display: block;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    
+    width: 100%;
+    height: 100%;  
+        
+    background-color: transparent;
+
+    overflow: hidden;
+}
+
+#custom_macro_textarea_overflow_hider {
+    display: block;
+    position: absolute;
+
+    width: 100%;
+    height: 100%;  
+    
+    background-color: #f4f6f6;
+
+    margin-left: 303px;
+}
