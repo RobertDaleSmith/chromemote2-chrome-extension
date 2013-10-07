@@ -76,16 +76,10 @@ var fling = function (flingUrl, callback) {
         moteServerActive = false;
     });
 }
-var macro = function (macro, callback) {
+var sendMacro = function (macro, callback) {
     console.log(macro);
     var macroKeyListObj = JSON.parse('["' + macro.replaceAll(',', '","') + '"]');
 
-    //for (var i = 0; i < macroKeyListObj.length; i++) {
-    //    if (macroKeyListObj[i].indexOf("DELAY_SEC_") != -1) {
-    //    } else { 
-    //        sendKeyCode("KEYCODE_" + macroKeyListObj[i]);
-    //    }
-    //}
 
     var qty = macroKeyListObj.length;
     var counter = -1;
@@ -697,8 +691,11 @@ var showAddNewFlingBox = function (oldName, oldUrl) {
             var name = document.getElementById("custom_intent_name_input").value,
                 uri = document.getElementById("custom_intent_uri_input").value;
 
+            name = name.replaceAll('"',"&quot;").stripHTML();
+            uri  = uri.replaceAll('"',"%22").stripHTML();
+
             if (name != "" && uri != "") {
-                removeCustomIntent(oldUrl);
+                removeCustomIntent(oldName, oldUrl);
                 addNewCustomIntent(name, uri);
                 $("#add_new_fling").remove();
             }
@@ -814,6 +811,9 @@ var showAddNewMacroBox = function (oldName, oldMacro) {
             keyCodes = document.getElementById("keycode_value_holder").value;
             //console.log(keyCodes);
 
+            name = name.replaceAll('"',"&quot;").stripHTML();
+            //keyCodes  = keyCodes.replaceAll('"',"");
+
             if (name != "" && keyCodes != "[]") { //Valid Input
                 removeCustomMacro(oldName, oldMacro);
 
@@ -875,7 +875,7 @@ var showAddNewMacroBox = function (oldName, oldMacro) {
     });
 
     if (oldName != null)
-        document.getElementById("custom_macro_name_input").value = oldName;
+        document.getElementById("custom_macro_name_input").value = oldName.replaceAll("&quot;",'"');
 
 
 }
@@ -914,9 +914,9 @@ var refreshCustomIntentListUI = function () {
     for (var i = 0; i < customIntentList.length; i++) {
         var newAppEl = document.createElement("div");
         newAppEl.className = "custom_intent_item";
-        newAppEl.textContent = customIntentList[i].name;
+        newAppEl.innerHTML = customIntentList[i].name;
         newAppEl.id = customIntentList[i].uri;
-
+        newAppEl.setAttribute("name", customIntentList[i].name);
         newAppEl.setAttribute("oncontextmenu", "return false;");
 
 
@@ -936,8 +936,6 @@ var refreshCustomIntentListUI = function () {
             }
             return true;
         });
-
-        
 
         document.getElementById("custom_intent_list").appendChild(newAppEl);
     }
@@ -976,23 +974,24 @@ var refreshCustomMacroListUI = function () {
     document.getElementById("custom_macro_list").textContent = "";
 
     for (var i = 0; i < customMacroList.length; i++) {
-        var macro = "" + customMacroList[i].macro;
+        var macroStr = "" + customMacroList[i].macro;
         var newMacroEl = document.createElement("div");
         newMacroEl.className = "custom_macro_item";
         $(newMacroEl).attr("name", customMacroList[i].name);
-        newMacroEl.innerHTML = "<div>" + customMacroList[i].name + "</div>" + "<div class='custom_macro_item_details'>" + macro.replaceAll(",",", ") + "</div>";
-        newMacroEl.id = macro;
+        newMacroEl.innerHTML = "<div>" + customMacroList[i].name + "</div>" + "<div class='custom_macro_item_details'>" + macroStr.replaceAll(",",", ") + "</div>";
+        newMacroEl.id = macroStr;
 
         newMacroEl.setAttribute("oncontextmenu", "return false;");
         
-        var name = 
+        
         $(newMacroEl).mouseup(function (e) {
             if (e.button == 2) { //Right mouse button
                 //console.log("Right Click");
                 showContextMenu(event.x, event.y, this.id, $(this).attr("name"), "macro");
                 return false;
             } else {
-                macro(this.id);
+                //console.log(this.id);
+                sendMacro(this.id);
                 showOptionsPanel();
             }
             return true;
@@ -1038,28 +1037,37 @@ var showContextMenu = function (x, y, id, name, type) {
 
 
         if (type == "intent") {
+            if (document.getElementById("add_new_fling")) $("#custom_intent_cancel_button").click();
             showAddNewFlingBox(name, id);
             document.getElementById(id).remove();
-        }
-        if (type == "macro") {
+        } else if (type == "macro") {
+            if (document.getElementById("add_new_macro")) $("#custom_macro_cancel_button").click();
             showAddNewMacroBox(name, id);
             document.getElementById(id).remove();
+        } else if (type == "device") {
+            
         }
 
 
     });
     $("#apps_context_menu_delete").mouseup(function (event) {
         hideContextMenu();
-        console.log("Delete " + id);
+        console.log("Deleting " + id);
 
-        document.getElementById(id).remove();
-
+        for(var i = 0; i < document.getElementsByName(name).length ; i++){
+            if( $(document.getElementsByName(name)[i]).attr("name") == name )
+                if(document.getElementsByName(name)[i].id == id)
+                    document.getElementsByName(name)[i].remove();
+        }
+        
         if (type == "intent") {
-            removeCustomIntent(id);
-        }
-        if (type == "macro") {
+            removeCustomIntent(name, id);
+        } else if (type == "macro") {
             removeCustomMacro(name, id);
+        } else if (type == "device") {
+            
         }
+
     });
 
 }
@@ -1067,11 +1075,11 @@ var hideContextMenu = function (x, y, id) {
     $("#apps_context_menu").css("display", "none");
 }
 
-var removeCustomIntent = function(id){
+var removeCustomIntent = function(name, uri){
     
     for (var i = 0; i < customIntentList.length; i++) {
         //console.log(customIntentList[i].uri);
-        if (customIntentList[i].uri == id) {
+        if (customIntentList[i].uri == uri && customIntentList[i].name == name) {
             customIntentList.splice(i, 1);
             localStorage.setItem("custom_intent_list", JSON.stringify(customIntentList));
             break;
@@ -1347,7 +1355,16 @@ var addDeviceFound = function (name, ip, current) {
         runPairing(this.id);
 
     });
-
+    $(newDeviceEl).mouseup(function (e) {
+        if (e.button == 2) { //Right mouse button
+            //console.log("Right Click");
+            showContextMenu(event.x, event.y, this.id, this.textContent, "device");
+            return false;
+        } else {
+            
+        }
+        return true;
+    });
 
     deviceListEl.appendChild(newDeviceEl);
 
@@ -2099,5 +2116,11 @@ String.prototype.replaceAll = function( token, newToken, ignoreCase ) {
         }
 
     }
-return str;
+    return str;
+};
+
+String.prototype.stripHTML = function() {
+    var str = this + "";
+    var strippedText = $("<div/>").html(str).text();
+    return strippedText;
 };

@@ -1462,7 +1462,9 @@ body::-scrollbar {
     color: #3ea8b8;
 }
 
-
+.device_found_active input{
+    color: #3ea8b8;
+}
 
 
 .installed_app_item {
@@ -1927,7 +1929,7 @@ body::-scrollbar {
 .device_found_name {
     display: block;
     position: absolute;
-    top: 12px;
+    top: 10px;
     left: 64px;
     
     
@@ -1935,6 +1937,38 @@ body::-scrollbar {
     font-size: 14px;
 
     max-width: 235px;
+}
+
+.device_found_name_input {
+    display: block;
+    position: absolute;
+    top: 9px;
+    left: 62px;
+    
+    
+    font-family: RobotoBold;
+    font-size: 14px;
+    line-height: 14px;
+    height: 14px;
+
+    margin:0px;
+    padding: 0px;
+
+    width: 192px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+}
+.device_found_name_input:disabled {
+
+    cursor: pointer;
+    background-color:transparent;    
+    border-color:transparent;
+
+}
+.device_found_name_input:focus { 
+    border-color: #3ea8b8;
+    outline: none; 
 }
 
 .device_found_ip {
