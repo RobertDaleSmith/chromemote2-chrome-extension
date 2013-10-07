@@ -978,16 +978,17 @@ var refreshCustomMacroListUI = function () {
     for (var i = 0; i < customMacroList.length; i++) {
         var newMacroEl = document.createElement("div");
         newMacroEl.className = "custom_macro_item";
-        newMacroEl.textContent = customMacroList[i].name;
+        $(newMacroEl).attr("name", customMacroList[i].name);
+        newMacroEl.innerHTML = "<div>" + customMacroList[i].name + "</div>" + "<div class='custom_macro_item_details'>" + customMacroList[i].macro + "</div>";
         newMacroEl.id = customMacroList[i].macro;
 
         newMacroEl.setAttribute("oncontextmenu", "return false;");
         
-
+        var name = 
         $(newMacroEl).mouseup(function (e) {
             if (e.button == 2) { //Right mouse button
                 //console.log("Right Click");
-                showContextMenu(event.x, event.y, this.id, this.textContent, "macro");
+                showContextMenu(event.x, event.y, this.id, $(this).attr("name"), "macro");
                 return false;
             } else {
                 macro(this.id);
@@ -1034,7 +1035,7 @@ var showContextMenu = function (x, y, id, name, type) {
 
     $("#apps_context_menu_edit").mouseup(function (event) {
         hideContextMenu();
-        console.log("Edit " + id);
+        //console.log("Edit " + id);
 
 
         if (type == "intent") {

@@ -1584,7 +1584,7 @@ body::-scrollbar {
     width: 239px;
     height: 36px;
     
-    line-height: 36px;
+    line-height: 24px;
         
     border-style: solid;
     border-width: 1px;
@@ -1632,7 +1632,22 @@ body::-scrollbar {
     background-color: #e0f5fa;
 }
 
-
+.custom_macro_item_details {
+    
+    
+    color: #9f9fa0;
+    
+    font-family: RobotoRegular;
+    font-size: 12px;
+    line-height: 12px;
+    
+    margin-top:-2px;
+    
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+}
 
 
 #add_new_device {

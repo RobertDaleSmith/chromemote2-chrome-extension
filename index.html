@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-	    <title>Chromemote</title>
+	    <title>Chromemote 2</title>
 
        <!--jQuery Lib and Plugins | START -->
         <script type="text/javascript" src="libs/jquery/jquery.js"></script>
@@ -42,68 +42,16 @@
        <!--Chromemote's CSS and JS source | END   -->
 
     </head>
-    <body>
-        <!--<div id="anymote_testing">
-            Welcome to GoogleTV Remote Web Server
-            <br><br>
-            <button onclick="discoverDevices();">discoverDevices</button>
-            <button onclick="isDiscovering();">isDiscovering</button>
-            <button onclick="getDeviceList();">getDeviceList</button>
-
-            <br><br>
-            <input type="text" id="ip_address_box">
-            <button onclick="connectDevice(document.getElementById('ip_address_box').value);">connectDevice</button>
-            <br>
-            <button onclick="isConnectingNow();">isConnectingNow</button>
-            <button onclick="isAwaitingPin();">isAwaitingPin</button>
-
-            <br><br>
-            <input type="text" id="pin_input_box">
-            <button onclick="sendPairCode(document.getElementById('pin_input_box').value);">sendPairCode</button>
-            <br>
-            <button onclick="cancelPairCode();">cancelPairCode</button>
-            <button onclick="connectSuccessOrFail();">connectSuccessOrFail</button>
-
-            <br><br>
-            <input type="text" id="keycode_input_box">
-            <button onclick="sendKeyCode(document.getElementById('keycode_input_box').value);">sendKeyCode</button>
-
-            <br><br>
-            <button onclick="sendKeyCode('KEYCODE_STB_POWER');">KEYCODE_STB_POWER</button>
-            <button onclick="sendKeyCode('KEYCODE_AVR_POWER');">KEYCODE_AVR_POWER</button>
-            <br>
-            <button onclick="sendKeyCode('KEYCODE_HOME');">KEYCODE_HOME</button>
-            <button onclick="sendKeyCode('KEYCODE_BACK');">KEYCODE_BACK</button>
-
-            <br><br>
-            <input type="text" id="url_input_box">
-            <button onclick="fling(document.getElementById('url_input_box').value);">sendUrl</button>
-
-            <br><br>
-            <input type="text" id="mote_server_ip_input_box">
-            <button onclick="setMoteServer(document.getElementById('mote_server_ip_input_box').value);">setMoteServer</button>
-
-            <br><br>
-            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');">Chrome</button>
-            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');">Netflix</button>
-            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
-        </div>-->
-    
-
+    <body>        
         <div id="main_container">
             <div id="title_bar_container">
                 <div class="menu_button"></div>
-            
                 <div id="title_bar_title" class="unselectable">remote</div>
-            
                 <div id="options_close_button"></div>
                 <div id="lock_mouse_button" class="title_mouse_unlocked_button"></div>
                 <div id="alt_panel_button" class="title_open_alt_button"></div>
                 <div id="touch_pad_open_button" class="title_open_touch_button"></div>
-            
             </div>
-
-        
 
             <div id="remote_button_panels" class="unselectable">
                 <div id="remote_button_panel_main" class="gridster">
@@ -149,13 +97,9 @@
                         <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_guide">
                         <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dvr">
                         <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_record">
-
                     </ul>
-            
-            
                 </div>
             
-
                 <div id="remote_button_panel_alt" class="gridster">
                     <ul id="alt_button_list" class="sortable grid">
                      
@@ -189,11 +133,10 @@
                         <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_9">
                         <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_0">
                     
-
                         <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out"></div></li>
                         <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button">
                         <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">                    
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">
                         <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
 
                         <!-- keycode_zoom_out -->
@@ -201,7 +144,6 @@
                         <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
                         <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">
                         <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
-
                     </ul>
                 </div>
 
@@ -252,13 +194,7 @@
                             <div id="intent_add_button" title="Add custom URI/Intent to fling."></div>
                         </div>
 
-                        <div id="apps_lists">
-                            <!--<div id="add_new_fling">
-                                <div id="custom_intent_cancel_button">cancel</div>
-                                <input id="custom_intent_name_input" placeholder="name">
-                                <input id="custom_intent_uri_input" placeholder="uri ex: http:// ">
-                                <div id="custom_intent_save_button">save</div>
-                            </div>-->
+                        <div id="apps_lists">                            
                             <div id="apps_list">
                                 <div id="app_clock"    class="app_icon_item" title="Clock"></div>
                                 <div id="app_downloads"class="app_icon_item" title="Downloads"></div>
@@ -280,6 +216,12 @@
                             </div>
                             <div id="custom_intent_list"></div>
                             <div id="apps_installed_list"></div>
+                            <!--<div id="add_new_fling">
+                                <div id="custom_intent_cancel_button">cancel</div>
+                                <input id="custom_intent_name_input" placeholder="name">
+                                <input id="custom_intent_uri_input" placeholder="uri ex: http:// ">
+                                <div id="custom_intent_save_button">save</div>
+                            </div>-->
                         </div>
 
 
@@ -293,6 +235,9 @@
                             <div id="macro_add_button" title="Add custom macros."></div>
                         </div>
                         <div id="channels_list">
+                            
+                            <div id="custom_macro_list"></div>
+                            <div id="system_channels_list"></div>
                             <!--<div id="add_new_macro">
                                 <div id="custom_macro_textarea_holder"><textarea id="custom_macro_textarea" rows="1" placeholder="add keycodes..."></textarea></div>
                                 <div id="custom_macro_textarea_overflow_hider_holder"><div id="custom_macro_textarea_overflow_hider">d</div></div>
@@ -300,14 +245,6 @@
                                 <div id="custom_macro_cancel_button">cancel</div>
                                 <input id="custom_macro_name_input" placeholder="macro name">
                             </div>-->
-                            <div id="custom_macro_list"></div>
-                            <div id="system_channels_list">
-                                <!--<div class="system_channels_list_item">
-                                    <div class="channels_list_item_callsign">KTHF</div>
-                                    <div class="channels_list_item_number">8</div>
-                                    <div class="channels_list_item_name">PBS Channel</div>
-                                </div>-->
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -321,12 +258,52 @@
             </div>
         </div>
 
+        <!-- Debug/Prototyping Stuff -->
+        <div id="color_picker" class="cp-default"></div>    
+        <!--<div id="anymote_testing">
+            Welcome to GoogleTV Remote Web Server
+            <br><br>
+            <button onclick="discoverDevices();">discoverDevices</button>
+            <button onclick="isDiscovering();">isDiscovering</button>
+            <button onclick="getDeviceList();">getDeviceList</button>
 
-    
-        <div id="color_picker" class="cp-default"></div>
+            <br><br>
+            <input type="text" id="ip_address_box">
+            <button onclick="connectDevice(document.getElementById('ip_address_box').value);">connectDevice</button>
+            <br>
+            <button onclick="isConnectingNow();">isConnectingNow</button>
+            <button onclick="isAwaitingPin();">isAwaitingPin</button>
 
-    
-    
-         
+            <br><br>
+            <input type="text" id="pin_input_box">
+            <button onclick="sendPairCode(document.getElementById('pin_input_box').value);">sendPairCode</button>
+            <br>
+            <button onclick="cancelPairCode();">cancelPairCode</button>
+            <button onclick="connectSuccessOrFail();">connectSuccessOrFail</button>
+
+            <br><br>
+            <input type="text" id="keycode_input_box">
+            <button onclick="sendKeyCode(document.getElementById('keycode_input_box').value);">sendKeyCode</button>
+
+            <br><br>
+            <button onclick="sendKeyCode('KEYCODE_STB_POWER');">KEYCODE_STB_POWER</button>
+            <button onclick="sendKeyCode('KEYCODE_AVR_POWER');">KEYCODE_AVR_POWER</button>
+            <br>
+            <button onclick="sendKeyCode('KEYCODE_HOME');">KEYCODE_HOME</button>
+            <button onclick="sendKeyCode('KEYCODE_BACK');">KEYCODE_BACK</button>
+
+            <br><br>
+            <input type="text" id="url_input_box">
+            <button onclick="fling(document.getElementById('url_input_box').value);">sendUrl</button>
+
+            <br><br>
+            <input type="text" id="mote_server_ip_input_box">
+            <button onclick="setMoteServer(document.getElementById('mote_server_ip_input_box').value);">setMoteServer</button>
+
+            <br><br>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');">Chrome</button>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');">Netflix</button>
+            <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
+        </div>-->
     </body>
 </html>
