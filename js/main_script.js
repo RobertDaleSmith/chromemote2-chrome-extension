@@ -976,11 +976,12 @@ var refreshCustomMacroListUI = function () {
     document.getElementById("custom_macro_list").textContent = "";
 
     for (var i = 0; i < customMacroList.length; i++) {
+        var macro = "" + customMacroList[i].macro;
         var newMacroEl = document.createElement("div");
         newMacroEl.className = "custom_macro_item";
         $(newMacroEl).attr("name", customMacroList[i].name);
-        newMacroEl.innerHTML = "<div>" + customMacroList[i].name + "</div>" + "<div class='custom_macro_item_details'>" + customMacroList[i].macro + "</div>";
-        newMacroEl.id = customMacroList[i].macro;
+        newMacroEl.innerHTML = "<div>" + customMacroList[i].name + "</div>" + "<div class='custom_macro_item_details'>" + macro.replaceAll(",",", ") + "</div>";
+        newMacroEl.id = macro;
 
         newMacroEl.setAttribute("oncontextmenu", "return false;");
         
@@ -996,8 +997,6 @@ var refreshCustomMacroListUI = function () {
             }
             return true;
         });
-
-        
 
         document.getElementById("custom_macro_list").appendChild(newMacroEl);
     }
