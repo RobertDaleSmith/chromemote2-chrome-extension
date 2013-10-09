@@ -165,6 +165,11 @@ if(localStorage.getItem("system_channels_list")){
     channelsList = JSON.parse( localStorage.getItem("system_channels_list") );    
 }
 
+var savedDeviceList = JSON.parse("[]");
+if(localStorage.getItem("saved_device_list")){
+    savedDeviceList = JSON.parse( localStorage.getItem("saved_device_list") );    
+}
+
 document.onselectstart = function(){ return false; }
 window.onload = function () {
 
@@ -186,17 +191,8 @@ window.onload = function () {
 
     updateAppsListUI();
 
-    //$(".keycode").click(function () {
-    //    sendKeyCode(this.id);
-    //});
-
-    //$(".keycode").on('mousedown', function () {
-    //      console.log($(this).attr('id')+" down");
-    //});
-
-
-    $(".keycode")
-      .on('mousedown', function () {
+    
+    $(".keycode").on('mousedown', function () {
           var thisButton = $(this);
           setTimeout(function () {
               console.log('down');
@@ -207,11 +203,8 @@ window.onload = function () {
               //sendKeyCode(thisButton.attr('id'));
 
           }, 200);
-
-
-      });
-    $(".keycode")
-      .on('mouseup', function () {
+    });
+    $(".keycode").on('mouseup', function () {
           var thisButton = $(this);
           console.log('up');
           //console.log(thisButton.attr('class'));
@@ -219,11 +212,7 @@ window.onload = function () {
               return;
           }
           sendKeyCode(thisButton.attr('id'));
-
-
-
-
-      });
+    });
 
 
 
@@ -256,31 +245,126 @@ window.onload = function () {
         toggleMouseLock();
     });
 
-
+    var optAniSpeed = 724;
+    var animationActive = false;
 
     $("#options_button_devices").click(function () {
-        if (!optionsActive || devices_options_active) showOptionsPanel();
+        if (optionsActive && !devices_options_active) {
+            if (apps_options_active) {
+                console.log("SLIDE CONTENT TO THE LEFT");
+                
+                $("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_apps").animate({
+                    left: "320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_apps").css("display", "none");
+                    // $("#options_panel_apps").css("left", "0");
+                    animationActive = false;
+                });
 
-        $("#options_panel_devices").css("display", "block");
-        $("#options_panel_apps").css("display", "none");
-        $("#options_panel_channels").css("display", "none");
+                $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").css("display", "block");
+                $("#options_panel_devices").css("z-index", "2");
+                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_channels").css("display", "none");
+            } 
+            if (channels_options_active) {
+                console.log("SLIDE CONTENT TO THE RIGHT");
+
+                $("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_channels").animate({
+                    left: "320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_channels").css("display", "none");
+                    // $("#options_panel_channels").css("left", "0");
+                    animationActive = false;
+                });
+
+                $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").css("display", "block");
+                $("#options_panel_devices").css("z-index", "2");
+                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_apps").css("display", "none");
+            }
+        } else if (!optionsActive || devices_options_active){
+            showOptionsPanel();
+
+            $("#options_panel_devices").css("display", "block");
+            $("#options_panel_apps").css("display", "none");
+            $("#options_panel_channels").css("display", "none");            
+        } 
 
         $("#device_selected").css("display", "block");
         $("#apps_selected").css("display", "none");
         $("#channels_selected").css("display", "none");
-
-        devices_options_active = true;
+        
         apps_options_active = false;
+        devices_options_active = true;
         channels_options_active = false;
-
     });
 
     $("#options_button_apps").click(function () {
-        if (!optionsActive || apps_options_active) showOptionsPanel();
+        if (optionsActive && !apps_options_active) {
+            if (devices_options_active) {
+                console.log("SLIDE CONTENT TO THE LEFT");
 
-        $("#options_panel_devices").css("display", "none");
-        $("#options_panel_apps").css("display", "block");
-        $("#options_panel_channels").css("display", "none");
+                $("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_devices").animate({
+                    left: "-320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_devices").css("display", "none");
+                    // $("#options_panel_devices").css("left", "0");
+                    animationActive = false;
+                });
+
+                $("#options_panel_apps").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").css("display", "block");
+                $("#options_panel_apps").css("z-index", "2");
+                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_channels").css("display", "none");
+            } 
+            if (channels_options_active) {
+                console.log("SLIDE CONTENT TO THE RIGHT");
+
+                $("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_channels").animate({
+                    left: "320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_channels").css("display", "none");
+                    // $("#options_panel_channels").css("left", "0");
+                    animationActive = false;
+                });
+
+                $("#options_panel_apps").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").css("display", "block");
+                $("#options_panel_apps").css("z-index", "2");
+                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_devices").css("display", "none");
+            }
+        } else if (!optionsActive || apps_options_active){
+            showOptionsPanel();
+
+            $("#options_panel_devices").css("display", "none");
+            $("#options_panel_apps").css("display", "block");
+            $("#options_panel_channels").css("display", "none");
+            
+        } 
 
         $("#device_selected").css("display", "none");
         $("#apps_selected").css("display", "block");
@@ -292,19 +376,68 @@ window.onload = function () {
     });
 
     $("#options_button_channels").click(function () {
-        if (!optionsActive || channels_options_active) showOptionsPanel();
 
-        $("#options_panel_devices").css("display", "none");
-        $("#options_panel_apps").css("display", "none");
-        $("#options_panel_channels").css("display", "block");
+        if (optionsActive && !channels_options_active) {
+            if (apps_options_active) {
+                console.log("SLIDE CONTENT TO THE RIGHT");
+                
+                $("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_apps").animate({
+                    left: "-320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_apps").css("display", "none");
+                    // $("#options_panel_apps").css("left", "0");
+                    animationActive = false;
+                });
+
+                $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").css("display", "block");
+                $("#options_panel_channels").css("z-index", "2");
+                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_devices").css("display", "none");
+            } 
+            if (devices_options_active) {
+                console.log("SLIDE CONTENT TO THE RIGHT");
+
+                $("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").css("z-index", "1");
+                animationActive = true;
+                $("#options_panel_devices").animate({
+                    left: "-320"
+                }, optAniSpeed, function () {
+                    // Animation complete.
+                    // $("#options_panel_devices").css("display", "none");
+                    // $("#options_panel_devices").css("left", "0");
+                    animationActive = false;
+                });
+
+                $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").css("display", "block");
+                $("#options_panel_channels").css("z-index", "2");
+                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+
+                $("#options_panel_apps").css("display", "none");
+            }
+        } else if (!optionsActive || channels_options_active){
+            showOptionsPanel();
+
+            $("#options_panel_devices").css("display", "none");
+            $("#options_panel_apps").css("display", "none");
+            $("#options_panel_channels").css("display", "block");
+            
+        } 
 
         $("#device_selected").css("display", "none");
         $("#apps_selected").css("display", "none");
         $("#channels_selected").css("display", "block");
 
-        channels_options_active = true;
-        devices_options_active = false;
         apps_options_active = false;
+        devices_options_active = false;
+        channels_options_active = true;
     });
 
     $("#options_close_button").click(function () {
@@ -378,13 +511,8 @@ window.onload = function () {
             updateAppsListUI();
 
             appsListUpdated = true;
-
         });
-
-
-
     });
-
 
     var getChannelsLoop, getChannelsTimeOut, clearChMsgTimeOut;
 
@@ -405,8 +533,6 @@ window.onload = function () {
                 clearChMsgTimeOut = setTimeout(function () { document.getElementById("channels_status_label").textContent = ""; }, 10000);
                 clearInterval(getChannelsLoop);
             }
-
-
         }, 1000);
 
         getChannelsTimeOut = setTimeout(function () {
@@ -419,7 +545,6 @@ window.onload = function () {
             }
         }, 15000);
 
-
         getChannelListing(function (res) {
             console.log(res);
 
@@ -429,11 +554,8 @@ window.onload = function () {
             updateChannelsListUI();
 
             channelsListUpdated = true;
-
         });
     });
-
-
 
 };   //END ONLOAD
 
@@ -454,9 +576,6 @@ var updateChannelsListUI = function() {
                                "<div class='channels_list_item_number'>" + channelsList[i].channel_number + "</div>" + 
                                "<div class='channels_list_item_name'>" + channelsList[i].channel_name + "</div>";
 
-                    
-
-
         newAppEl.id = channelsList[i].channel_uri;
 
         $(newAppEl).click(function() {
@@ -465,7 +584,6 @@ var updateChannelsListUI = function() {
         });
 
         document.getElementById("system_channels_list").appendChild(newAppEl);
-
     }
 }
 
@@ -485,7 +603,6 @@ var updateAppsListUI = function() {
         });
 
         document.getElementById("apps_installed_list").appendChild(newAppEl);
-
     }
 }
 
@@ -513,8 +630,6 @@ var showAddPinInputBox = function() {
                 $("#loaderImage").css("display", "none");
                 $("#devices_refresh_button").css("display", "block");
             });
-
-
         });
 
         $(function () {
@@ -530,7 +645,7 @@ var showAddPinInputBox = function() {
         $(".pair_code_input").select();
 
         $(".pair_code_input").keypress(function (e) {
-            if (e.which == 13) {
+            if (e.which == 13) { //Enter Press
                 sendPairCodeButtonEvent();
             }
         });
@@ -557,7 +672,7 @@ var sendPairCodeButtonEvent = function () {
                         //success, no fail
                         clearInterval(pairSuccessLoop);
                         clearInterval(pairSuccessTimeout);
-                        document.getElementById("devices_status_label").textContent = "Connected to " + pairingTo;
+                        document.getElementById("devices_status_label").textContent = "Connected to " + pairingTo.replaceAll('_','.');
                         $("#loaderImage").css("display", "none");
                         $("#devices_refresh_button").css("display", "block");
 
@@ -566,7 +681,6 @@ var sendPairCodeButtonEvent = function () {
                         if (document.getElementsByClassName("new_device_ip_input").length > 0) {
                             $("#add_new_device").remove();
                         }
-
 
                         $("#enter_pin_code_container").remove();
 
@@ -615,7 +729,7 @@ var sendPairCodeButtonEvent = function () {
 
             var pairSuccessTimeout = setTimeout(function () {
                 clearInterval(pairSuccessLoop);
-                document.getElementById("devices_status_label").textContent = address + " did not respond";
+                document.getElementById("devices_status_label").textContent = address.replaceAll('_','.') + " did not respond";
                 $("#loaderImage").css("display", "none");
                 $("#devices_refresh_button").css("display", "block");
             }, 15000);
@@ -1007,13 +1121,8 @@ var refreshCustomMacroListUI = function () {
 
 var showContextMenu = function (x, y, id, name, type) {
 
-
-    if (x > 205)
-        x = 205;
-
-    if (y > 398)
-        y = 398;
-
+    if (x > 205) x = 205;
+    if (y > 398) y = 398;
 
     $("#apps_context_menu").css("display", "block");
     $("#apps_context_menu").css("left", x);
@@ -1021,12 +1130,9 @@ var showContextMenu = function (x, y, id, name, type) {
 
     $("#apps_context_menu").unbind("blur");
 
-    $("#apps_context_menu").blur(function () {
-        hideContextMenu();
-    });
+    $("#apps_context_menu").blur(function () { hideContextMenu(); });
 
     $("#apps_context_menu").focus();
-
 
     $("#apps_context_menu_edit").unbind("mouseup");
     $("#apps_context_menu_delete").unbind("mouseup");
@@ -1034,7 +1140,6 @@ var showContextMenu = function (x, y, id, name, type) {
     $("#apps_context_menu_edit").mouseup(function (event) {
         hideContextMenu();
         //console.log("Edit " + id);
-
 
         if (type == "intent") {
             if (document.getElementById("add_new_fling")) $("#custom_intent_cancel_button").click();
@@ -1045,10 +1150,12 @@ var showContextMenu = function (x, y, id, name, type) {
             showAddNewMacroBox(name, id);
             document.getElementById(id).remove();
         } else if (type == "device") {
-            
+            //Enable rename device inner textbox and save button.
+            $(document.getElementById(id).getElementsByClassName("device_found_name_input")).removeAttr('disabled');
+            $(document.getElementById(id).getElementsByClassName("device_found_name_input")).focus();
+            $(document.getElementById(id).getElementsByClassName("device_found_rename_save_button")).css("display","block");
+            document.getElementById(id).className += " device_renaming";
         }
-
-
     });
     $("#apps_context_menu_delete").mouseup(function (event) {
         hideContextMenu();
@@ -1058,14 +1165,13 @@ var showContextMenu = function (x, y, id, name, type) {
             if( $(document.getElementsByName(name)[i]).attr("name") == name )
                 if(document.getElementsByName(name)[i].id == id)
                     document.getElementsByName(name)[i].remove();
-        }
-        
+        }        
         if (type == "intent") {
             removeCustomIntent(name, id);
         } else if (type == "macro") {
             removeCustomMacro(name, id);
         } else if (type == "device") {
-            
+            delSavedDevice(name, id.replaceAll("_","."));
         }
 
     });
@@ -1335,6 +1441,7 @@ var showOptionsPanel = function (enable) {
         });
 
         optionsActive = false;
+        devices_options_active = false; apps_options_active = false; channels_options_active = false;
         enableKeyBoardEvents();
     }
 
@@ -1343,37 +1450,150 @@ var showOptionsPanel = function (enable) {
 var addDeviceFound = function (name, ip, current) {
 
     var deviceListEl = document.getElementById("devices_list");
+    var deviceFoundID = ip.replaceAll('.','_');
 
     var newDeviceEl = document.createElement("div");
     if (!current) newDeviceEl.className = "device_found"; else newDeviceEl.className = "device_found_active";
-    newDeviceEl.id = ip;
-
-    newDeviceEl.innerHTML = "<div class='device_found_name'>" + name + "</div><div class='device_found_ip'>" + ip + "</div>";
+    newDeviceEl.id = "" + deviceFoundID;
+    $(newDeviceEl).attr("name",name);
+                            
+    newDeviceEl.innerHTML = "<div class='device_found_ip'>" + ip + "</div><input class='device_found_name_input' value='" + getSavedName(name, ip) + "' disabled></input><div class='device_found_rename_save_button' id='rename_" + deviceFoundID + "'>save</div>";
 
     newDeviceEl.addEventListener("click", function () {
-        document.getElementById("devices_status_label").textContent = "Connecting to "+ this.id;
-        runPairing(this.id);
-
+        if( !hasClass(document.getElementById(deviceFoundID),"device_renaming") ){
+            var ipAddress = this.id.replaceAll('_','.');
+            document.getElementById("devices_status_label").textContent = "Connecting to "+ ipAddress;
+            runPairing(ipAddress);            
+        }        
     });
+    
     $(newDeviceEl).mouseup(function (e) {
-        if (e.button == 2) { //Right mouse button
-            //console.log("Right Click");
-            showContextMenu(event.x, event.y, this.id, this.textContent, "device");
-            return false;
-        } else {
-            
-        }
+        if( !hasClass(document.getElementById(deviceFoundID),"device_renaming") )
+            if (e.button == 2) { //Right mouse button
+                //console.log("Right Click");
+                showContextMenu(event.x, event.y, this.id, $(this).attr("name"), "device");
+                return false;
+            } else {
+                
+            }
         return true;
     });
 
     deviceListEl.appendChild(newDeviceEl);
 
+    //KeyPress Listener for Enter press on rename text input.
+    $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).keypress(function (e) {
+        if (e.which == 13) { //Enter Press
+            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_rename_save_button")).click();
+        }
+    });
+    
+    //Click Listener for saving changes to device name.
+    document.getElementById( 'rename_' + deviceFoundID ).addEventListener("click", function () {
+
+        var newName = document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")[0].value;
+        if( newName != "" ){
+            console.log("Renamed "+ deviceFoundID.replaceAll("_","."));
+
+            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).attr({'disabled':'disabled'});
+            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_rename_save_button")).css("display","none");
+            setTimeout(function(){ document.getElementById(deviceFoundID).className = document.getElementById(deviceFoundID).className.replace(" device_renaming",""); },"50");
+                        
+            if(newName == name) newName = "";
+            addNewSavedDevice(name, ip, newName);            
+        } else {
+            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).css("border-color", "#f00");
+            setTimeout(function () {
+                $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).css("border-color", "#e8e9e9");
+                setTimeout(function () {
+                    $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).css("border-color", "#f00");
+                    setTimeout(function () {
+                        $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).css("border-color", "");
+                        setTimeout(function () {                            
+                            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).focus();
+                            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).select();
+                        }, 150);
+                    }, 150);
+                }, 150);
+            }, 150);
+
+        }
+
+        
+
+    });
 }
+
+
+var addNewSavedDevice = function(originalName, ip, newName){
+
+    var existingFound = false;
+    if(!newName) newName = "";
+
+    if(newName != ""){
+
+        //FIND EXISTING DEVICE IN THE LIST
+        for(var i=0 ; i < savedDeviceList.length ; i++){
+            //UPDATE IF ELEMENT FOUND WITH MATCHING ORIGINALNAME AND IP
+            if(savedDeviceList[i].originalName == originalName && savedDeviceList[i].ip == ip){
+                if( savedDeviceList[i].name != newName)
+                    savedDeviceList[i].name  = newName;
+                existingFound = true;
+                break;
+            }
+        }
+
+        //IF NOT FOUND AND NEW NAME FOUND, THEN ADD TO SAVEDDEVICES JSON ARRAY 
+        if(!existingFound){
+            var jsonObjectString = '{ "originalName" : "' + originalName + '", "ip" : "' + ip + '", "name" : "' + newName + '" }';
+            var jsonObject = JSON.parse(jsonObjectString);
+            savedDeviceList.push(jsonObject);    
+        }
+
+        savedDeviceList.sort(function (a, b) {
+            if (a.name < b.name) {
+                return -1;
+            }
+            else if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        });
+        localStorage.setItem("saved_device_list", JSON.stringify(savedDeviceList));
+        
+    }
+        
+}
+
+var delSavedDevice = function(originalName, ip){
+
+    //FIND AND REMOVE DEVICE WITH ORIGINAL NAME AND IP
+    console.log(originalName);
+    console.log(ip);
+
+    for(var i=0 ; i < savedDeviceList.length ; i++){        
+        if(savedDeviceList[i].originalName == originalName && savedDeviceList[i].ip == ip){
+            savedDeviceList.splice(i, 1);
+            localStorage.setItem("saved_device_list", JSON.stringify(savedDeviceList));
+            break;
+        }
+    }
+
+}
+
+var getSavedName = function(name, ip){    
+    for(var i=0 ; i < savedDeviceList.length ; i++)
+        if(savedDeviceList[i].originalName == name && savedDeviceList[i].ip == ip)
+            return savedDeviceList[i].name;
+    return name;
+}
+
 
 var pairingTo = "";
 var runPairing = function (address) {
     pairingTo = address;
     connectDevice(address);
+    var deviceFoundID = pairingTo.replaceAll('.','_');
 
     $("#loaderImage").css("display", "block");
     $("#devices_refresh_button").css("display", "none");
@@ -1395,18 +1615,18 @@ var runPairing = function (address) {
                         clearInterval(pinWaitLoop);
                         clearTimeout(pinWaitTimeout);
                         document.getElementById("devices_status_label").textContent = "Connected to " + pairingTo;
+                        console.log("pairingTo "+pairingTo);
                         $("#loaderImage").css("display", "none");
                         $("#devices_refresh_button").css("display", "block");
 
-                        if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found_active";
-                        else {
+                        
+                        if (document.getElementById(deviceFoundID) != null) 
+                            document.getElementById(deviceFoundID).className = "device_found_active";
+                        else
                             addDeviceFound("Google TV Device", address, true);
-                        }
 
-
-                        if (document.getElementsByClassName("new_device_ip_input").length > 0) {
+                        if (document.getElementsByClassName("new_device_ip_input").length > 0)
                             $("#add_new_device").remove();
-                        }
 
                         $("#enter_pin_code_container").remove();
 
@@ -1422,7 +1642,8 @@ var runPairing = function (address) {
                         $("#loaderImage").css("display", "none");
                         $("#devices_refresh_button").css("display", "block");
 
-                        if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found";
+                        if (document.getElementById(deviceFoundID) != null) 
+                            document.getElementById(deviceFoundID).className = "device_found";
 
                         //runPairing(pairingTo);
 
@@ -1443,7 +1664,7 @@ var runPairing = function (address) {
 
     var pinWaitTimeout = setTimeout(function () {
         clearInterval(pinWaitLoop);
-        document.getElementById("devices_status_label").textContent = address + " did not respond";
+        document.getElementById("devices_status_label").textContent = address.replaceAll('_','.') + " did not respond";
         $("#loaderImage").css("display", "none");
         $("#devices_refresh_button").css("display", "block");
     }, 15000);
@@ -2124,3 +2345,7 @@ String.prototype.stripHTML = function() {
     var strippedText = $("<div/>").html(str).text();
     return strippedText;
 };
+
+function hasClass(element, cls) {
+    return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}

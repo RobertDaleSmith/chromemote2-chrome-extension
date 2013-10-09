@@ -172,7 +172,7 @@
             <div id="options_panel_container" class="unselectable">
                 <div id="options_button_panel">
                     <div id="options_button_devices" class="options_button" title="Discover and connect to Google TV devices.">DEVICES<div id="device_selected" class="options_button_selected"></div></div>
-                    <div id="options_button_apps" class="options_button" title="Sync and launch Google TV apps.">APPS<div id="options_button_seperator"></div><div id="apps_selected" class="options_button_selected"></div></div>
+                    <div id="options_button_apps" class="options_button" title="Sync and launch Google TV apps.">APPS<div class="options_button_seperator_left"></div><div class="options_button_seperator_right"></div><div id="apps_selected" class="options_button_selected"></div></div>
                     <div id="options_button_channels" class="options_button" title="TV channel listing and macros.">CHANNELS<div id="channels_selected" class="options_button_selected"></div></div>
                 </div>
                 <div id="options_panels">
@@ -183,21 +183,7 @@
                             <div id="devices_status_label"></div>
                             <div id="devices_add_button" title="Manually add a device by IP address."></div>
                         </div>
-                        <div id="devices_list">
-                            <div class="device_found_active" id="192.168.10.7">
-                                <input class="device_found_name_input" value="ka-1049GB081508" disabled></input>
-                                <div class="device_found_ip">192.168.10.7</div>
-                            </div>
-                            <div class="device_found" id="192.168.10.7">
-                                <input class="device_found_name_input" value="ka-1049GB081508" disabled></input>
-                                <div class="device_found_ip">192.168.10.7</div>
-                            </div>
-                            <div class="device_found" id="192.168.10.7">
-                                <input class="device_found_name_input" value="ka-1049GB081508"></input>
-                                <div class="device_found_ip">192.168.10.7</div>
-                            </div>
-                            
-                        </div>                    
+                        <div id="devices_list"></div>                    
                     </div>
                     <div id="options_panel_apps" class="options_panel">
 
@@ -274,7 +260,7 @@
 
         <!-- Debug/Prototyping Stuff -->
         <div id="color_picker" class="cp-default"></div>    
-        <!--<div id="anymote_testing">
+        <!-- <div id="anymote_testing">
             Welcome to GoogleTV Remote Web Server
             <br><br>
             <button onclick="discoverDevices();">discoverDevices</button>
@@ -318,6 +304,6 @@
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');">Chrome</button>
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');">Netflix</button>
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
-        </div>-->
+        </div> -->
     </body>
 </html>

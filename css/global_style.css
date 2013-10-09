@@ -54,9 +54,10 @@ body::-scrollbar {
 }
 
 #anymote_testing {
-    display: block;
-    position: relative;
-    float: right;
+    
+    position: absolute;
+    right:0px;
+    top:0px;
 }
 
 
@@ -331,30 +332,39 @@ body::-scrollbar {
     background-color: #c6c7c9;
 }
 
-#options_button_seperator {
+.options_button_seperator_left {
     display: block;
     position: absolute;
     top: 0px;
     left: 0px;
     
-    width: 100%;
+    width: 1px;
     height: 32px;
     
     margin-top: 7px;   
     margin-bottom: 7px;
     
-    background-color: transparent;
+    background-color: #c6c7c9;
     
     border-style: solid;
-    border-width: 0px;
-    border-right-width:1px;
-    border-right-color: #c6c7c9;
-    border-left-width:1px;
-    border-left-color: #c6c7c9;
+    border-width: 0px;    
+}
+.options_button_seperator_right {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
     
-    padding-left: -1px;
-    padding-right: -1px;
+    width: 1px;
+    height: 32px;
     
+    margin-top: 7px;   
+    margin-bottom: 7px;
+    
+    background-color: #c6c7c9;
+    
+    border-style: solid;
+    border-width: 0px;    
 }
 
 
@@ -366,6 +376,8 @@ body::-scrollbar {
 
     width: 320px;
     height: 336px;
+
+    overflow: hidden;
 }
 
 .options_panel {
@@ -378,6 +390,10 @@ body::-scrollbar {
     height: 336px;
     
     background-color: #f4f6f6;
+
+    -webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 1);
+    -moz-box-shadow:    0px 0px 10px rgba(50, 50, 50, 1);
+    box-shadow:         0px 0px 10px rgba(50, 50, 50, 1);
 }
 
 
@@ -1041,6 +1057,8 @@ body::-scrollbar {
         
     color: #868787;
     overflow: hidden;
+
+    cursor: default;
 }
 
 #apps_status_label {
@@ -1071,6 +1089,8 @@ body::-scrollbar {
         
     color: #868787;
     overflow: hidden;
+
+    cursor: default;
 }
 
 #apps_list {
@@ -1134,6 +1154,8 @@ body::-scrollbar {
         
     color: #868787;
     overflow: hidden;
+
+    cursor: default;
 }
 
 #custom_intent_list {
@@ -1148,7 +1170,7 @@ body::-scrollbar {
 }
 
 #options_panel_apps {
-    
+    position: absolute;
     overflow: hidden;
 }
 
@@ -1464,6 +1486,21 @@ body::-scrollbar {
 
 .device_found_active input{
     color: #3ea8b8;
+}
+
+
+.device_renaming {      
+    cursor: default;    
+    background-color: inherit;        
+}
+.device_renaming:hover {      
+    background-color: inherit;
+}
+.device_renaming:active {      
+    background-color: inherit;    
+}
+.device_renaming input{
+    color: #545454;
 }
 
 
@@ -1942,8 +1979,8 @@ body::-scrollbar {
 .device_found_name_input {
     display: block;
     position: absolute;
-    top: 9px;
-    left: 62px;
+    top: 8px;
+    left: 61px;
     
     
     font-family: RobotoBold;
@@ -1952,19 +1989,36 @@ body::-scrollbar {
     height: 14px;
 
     margin:0px;
-    padding: 0px;
+    padding: 2px;
 
-    width: 192px;
+    width: 190px;
     border-style: solid;
     border-width: 1px;
-    border-color: #e8e9e9;
+    border-color: #c6c7c9;
+    background-color:#f9f9f9;
 }
 .device_found_name_input:disabled {
+
+    top: 0px;
+    left: 0px;
+
+    padding-top: 10px;
+    padding-left: 63px;
+    padding-right: 63px;
+    padding-bottom: 22px;
 
     cursor: pointer;
     background-color:transparent;    
     border-color:transparent;
 
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+}
+.device_found_name_input:disabled:active { 
+    color: inherit;    
 }
 .device_found_name_input:focus { 
     border-color: #3ea8b8;
@@ -2247,6 +2301,36 @@ body::-scrollbar {
     color: #f6f6f6;
     background-color: rgba(62, 168, 184, 0.9);
 }
+
+
+.device_found_rename_save_button {
+    display: none;
+    position: absolute;
+    left: 257px;
+    top: 8px;
+    width: 62px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+        
+    text-align: center;
+    line-height: 32px;
+    color: #3ea8b8;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+.device_found_rename_save_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+.device_found_rename_save_button:active {
+    color: #f6f6f6;
+    background-color: rgba(62, 168, 184, 0.9);
+}
+
 
 
 #send_pair_code_button {
