@@ -245,15 +245,15 @@ window.onload = function () {
         toggleMouseLock();
     });
 
-    var optAniSpeed = 724;
+    var optAniSpeed = 600;
     var animationActive = false;
 
     $("#options_button_devices").click(function () {
         if (optionsActive && !devices_options_active) {
             if (apps_options_active) {
-                console.log("SLIDE CONTENT TO THE LEFT");
+                //console.log("SLIDE CONTENT TO THE LEFT");
                 
-                $("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_apps").animate({
@@ -268,14 +268,14 @@ window.onload = function () {
                 $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("display", "block");
                 $("#options_panel_devices").css("z-index", "2");
-                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_channels").css("display", "none");
             } 
             if (channels_options_active) {
-                console.log("SLIDE CONTENT TO THE RIGHT");
+                //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                $("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_channels").animate({
@@ -290,12 +290,14 @@ window.onload = function () {
                 $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("display", "block");
                 $("#options_panel_devices").css("z-index", "2");
-                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_apps").css("display", "none");
             }
         } else if (!optionsActive || devices_options_active){
             showOptionsPanel();
+
+            $("#options_panel_devices").css("left", "0");
 
             $("#options_panel_devices").css("display", "block");
             $("#options_panel_apps").css("display", "none");
@@ -314,9 +316,9 @@ window.onload = function () {
     $("#options_button_apps").click(function () {
         if (optionsActive && !apps_options_active) {
             if (devices_options_active) {
-                console.log("SLIDE CONTENT TO THE LEFT");
+                //console.log("SLIDE CONTENT TO THE LEFT");
 
-                $("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_devices").animate({
@@ -331,14 +333,14 @@ window.onload = function () {
                 $("#options_panel_apps").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("display", "block");
                 $("#options_panel_apps").css("z-index", "2");
-                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_channels").css("display", "none");
             } 
             if (channels_options_active) {
-                console.log("SLIDE CONTENT TO THE RIGHT");
+                //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                $("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_channels").animate({
@@ -353,12 +355,14 @@ window.onload = function () {
                 $("#options_panel_apps").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("display", "block");
                 $("#options_panel_apps").css("z-index", "2");
-                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_devices").css("display", "none");
             }
         } else if (!optionsActive || apps_options_active){
             showOptionsPanel();
+
+            $("#options_panel_apps").css("left", "0");
 
             $("#options_panel_devices").css("display", "none");
             $("#options_panel_apps").css("display", "block");
@@ -379,9 +383,9 @@ window.onload = function () {
 
         if (optionsActive && !channels_options_active) {
             if (apps_options_active) {
-                console.log("SLIDE CONTENT TO THE RIGHT");
+                //console.log("SLIDE CONTENT TO THE RIGHT");
                 
-                $("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_apps").animate({
@@ -396,14 +400,14 @@ window.onload = function () {
                 $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("display", "block");
                 $("#options_panel_channels").css("z-index", "2");
-                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_devices").css("display", "none");
             } 
             if (devices_options_active) {
-                console.log("SLIDE CONTENT TO THE RIGHT");
+                //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                $("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("z-index", "1");
                 animationActive = true;
                 $("#options_panel_devices").animate({
@@ -418,12 +422,14 @@ window.onload = function () {
                 $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("display", "block");
                 $("#options_panel_channels").css("z-index", "2");
-                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed/2, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_apps").css("display", "none");
             }
         } else if (!optionsActive || channels_options_active){
             showOptionsPanel();
+
+            $("#options_panel_channels").css("left", "0");
 
             $("#options_panel_devices").css("display", "none");
             $("#options_panel_apps").css("display", "none");
