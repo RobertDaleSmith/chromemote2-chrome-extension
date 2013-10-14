@@ -107,6 +107,82 @@ body::-scrollbar {
     
     overflow: hidden;    
 }
+#settings_menu_panel {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: -320px;
+    
+    margin: 0px;
+    padding: 0px;
+    
+    padding-top: 48px;
+    width: 320px;
+    height: 336px; 
+    
+    background-image: url("../images/bg_settings.png");
+    background-size:320px 480px;
+    background-repeat:no-repeat;    
+}
+
+#menu_items{
+    display: block;
+    position: relative;
+    
+    margin: 0px;
+    padding: 0px;
+    
+    width: 100%;
+    height: calc(100% - 1px);
+
+    border-style: solid;
+    border-width: 0px;
+
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.25);
+
+    overflow-x:hidden;
+}
+
+#menu_panel_settings{
+    display: none;
+    position: relative;
+    float:left;
+    margin: 0px;
+    padding: 0px;
+    
+    width: 100%;
+    /*height: 194px;*/
+
+    border-style: solid;
+    border-width: 0px;
+
+    /*border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.25);*/
+
+    background-color:rgba(0, 0, 0, 0.25);
+
+}
+
+#menu_panel_about{
+    display: none;
+    position: relative;
+    float:left;
+    margin: 0px;
+    padding: 0px;
+    
+    width: 100%;
+    height: 194px;
+
+    border-style: solid;
+    border-width: 0px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+
+    background-color:#212e39;
+
+}
 
 #remote_button_panel_main {
     display: block;
@@ -158,6 +234,8 @@ body::-scrollbar {
     padding: 0px;
     margin: 0px;
     width: 320px;
+
+    overflow: hidden;
 }
 
 #alt_button_list {
@@ -644,6 +722,26 @@ body::-scrollbar {
 }
 #KEYCODE_channel_down:active {
     background-position:0px -480px; 
+}
+
+
+
+.title_close_menu_button {
+    background-position:0px -240px; 
+
+    float:right;
+}
+.title_close_menu_button:active {
+    background-position:0px -576px; 
+}
+
+.title_open_menu_button {
+    background-position:-320px -288px; 
+
+    float:left;
+}
+.title_open_menu_button:active {
+    background-position:-320px -624px; 
 }
 
 
@@ -2039,11 +2137,8 @@ body::-scrollbar {
 
 
 
-
-
-
-.menu_button {
-    display: block;
+#full_mode_button {
+    display: none;
     position: relative;
     width: 64px;
     height: 48px;
@@ -2059,11 +2154,31 @@ body::-scrollbar {
     background-size:704px 707px;
     background-repeat:no-repeat;
     background-attachment:initial;
-    
-    background-position:-320px -288px; 
+    background-position:-384px -288px; 
 }
-.menu_button:active {
-    background-position:-320px -624px; 
+#full_mode_button:active {
+    background-position:-384px -624px; 
+}
+
+
+#menu_button {
+    display: block;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+        
 }
 
 #alt_panel_button {
@@ -2212,7 +2327,7 @@ body::-scrollbar {
     border-width: 0px;
     
     border-top-width: 1px;
-    border-top-color: #222f3a;    
+    border-top-color: rgba(0, 0, 0, 0.25);
     
     
     cursor: pointer;    
@@ -2931,4 +3046,137 @@ body::-scrollbar {
     background-color: #f4f6f6;
 
     margin-left: 303px;
+}
+
+.menu_item{
+
+    display: block;
+    position: relative;
+    float:left;
+
+    width: calc(100% - 64px);
+    height:34px;
+    line-height: 34px;
+    color: rgba(255, 255, 255, 0.75);
+
+    padding-left: 64px;
+
+    border-style: solid;
+    border-width: 0px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    background-image: url("../images/remote_button_icons.png");
+    background-size:704px 707px;
+    background-repeat:no-repeat;
+    background-attachment:initial;
+
+    font-family: RobotoRegular;
+}
+.menu_item:hover{
+    background-color:rgba(0, 0, 0, 0.05);
+}
+.menu_item:active{
+    color: #fff;
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.70), 0 0 25px rgba(255, 255, 255, 0.70), 0 0 25px rgba(255, 255, 255, 0.60);
+}
+
+#menu_item_sub_cat{    
+    background-image: none;
+
+    padding-left: 32px;
+    width: calc(100% - 32px);
+
+
+}
+#menu_item_sub_cat:active{
+    background-image: none;
+}
+
+#menu_item_settings{    
+    background-position:-640px -1px; 
+}
+#menu_item_settings:active{
+    background-position:-640px -337px; 
+}
+
+#menu_item_help{    
+    background-position:-640px -36px; 
+}
+#menu_item_help:active{
+    background-position:-640px -372px; 
+}
+
+#menu_item_about{    
+    background-position:-640px -72px; 
+}
+#menu_item_about:active{
+    background-position:-640px -408px; 
+}
+
+#menu_item_support{    
+    background-position:-640px -106px; 
+}
+#menu_item_support:active{
+    background-position:-640px -442px; 
+}
+
+#menu_item_bugs{    
+    background-position:-640px -142px; 
+}
+#menu_item_bugs:active{
+    background-position:-640px -478px; 
+}
+
+#menu_item_suggest{    
+    background-position:-640px -176px; 
+}
+#menu_item_suggest:active{
+    background-position:-640px -512px; 
+}
+
+#menu_item_updates{    
+    background-position:-640px -211px; 
+}
+#menu_item_updates:active{
+    background-position:-640px -547px; 
+}
+
+#menu_item_blog{    
+    background-position:-640px -246px; 
+}
+#menu_item_blog:active{
+    background-position:-640px -582px; 
+}
+
+
+.menu_panel_category{
+    display: block;
+    position: relative;
+    float:left;
+
+    width: calc(100% - 16px);
+    height:28px;
+    line-height: 34px;
+    color: rgba(255, 255, 255, 0.8);
+
+    padding-left: 16px;
+
+    border-style: solid;
+    border-width: 0px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 0, 0, 0.25);
+
+    font-family: RobotoBold;
+    font-size: 12px;
+
+    /*background-color:rgba(0, 0, 0, 0.05);*/
+
+    cursor: default;
 }

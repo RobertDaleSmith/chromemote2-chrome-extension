@@ -177,6 +177,8 @@ window.onload = function () {
 
     initColorPicker();
 
+    initMenuItemEvents();
+
     initAppIntents();
 
     initTouchPadEvents();
@@ -231,7 +233,9 @@ window.onload = function () {
     //});
     //$("#sortable").disableSelection();
     
-
+    $("#menu_button").click(function () {
+        showSettingsMenuPanel();
+    });
 
     $("#alt_panel_button").click(function () {
         showAltPanel();
@@ -253,10 +257,10 @@ window.onload = function () {
             if (apps_options_active) {
                 //console.log("SLIDE CONTENT TO THE LEFT");
                 
-                //$("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_apps").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_apps").animate({
+                $("#options_panel_apps").stop().animate({
                     left: "320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -265,20 +269,20 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").stop().animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("display", "block");
                 $("#options_panel_devices").css("z-index", "2");
-                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_channels").css("display", "none");
             } 
             if (channels_options_active) {
                 //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                //$("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_channels").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_channels").animate({
+                $("#options_panel_channels").stop().animate({
                     left: "320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -287,10 +291,10 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_devices").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").stop().animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("display", "block");
                 $("#options_panel_devices").css("z-index", "2");
-                $("#options_panel_devices").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_devices").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_apps").css("display", "none");
             }
@@ -307,6 +311,10 @@ window.onload = function () {
         $("#device_selected").css("display", "block");
         $("#apps_selected").css("display", "none");
         $("#channels_selected").css("display", "none");
+
+        $("#options_button_devices").css("color", "#3ea8b7");
+        $("#options_button_apps").css("color", "#7a7b7d");
+        $("#options_button_channels").css("color", "#7a7b7d");
         
         apps_options_active = false;
         devices_options_active = true;
@@ -318,10 +326,10 @@ window.onload = function () {
             if (devices_options_active) {
                 //console.log("SLIDE CONTENT TO THE LEFT");
 
-                //$("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_devices").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_devices").animate({
+                $("#options_panel_devices").stop().animate({
                     left: "-320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -330,20 +338,20 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_apps").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").stop().animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("display", "block");
                 $("#options_panel_apps").css("z-index", "2");
-                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_channels").css("display", "none");
             } 
             if (channels_options_active) {
                 //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                //$("#options_panel_channels").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_channels").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_channels").animate({
+                $("#options_panel_channels").stop().animate({
                     left: "320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -352,10 +360,10 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_apps").animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").stop().animate({ left: "-320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("display", "block");
                 $("#options_panel_apps").css("z-index", "2");
-                $("#options_panel_apps").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_apps").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_devices").css("display", "none");
             }
@@ -374,6 +382,10 @@ window.onload = function () {
         $("#apps_selected").css("display", "block");
         $("#channels_selected").css("display", "none");
 
+        $("#options_button_devices").css("color", "#7a7b7d");
+        $("#options_button_apps").css("color", "#3ea8b7");
+        $("#options_button_channels").css("color", "#7a7b7d");        
+
         apps_options_active = true;
         devices_options_active = false;
         channels_options_active = false;
@@ -385,10 +397,10 @@ window.onload = function () {
             if (apps_options_active) {
                 //console.log("SLIDE CONTENT TO THE RIGHT");
                 
-                //$("#options_panel_apps").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_apps").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_apps").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_apps").animate({
+                $("#options_panel_apps").stop().animate({
                     left: "-320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -397,20 +409,20 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").stop().animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("display", "block");
                 $("#options_panel_channels").css("z-index", "2");
-                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_devices").css("display", "none");
             } 
             if (devices_options_active) {
                 //console.log("SLIDE CONTENT TO THE RIGHT");
 
-                //$("#options_panel_devices").animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
+                //$("#options_panel_devices").stop().animate({ left: "0" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_devices").css("z-index", "1");
                 animationActive = true;
-                $("#options_panel_devices").animate({
+                $("#options_panel_devices").stop().animate({
                     left: "-320"
                 }, optAniSpeed, function () {
                     // Animation complete.
@@ -419,10 +431,10 @@ window.onload = function () {
                     animationActive = false;
                 });
 
-                $("#options_panel_channels").animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").stop().animate({ left: "320" }, 0, function () {  /*Animation complete.*/  });
                 $("#options_panel_channels").css("display", "block");
                 $("#options_panel_channels").css("z-index", "2");
-                $("#options_panel_channels").animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
+                $("#options_panel_channels").stop().animate({ left: "0" }, optAniSpeed*0.6, function () {  /*Animation complete.*/  });
 
                 $("#options_panel_apps").css("display", "none");
             }
@@ -440,6 +452,10 @@ window.onload = function () {
         $("#device_selected").css("display", "none");
         $("#apps_selected").css("display", "none");
         $("#channels_selected").css("display", "block");
+
+        $("#options_button_devices").css("color", "#7a7b7d");
+        $("#options_button_apps").css("color", "#7a7b7d");
+        $("#options_button_channels").css("color", "#3ea8b7");
 
         apps_options_active = false;
         devices_options_active = false;
@@ -1256,24 +1272,138 @@ var ipAddressIsValid = function (ip) {
     
 }
 
+var showSettingsMenuPanel = function() {
+    if(optionsActive) showOptionsPanel();
+
+    if (!settingsActive) {
+        
+        $("#settings_menu_panel").stop().animate({
+                left: "0"
+            }, 320, function () {
+                // Animation complete.
+                //$("#settings_menu_panel").toggleClass('title_open_alt_button title_close_alt_button');
+
+                $("#menu_button").toggleClass('title_open_menu_button title_close_menu_button');
+                $("#touch_pad_open_button").css("display","none");                
+                $("#full_mode_button").css("display","block");
+                document.getElementById("title_bar_title").textContent = "menu";
+                $("#title_bar_title").css("width","192px");
+        });
+        if(altActive && !touchActive){    
+
+            $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
+
+            $("#remote_button_panel_alt").stop().animate({
+                left: "320"
+            }, 320, function () {
+                // Animation complete.
+                $("#alt_panel_button").css("display","none");
+            });
+
+        } else if(touchActive){    
+
+            if(altActive) $("#settings_menu_panel").css("background-image","url('images/bg_alt.png')");
+            else          $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
+
+            $("#remote_button_panel_touch").stop().animate({
+                left: "320"
+            }, 320, function () {
+                // Animation complete.
+                $("#lock_mouse_button").css("display","none");
+            });
+
+        } else {
+
+            $("#settings_menu_panel").css("background-image","url('images/bg_settings.png')");
+            
+            $("#remote_button_panel_main").stop().animate({
+                left: "320"
+            }, 320, function () {
+                // Animation complete.
+                $("#alt_panel_button").css("display","none");
+            });    
+        }
+
+        settingsActive = true;
+    } else {
+
+        $("#settings_menu_panel").stop().animate({
+            left: "-320"
+        }, 320, function () {
+            // Animation complete.
+            //$("#settings_menu_panel").toggleClass('title_close_alt_button title_open_alt_button');
+
+            $("#menu_button").toggleClass('title_close_menu_button title_open_menu_button');
+            $("#touch_pad_open_button").css("display","block");            
+            $("#full_mode_button").css("display","none");
+            document.getElementById("title_bar_title").textContent = "remote";
+            $("#title_bar_title").css("width","128px");
+
+        });
+
+        if(altActive && !touchActive){  
+
+            $("#remote_button_panel_alt").stop().animate( {
+                left: "0"
+            }, 320, function () {
+                // Animation complete.
+                $("#alt_panel_button").css("display","block");
+            });
+
+        } else if(touchActive){    
+
+            $("#remote_button_panel_touch").stop().animate( {
+                left: "0"
+            }, 320, function () {
+                // Animation complete.
+                $("#lock_mouse_button").css("display","block");
+            });
+
+        } else {
+
+            $("#remote_button_panel_main").stop().animate( {
+                left: "0"
+            }, 320, function () {
+                // Animation complete.
+                $("#alt_panel_button").css("display","block");
+            });
+
+        }
+
+        if(menuPanelAboutEnabled){
+            $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+            menuPanelAboutEnabled = false;
+        }
+        if(menuPanelSettingsEnabled){
+            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+            menuPanelSettingsEnabled = false;
+        }
+        
+        settingsActive = false;
+    }
+
+
+}
+
 
 var mainActive = true,
      altActive = false,
    touchActive = false,
  optionsActive = false,
-   mouseLocked = false;
+   mouseLocked = false,
+settingsActive = false;
 
 var showAltPanel = function () {
 
     if (!altActive) {
 
-        $("#remote_button_panel_alt").animate({
+        $("#remote_button_panel_alt").stop().animate({
             left: "0"
         }, 320, function () {
             // Animation complete.
             $("#alt_panel_button").toggleClass('title_open_alt_button title_close_alt_button');
         });
-        $("#remote_button_panel_main").animate({
+        $("#remote_button_panel_main").stop().animate({
             left: "-320"
         }, 320, function () {
             // Animation complete.
@@ -1284,13 +1414,13 @@ var showAltPanel = function () {
 
     } else { 
         
-        $("#remote_button_panel_alt").animate({
+        $("#remote_button_panel_alt").stop().animate({
             left: "320"
         }, 320, function () {
             // Animation complete.
             $("#alt_panel_button").toggleClass('title_close_alt_button title_open_alt_button');
         });
-        $("#remote_button_panel_main").animate({
+        $("#remote_button_panel_main").stop().animate({
             left: "0"
         }, 320, function () {
             // Animation complete.
@@ -1309,7 +1439,7 @@ var showTouchPad = function () {
     if (!touchActive) {
                 
 
-        $("#remote_button_panel_touch").animate({
+        $("#remote_button_panel_touch").stop().animate({
             left: "0"
         }, 320, function () {
             // Animation complete.
@@ -1323,14 +1453,14 @@ var showTouchPad = function () {
 
         if (!altActive) {
             $("#remote_button_panel_touch").css("background-image","url('images/bg_alt.png')");
-            $("#remote_button_panel_main").animate({
+            $("#remote_button_panel_main").stop().animate({
                 left: "-320"
             }, 320, function () {
                 // Animation complete.                
             });
         } else {
             $("#remote_button_panel_touch").css("background-image","url('images/bg_touch.png')");
-            $("#remote_button_panel_alt").animate({
+            $("#remote_button_panel_alt").stop().animate({
                 left: "-320"
             }, 320, function () {
                 // Animation complete.
@@ -1340,7 +1470,7 @@ var showTouchPad = function () {
         touchActive = true;
     } else {
 
-        $("#remote_button_panel_touch").animate({
+        $("#remote_button_panel_touch").stop().animate({
             left: "320"
         }, 320, function () {
             // Animation complete.
@@ -1352,13 +1482,13 @@ var showTouchPad = function () {
         });
 
         if (!altActive) {
-            $("#remote_button_panel_main").animate({
+            $("#remote_button_panel_main").stop().animate({
                 left: "0"
             }, 320, function () {
                 // Animation complete.
             });
         } else {
-            $("#remote_button_panel_alt").animate({
+            $("#remote_button_panel_alt").stop().animate({
                 left: "0"
             }, 320, function () {
                 // Animation complete.
@@ -1383,6 +1513,7 @@ var toggleMouseLock = function () {
 }
 
 var showOptionsPanel = function (enable) {
+    if(settingsActive) showSettingsMenuPanel();
 
     if (enable != null) {
         optionsActive = !enable;
@@ -1390,7 +1521,7 @@ var showOptionsPanel = function (enable) {
 
     if (!optionsActive) { //Open Options
 
-        $("#options_panel_container").animate({
+        $("#options_panel_container").stop().animate({
             bottom: "50"
         }, 320, function () {
             // Animation complete.
@@ -1414,7 +1545,7 @@ var showOptionsPanel = function (enable) {
 
     } else { //Close Options
 
-        $("#options_panel_container").animate({
+        $("#options_panel_container").stop().animate({
             bottom: "-286"
         }, 320, function () {
             // Animation complete.    
@@ -1444,7 +1575,13 @@ var showOptionsPanel = function (enable) {
             $("#apps_selected").css("display", "none");
             $("#channels_selected").css("display", "none");
 
+            $("#options_button_devices").css("color", "#7a7b7d");
+            $("#options_button_apps").css("color", "#7a7b7d");
+            $("#options_button_channels").css("color", "#7a7b7d");
+
         });
+
+        
 
         optionsActive = false;
         devices_options_active = false; apps_options_active = false; channels_options_active = false;
@@ -1747,6 +1884,67 @@ var runDiscovery = function () {
 
 borderColorsEnabled = true;
 
+
+var menuPanelSettingsEnabled = false;
+var menuPanelAboutEnabled = false;
+
+
+var initMenuItemEvents = function(){
+    
+
+    $("#menu_item_settings").click( function () { 
+        //TODO: EXPAND SETTINGS MENU
+        if(!menuPanelSettingsEnabled){            
+            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+            menuPanelSettingsEnabled = true;
+        } else{            
+            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+            menuPanelSettingsEnabled = false;
+        }
+
+        if(menuPanelAboutEnabled){
+            $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+            menuPanelAboutEnabled = false;
+        }
+    });
+
+    $("#menu_item_about").click( function () { 
+        //TODO: EXPAND ABOUT MENU
+        if(!menuPanelAboutEnabled){            
+            $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+            menuPanelAboutEnabled = true;
+        } else{            
+            $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+            menuPanelAboutEnabled = false;
+        }   
+
+        if(menuPanelSettingsEnabled){
+            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+            menuPanelSettingsEnabled = false;
+        }   
+    });
+
+
+    $("#menu_item_help").click( function () { 
+        window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#question','_blank');
+    });  
+    $("#menu_item_support").click( function () { 
+        window.open('http://chromemote.com/support-us/','_blank')
+    });
+    $("#menu_item_bugs").click( function () { 
+        window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#bug','_blank');
+    });
+    $("#menu_item_suggest").click( function () { 
+        window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#feature','_blank');
+    });
+    $("#menu_item_updates").click( function () { 
+        window.open('http://chromemote.com/update/','_blank');
+    });
+    $("#menu_item_blog").click( function () { 
+        window.open('http://chromemote.com/blog/','_blank');
+    });
+
+}
 
 var initAppIntents = function(){
     

@@ -45,15 +45,48 @@
     <body>        
         <div id="main_container">
             <div id="title_bar_container">
-                <div class="menu_button"></div>
+                <div id="full_mode_button"></div>
+                <div id="menu_button" class="title_open_menu_button"></div>
                 <div id="title_bar_title" class="unselectable">remote</div>
-                <div id="options_close_button"></div>
-                <div id="lock_mouse_button" class="title_mouse_unlocked_button"></div>
+                <div id="options_close_button"></div>                
                 <div id="alt_panel_button" class="title_open_alt_button"></div>
                 <div id="touch_pad_open_button" class="title_open_touch_button"></div>
+                <div id="lock_mouse_button" class="title_mouse_unlocked_button"></div>
             </div>
 
             <div id="remote_button_panels" class="unselectable">
+                <div id="settings_menu_panel">
+                    <div id="menu_items">
+                        <div class="menu_item" id="menu_item_settings">Settings</div>
+                        <div id="menu_panel_settings">
+                            <div class="menu_panel_category">Button Config Settings</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Buttons Rearrangeable</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Reset to Defaults</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Edit Bookmarks</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Edit Macros</div>
+                            <div class="menu_panel_category">Appearance Settings</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Select Theme</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Custom Theme</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Disable Ads</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Dark Background (Full Mode) </div>
+                            <div class="menu_panel_category">User Settings</div>
+                            <div class="menu_item" id="menu_item_sub_cat">Sign In / Sign Up</div>
+                            
+                            <div class="menu_item" id="menu_item_sub_cat">Sync Settings</div>
+                            <div class="menu_panel_category">Other Settings</div>
+                            <div class="menu_item" id="menu_item_sub_cat">View Changelog</div>
+                        </div>                        
+                        <div class="menu_item" id="menu_item_about">About</div>
+                        <div id="menu_panel_about">ABOUT STUFF HERE</div>
+                        <div class="menu_item" id="menu_item_support">Support Us</div>
+                        <div class="menu_item" id="menu_item_help">Help</div>
+                        <div class="menu_item" id="menu_item_bugs">Report Bugs</div>
+                        <div class="menu_item" id="menu_item_suggest">Suggest Features</div>
+                        <div class="menu_item" id="menu_item_updates">Check for Updates</div>
+                        <div class="menu_item" id="menu_item_blog">Blog</div>
+                    </div>
+                    
+                </div>
                 <div id="remote_button_panel_main" class="gridster">
                     <ul id="main_button_list" class="sortable grid">
                         <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_home">
