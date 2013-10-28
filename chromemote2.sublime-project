@@ -2,7 +2,8 @@
 	"folders":
 	[
 		{
-			"path": "/C/Users/Robert Smith/Dropbox/My Web Sites/chromemote2"
+			"follow_symlinks": true,
+			"path": "C:\\Users\\robert\\Dropbox\\My Web Sites\\chromemote2"
 		}
 	]
 }

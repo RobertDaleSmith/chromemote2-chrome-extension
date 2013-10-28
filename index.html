@@ -37,9 +37,12 @@
        <!--Chromemote's CSS and JS source | START -->
         <link type="text/css" rel="stylesheet" href="css/fonts/Roboto-stylesheet.css" media="all" />
         <link type="text/css" rel="stylesheet" href="css/global_style.css" media="all" />
-        <script type="text/javascript" src="libs/colorpicker.min.js"></script>
+        
         <script type="text/javascript" src="js/main_script.js"></script>
        <!--Chromemote's CSS and JS source | END   -->
+
+        <script type="text/javascript" src="libs/farbtastic/farbtastic.js"></script>
+        <link rel="stylesheet" href="libs/farbtastic/farbtastic.css" type="text/css" />
 
     </head>
     <body>        
@@ -60,24 +63,55 @@
                         <div class="menu_item" id="menu_item_settings">Settings</div>
                         <div id="menu_panel_settings">
                             <div class="menu_panel_category">Button Config Settings</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Buttons Rearrangeable</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Reset to Defaults</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Edit Bookmarks</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Edit Macros</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Buttons Rearrangeable</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Reset to Defaults</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Edit Bookmarks</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Edit Macros</div>
                             <div class="menu_panel_category">Appearance Settings</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Select Theme</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Custom Theme</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Disable Ads</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Dark Background (Full Mode) </div>
-                            <div class="menu_panel_category">User Settings</div>
-                            <div class="menu_item" id="menu_item_sub_cat">Sign In / Sign Up</div>
+                            <div class="menu_item menu_item_sub_cat" id="menu_item_settings_select_theme">Select Theme</div>
                             
-                            <div class="menu_item" id="menu_item_sub_cat">Sync Settings</div>
+
+                            <div id="menu_panel_settings_select_theme" class="sub_menu_panel">
+                                <div class="theme_color_preset" id="theme_color_preset_0" color="#000000" border="false">Default<div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_1" color="#6abae2" border="true" >Water  <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_2" color="#a3d5f5" border="true" >Sky    <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_3" color="#16a73c" border="true" >Grass  <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_4" color="#17a652" border="false">Forest <div class="theme_color_border"></div></div>
+
+                                <div class="theme_color_preset" id="theme_color_preset_5" color="#f1f386" border="true" >Sand   <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_6" color="#f48083" border="true" >Clay   <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_7" color="#a36305" border="false">Dirt   <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_8" color="#f21307" border="true" >Lava   <div class="theme_color_border"></div></div>
+                                <div class="theme_color_preset" id="theme_color_preset_9" color="#c316ca" border="true" >UV     <div class="theme_color_border"></div></div>
+                            </div>
+
+
+                            <div class="menu_item menu_item_sub_cat" id="menu_item_settings_custom_theme">Custom Theme</div>
+                            <div id="menu_panel_settings_custom_theme" class="sub_menu_panel">
+                                <div id="colorpicker"></div>
+                                <div id="custom_theme_color_input_holder">&nbsp;&nbsp;
+                                    <input id="custom_theme_color_input" name="color" value="#000000" maxlength="7"/>
+                                </div>
+                                <div id="border_color_checkbox_holder">
+                                    <div id="border_color_checkbox_label">Borders</div>
+                                    <input type="checkbox" id="border_color_checkbox">
+                                </div>
+                            </div>
+                            <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Dark Background (Full Mode) </div>
+                            <div class="menu_panel_category">User Settings</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Sign In / Sign Up</div>                            
+                            <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div>
+                            <div class="menu_panel_category">Network Settings</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Device Name</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Mote Server IP</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Enable GTV NPAPI Plugin</div>                            
+                            <div class="menu_item menu_item_sub_cat" id="">Sync Settings to Mote Server</div>                            
                             <div class="menu_panel_category">Other Settings</div>
-                            <div class="menu_item" id="menu_item_sub_cat">View Changelog</div>
+                            <div class="menu_item menu_item_sub_cat" id="">View Changelog</div>
                         </div>                        
                         <div class="menu_item" id="menu_item_about">About</div>
-                        <div id="menu_panel_about">ABOUT STUFF HERE</div>
+                        <div id="menu_panel_about" class="sub_menu_panel">ABOUT STUFF HERE</div>
                         <div class="menu_item" id="menu_item_support">Support Us</div>
                         <div class="menu_item" id="menu_item_help">Help</div>
                         <div class="menu_item" id="menu_item_bugs">Report Bugs</div>
@@ -292,7 +326,7 @@
         </div>
 
         <!-- Debug/Prototyping Stuff -->
-        <div id="color_picker" class="cp-default"></div>    
+        
         <!-- <div id="anymote_testing">
             Welcome to GoogleTV Remote Web Server
             <br><br>

@@ -170,6 +170,12 @@ if(localStorage.getItem("saved_device_list")){
     savedDeviceList = JSON.parse( localStorage.getItem("saved_device_list") );    
 }
 
+var borderColorsEnabled = false, themeHexColor = "#000000";
+if(localStorage.getItem("theme_colors")!= null) {
+    borderColorsEnabled = JSON.parse(localStorage.getItem("theme_colors")).borders;
+          themeHexColor = JSON.parse(localStorage.getItem("theme_colors")).baseColor;
+}
+
 document.onselectstart = function(){ return false; }
 window.onload = function () {
 
@@ -320,6 +326,22 @@ window.onload = function () {
         devices_options_active = true;
         channels_options_active = false;
     });
+
+    //Hide/shows menu button seperator when next to a clicked button...
+    $("#options_button_devices").mousedown( function () { $(".options_button_seperator_left").css("border-color","#c6c7c9"); });
+    $("#options_button_devices").mouseup(   function () { $(".options_button_seperator_left").css("border-color","#dcdee0"); });
+    $("#options_button_devices").mouseleave(function () { $(".options_button_seperator_left").css("border-color","#dcdee0"); });
+
+    $("#options_button_channels").mousedown( function () { $(".options_button_seperator_right").css("border-color","#c6c7c9"); });
+    $("#options_button_channels").mouseup(   function () { $(".options_button_seperator_right").css("border-color","#dcdee0"); });
+    $("#options_button_channels").mouseleave(function () { $(".options_button_seperator_right").css("border-color","#dcdee0"); });
+
+    $("#options_button_apps").mousedown( function () { $(".options_button_seperator_left" ).css("border-color","#c6c7c9");
+                                                       $(".options_button_seperator_right").css("border-color","#c6c7c9"); });
+    $("#options_button_apps").mouseup(   function () { $(".options_button_seperator_left" ).css("border-color","#dcdee0");
+                                                       $(".options_button_seperator_right").css("border-color","#dcdee0"); });
+    $("#options_button_apps").mouseleave(function () { $(".options_button_seperator_left" ).css("border-color","#dcdee0");
+                                                       $(".options_button_seperator_right").css("border-color","#dcdee0"); });
 
     $("#options_button_apps").click(function () {
         if (optionsActive && !apps_options_active) {
@@ -1276,7 +1298,9 @@ var showSettingsMenuPanel = function() {
     if(optionsActive) showOptionsPanel();
 
     if (!settingsActive) {
-        
+
+        disableKeyBoardEvents();
+
         $("#settings_menu_panel").stop().animate({
                 left: "0"
             }, 320, function () {
@@ -1326,6 +1350,8 @@ var showSettingsMenuPanel = function() {
 
         settingsActive = true;
     } else {
+
+        enableKeyBoardEvents();
 
         $("#settings_menu_panel").stop().animate({
             left: "-320"
@@ -1378,11 +1404,25 @@ var showSettingsMenuPanel = function() {
             $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
             menuPanelSettingsEnabled = false;
         }
-        
+
+        closeAllOpenSettingsSubCats();
+
         settingsActive = false;
     }
 
 
+}
+
+
+function closeAllOpenSettingsSubCats(){
+    if(menuPanelSettingsCustomThemeEnabled){            
+        $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
+        menuPanelSettingsCustomThemeEnabled = false;
+    }
+    if(menuPanelSettingsSelectThemeEnabled){            
+        $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
+        menuPanelSettingsSelectThemeEnabled = false;
+    }
 }
 
 
@@ -1882,20 +1922,23 @@ var runDiscovery = function () {
 }
 
 
-borderColorsEnabled = true;
 
 
-var menuPanelSettingsEnabled = false;
-var menuPanelAboutEnabled = false;
+
+
+var menuPanelSettingsEnabled = false,
+    menuPanelAboutEnabled = false,
+    menuPanelSettingsCustomThemeEnabled = false,
+    menuPanelSettingsSelectThemeEnabled = false;
 
 
 var initMenuItemEvents = function(){
-    
 
     $("#menu_item_settings").click( function () { 
         //TODO: EXPAND SETTINGS MENU
         if(!menuPanelSettingsEnabled){            
             $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
             menuPanelSettingsEnabled = true;
         } else{            
             $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
@@ -1912,6 +1955,7 @@ var initMenuItemEvents = function(){
         //TODO: EXPAND ABOUT MENU
         if(!menuPanelAboutEnabled){            
             $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 35 }, 250);
             menuPanelAboutEnabled = true;
         } else{            
             $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
@@ -1922,6 +1966,34 @@ var initMenuItemEvents = function(){
             $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
             menuPanelSettingsEnabled = false;
         }   
+    });
+
+
+    $("#menu_item_settings_custom_theme").click( function () {
+        if(!menuPanelSettingsCustomThemeEnabled){      
+            closeAllOpenSettingsSubCats();       
+            $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 268 }, 250);
+            menuPanelSettingsCustomThemeEnabled = true;
+        } else{            
+            $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 204 }, 250);
+            menuPanelSettingsCustomThemeEnabled = false;
+        }
+
+    });
+
+    $("#menu_item_settings_select_theme").click( function () {         
+        if(!menuPanelSettingsSelectThemeEnabled){
+            closeAllOpenSettingsSubCats(); 
+            $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 233 }, 250);
+            menuPanelSettingsSelectThemeEnabled = true;
+        } else{            
+            $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
+            $( '#menu_items' ).animate({ scrollTop: 204 }, 250);
+            menuPanelSettingsSelectThemeEnabled = false;
+        }
     });
 
 
@@ -2552,4 +2624,173 @@ String.prototype.stripHTML = function() {
 
 function hasClass(element, cls) {
     return (' ' + element.className + ' ').indexOf(' ' + cls + ' ') > -1;
+}
+
+
+function toggleCustomBorderColors(){
+    if(!borderColorsEnabled) {
+        $("#border_color_checkbox").prop("checked", true);
+        borderColorsEnabled = true;
+        changeThemeColor(themeHexColor);
+    } else {
+        $("#border_color_checkbox").prop("checked", false);
+        borderColorsEnabled = false;
+        changeThemeColor(themeHexColor);
+    }
+    $("#border_color_checkbox").blur();
+}
+
+function initColorPicker(){  
+
+    if(borderColorsEnabled)
+        $("#border_color_checkbox").prop("checked", true);
+    else
+        $("#border_color_checkbox").prop("checked", false);
+
+    $('#colorpicker').farbtastic(function(color) {
+        themeHexColor = color;
+        changeThemeColor(color);
+        $("#custom_theme_color_input").val(color);
+        //$("#custom_theme_color_input").blur();
+    });
+    $.farbtastic('#colorpicker').setColor(themeHexColor);
+    $("#custom_theme_color_input").bind('paste', colorPickerInputChangeEvent)
+                                  .bind('cut', colorPickerInputChangeEvent)
+                                  .keyup(colorPickerInputChangeEvent)
+                                  .bind('keypress', colorPickerInputKeyPressEvent);
+
+
+    $("#border_color_checkbox_holder").click(function () {
+        toggleCustomBorderColors();
+    });
+
+
+    //Init presets.
+    for( var i = 0 ; i < document.getElementsByClassName("theme_color_preset").length; i++ ){
+        var thisEl = document.getElementsByClassName("theme_color_preset")[i],
+         thisColor = thisEl.getAttribute("color"),
+         hadBorder = false;
+
+        if(thisEl.getAttribute("border") == "true") hadBorder = true;
+
+
+        $(thisEl).css("background-color", thisColor);
+        if(hadBorder) $(thisEl.getElementsByClassName("theme_color_border")).css("border-color",thisEl.getAttribute("color"));
+        
+        //console.log(thisEl.getAttribute("color"));
+
+        $(thisEl).click(function(){
+            if((this.getAttribute("border") == "true" && !borderColorsEnabled) || (this.getAttribute("border") == "false" && borderColorsEnabled)){
+                toggleCustomBorderColors();
+            }
+            //changeThemeColor(this.getAttribute("color"));
+            $.farbtastic('#colorpicker').setColor(this.getAttribute("color"));
+        });
+    }
+    
+}
+
+function colorPickerInputChangeEvent(){
+    setTimeout(function(){
+        var initVal = $("#custom_theme_color_input").val();
+        var value = $("#custom_theme_color_input").val().replace(/[^-a-fA-F0-9]/g, "");
+
+        if($('#custom_theme_color_input').val()[0] != '#')
+            $('#custom_theme_color_input').val('#' + value);
+
+        if(initVal != '#'+value)
+            $('#custom_theme_color_input').val('#' + value);
+
+        if(value.length == 3 || value.length == 6){
+            
+            $.farbtastic('#colorpicker').setColor('#' + value);
+        }
+    }, 20);    
+}
+
+function colorPickerInputKeyPressEvent(event) {
+    var regex = new RegExp("^[a-fA-F0-9]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+    if (!regex.test(key) && !(event.which == 13)) {
+       event.preventDefault();
+       return false;
+    } else if(event.which == 13){
+        var value = $("#custom_theme_color_input").val().replace(/[^-a-fA-F0-9]/g, "");
+        if(value.length == 3 || value.length == 6) {
+            $('#custom_theme_color_input').blur();
+            console.log("Fire click event to save custom theme settings.");
+        } else {
+            $("#custom_theme_color_input").css("border-color", "#f00");
+            setTimeout(function () {
+                $("#custom_theme_color_input").css("border-color", "");
+                setTimeout(function () {
+                    $("#custom_theme_color_input").css("border-color", "#f00");
+                    setTimeout(function () {
+                        $("#custom_theme_color_input").css("border-color", "");
+                        setTimeout(function () {                                
+                            $("#custom_theme_color_input").focus();
+                            setInputSelection(document.getElementById("custom_theme_color_input"), 1, 6);
+                        }, 150);
+                    }, 150);
+                }, 150);
+            }, 150);
+        }
+    }
+}
+
+function setInputSelection(input, startPos, endPos) {
+    input.focus();
+    if (typeof input.selectionStart != "undefined") {
+        input.selectionStart = startPos;
+        input.selectionEnd = endPos;
+    } else if (document.selection && document.selection.createRange) {
+        // IE branch
+        input.select();
+        var range = document.selection.createRange();
+        range.collapse(true);
+        range.moveEnd("character", endPos);
+        range.moveStart("character", startPos);
+        range.select();
+    }
+}
+
+function changeThemeColor(hex) {
+    var rgb = hexToRgb(hex);
+    var red = rgb.r, green = rgb.g, blue = rgb.b;
+    var borderColor = "";
+
+    document.getElementById("main_container").style.backgroundColor = hex;
+
+    if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
+
+
+
+    $(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
+    $('.remote_button').css("border-left-color", borderColor);
+
+    $('.remote_button_rocker').css("border-top-color", borderColor);
+    $('.remote_button_rocker').css("border-left-color", borderColor);
+
+    $('#remote_touch_pad').css("border-top-color", borderColor);
+
+
+    $('#menu_items').css("border-top-color",   borderColor);
+    $('#menu_items').css("border-right-color", borderColor);
+    $('.menu_item').css("border-bottom-color", borderColor);
+    $('.menu_panel_category').css("border-bottom-color", borderColor);
+
+    $('.sub_menu_panel').css("border-bottom-color", borderColor);
+
+
+    localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
+}
+
+function hexToRgb(hex) {
+    if(hex.length == 4) hex = hex[0]+hex[1]+hex[1]+hex[2]+hex[2]+hex[3]+hex[3];
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
 }
