@@ -151,21 +151,21 @@ var sendScroll = function (scrollX, scrollY, callback) {
 
 //App UI Logic--------------------------------------------------
 
-var devices_options_active = false,
-    apps_options_active = false,
+var devices_options_active  = false,
+    apps_options_active     = false,
     channels_options_active = false;
 
-var installAppsList = JSON.parse("[]");
+var installAppsList = [];
 if(localStorage.getItem("apps_installed_list")){
     installAppsList = JSON.parse( localStorage.getItem("apps_installed_list") );    
 }
 
-var channelsList = JSON.parse("[]");
+var channelsList = [];
 if(localStorage.getItem("system_channels_list")){
     channelsList = JSON.parse( localStorage.getItem("system_channels_list") );    
 }
 
-var savedDeviceList = JSON.parse("[]");
+var savedDeviceList = [];
 if(localStorage.getItem("saved_device_list")){
     savedDeviceList = JSON.parse( localStorage.getItem("saved_device_list") );    
 }
@@ -176,10 +176,55 @@ if(localStorage.getItem("theme_colors")!= null) {
           themeHexColor = JSON.parse(localStorage.getItem("theme_colors")).baseColor;
 }
 
+var undoCountDownInterval = null;
+var buttonLayoutJson = [];                      //Load saved button layout if exist.
+var undoButtonLayoutJSON = [];  var undoLayoutFound = false;
+function initUndoDefaults() {
+    if( localStorage.getItem("button_layout_undo") ){
+        var date      = new Date(), 
+            timeThen  = JSON.parse( localStorage.getItem("button_layout_undo") ).time,            
+            timeNow   = date.getTime(),
+            timeSince = timeNow - timeThen,
+            timeLeft  = 60000 - timeSince;
+        if( timeSince <= 60000 ) {
+            undoButtonLayoutJSON = JSON.parse( localStorage.getItem("button_layout_undo") ).layout;
+            $("#undo_default_reset").css("display","block");
+            undoLayoutFound = true;
+            setTimeout(function(){ undoTimeout(); }, timeLeft);
+            undoCountDownInterval = setInterval(function(){ 
+                var date      = new Date(), 
+                    timeThen  = JSON.parse( localStorage.getItem("button_layout_undo") ).time,            
+                    timeNow   = date.getTime(),
+                    timeSince = timeNow - timeThen,
+                    timeLeft  = 60000 - timeSince,
+                  percentLeft = (timeLeft / 60000) * 100;                
+                $("#undo_default_timeleft").css("width", percentLeft+"%");
+            }, 250);
+        } else undoTimeout();
+    }
+}
+function undoTimeout(){
+    if(undoLayoutFound){
+        $("#undo_default_reset").css("display","none");        
+        localStorage.removeItem("button_layout_undo");
+        undoLayoutFound = false;        
+        window.clearInterval(undoCountDown);
+    }
+}
+
+var gridster = [];
+var draggableButtonsEnabled = false;
+var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":2},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":2},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":2},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":1},{"col":1,"row":4,"size_x":1,"size_y":1},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":5,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":1},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":1,"row":6,"size_x":1,"size_y":2},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":5,"size_y":5},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":2},{"col":4,"row":6,"size_x":1,"size_y":2},{"col":5,"row":6,"size_x":1,"size_y":2},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1}]';
+
+
 document.onselectstart = function(){ return false; }
 window.onload = function () {
 
     initMoteServer();
+
+    initGridster();
+
+    initUndoDefaults();
 
     initColorPicker();
 
@@ -198,7 +243,6 @@ window.onload = function () {
     updateChannelsListUI();
 
     updateAppsListUI();
-
     
     $(".keycode").on('mousedown', function () {
           var thisButton = $(this);
@@ -212,6 +256,7 @@ window.onload = function () {
 
           }, 200);
     });
+
     $(".keycode").on('mouseup', function () {
           var thisButton = $(this);
           console.log('up');
@@ -221,23 +266,6 @@ window.onload = function () {
           }
           sendKeyCode(thisButton.attr('id'));
     });
-
-
-
-    //$( ".keycode" ).draggable({
-    //  connectToSortable: "#remote_button_panel_main",
-    //  grid: [ 64, 48 ], 
-    //  snap: ".keycode", 
-    //  snapMode: "outer"
-    //});
-
-    //$('#remote_button_panel_main').sortable();
-
-    //$("#remote_button_panel_main").sortable({
-    //    placeholder: "ui-state-highlight"
-    //        
-    //});
-    //$("#sortable").disableSelection();
     
     $("#menu_button").click(function () {
         showSettingsMenuPanel();
@@ -606,7 +634,7 @@ window.onload = function () {
 
 //DISABLES right-click globally.
 document.oncontextmenu = function() {
-    //return false;
+    // return false;
 }
 
 var updateChannelsListUI = function() {
@@ -1951,8 +1979,7 @@ var initMenuItemEvents = function(){
         }
     });
 
-    $("#menu_item_about").click( function () { 
-        //TODO: EXPAND ABOUT MENU
+    $("#menu_item_about").click( function () {         
         if(!menuPanelAboutEnabled){            
             $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
             $( '#menu_items' ).animate({ scrollTop: 35 }, 250);
@@ -1966,35 +1993,55 @@ var initMenuItemEvents = function(){
             $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
             menuPanelSettingsEnabled = false;
         }   
-    });
-
+    }); 
 
     $("#menu_item_settings_custom_theme").click( function () {
         if(!menuPanelSettingsCustomThemeEnabled){      
             closeAllOpenSettingsSubCats();       
             $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 268 }, 250);
+            $( '#menu_items' ).animate({ scrollTop: 198 }, 250);
             menuPanelSettingsCustomThemeEnabled = true;
         } else{            
             $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 204 }, 250);
+            $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
             menuPanelSettingsCustomThemeEnabled = false;
         }
-
     });
 
     $("#menu_item_settings_select_theme").click( function () {         
         if(!menuPanelSettingsSelectThemeEnabled){
             closeAllOpenSettingsSubCats(); 
             $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 233 }, 250);
+            $( '#menu_items' ).animate({ scrollTop: 163 }, 250);
             menuPanelSettingsSelectThemeEnabled = true;
         } else{            
             $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 204 }, 250);
+            $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
             menuPanelSettingsSelectThemeEnabled = false;
         }
     });
+
+    $("#menu_item_settings_toggle_btn_lock").click( function () {         
+        if(!draggableButtonsEnabled) enableDraggableButtons();            
+        else                        disableDraggableButtons();
+    });
+
+    $("#menu_item_settings_reset_default_layout").click( function () {
+        if(!undoLayoutFound){
+            var date = new Date(), time = date.getTime();
+            undoButtonLayoutStr = '{"time": "' + time + '", "layout": ' + JSON.stringify(buttonLayoutJson) + ' }';
+            localStorage.setItem("button_layout_undo", undoButtonLayoutStr);
+            localStorage.setItem("button_layout", defaultButtonLayoutStr);
+            location.reload();
+        } else {
+            $("#undo_default_reset").css("display","none");
+            undoLayoutFound = false;
+            localStorage.removeItem("button_layout_undo");
+            localStorage.setItem("button_layout", JSON.stringify(undoButtonLayoutJSON));
+            location.reload();
+        }        
+    });
+
 
 
     $("#menu_item_help").click( function () { 
@@ -2019,38 +2066,36 @@ var initMenuItemEvents = function(){
 }
 
 var initAppIntents = function(){
-    
-    //$("#app_AAAAAA").click(     function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA;end');     });
 
-    //$("#app_amazon").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.amazon.avod/.MainActivity;end');  showOptionsPanel();   });
+    //$("#app_amazon").click(    function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.amazon.avod/.MainActivity;end');  showOptionsPanel();   });
 
     $("#app_chrome").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');  showOptionsPanel();   });
 
     $("#app_clock").click(       function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.deskclock/.DeskClock;end');  showOptionsPanel();   });
 
-    //$("#app_cnbc").click(        function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbc.cnbc.android.googletv/.ui.Splash;end');  showOptionsPanel();   });
+    //$("#app_cnbc").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbc.cnbc.android.googletv/.ui.Splash;end');  showOptionsPanel();   });
 
     $("#app_downloads").click(   function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.providers.downloads.ui/.DownloadList;end');  showOptionsPanel();   });
 
     $("#app_search").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.quicksearchbox/.SearchActivity;end');  showOptionsPanel();   });
 
-    //$("#app_mgo").click(         function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.technicolor.navi.mgo.gtv/com.technicolor.navi.mgo.gtv.MainActivity;end');  showOptionsPanel();   });
+    //$("#app_mgo").click(       function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.technicolor.navi.mgo.gtv/com.technicolor.navi.mgo.gtv.MainActivity;end');  showOptionsPanel();   });
     
     $("#app_movies").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.videos/com.google.android.youtube.videos.EntryPoint;end');  showOptionsPanel();   });
 
     $("#app_music").click(       function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.music/com.android.music.activitymanagement.TopLevelActivity;end');  showOptionsPanel();   });
 
-    //$("#app_nba").click(         function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbadigital.gametimegtv/.ActivityManager;end');  showOptionsPanel();   });
+    //$("#app_nba").click(       function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbadigital.gametimegtv/.ActivityManager;end');  showOptionsPanel();   });
     
     $("#app_netflix").click(     function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');  showOptionsPanel();   });
 
-    //$("#app_onlive").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.onlive.clientgtv/.OnLiveClientGTVActivity;end');  showOptionsPanel();   });
+    //$("#app_onlive").click(    function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.onlive.clientgtv/.OnLiveClientGTVActivity;end');  showOptionsPanel();   });
     
     $("#app_pandora").click(     function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.pandora.android.gtv/com.pandora.android.Main;end');  showOptionsPanel();   });
 
     $("#app_photos").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.mediabrowser/com.google.tv.mediabrowser.newui.MainActivity;end');  showOptionsPanel();   });
 
-    //$("#app_plex").click(        function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.plexapp.gtv/com.plexapp.gtv.activities.MyPlexActivity;end');  showOptionsPanel();   });
+    //$("#app_plex").click(      function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.plexapp.gtv/com.plexapp.gtv.activities.MyPlexActivity;end');  showOptionsPanel();   });
 
     $("#app_primetime").click(   function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.alf/com.google.tv.alf.ui.MainActivity;end');  showOptionsPanel();   });
 
@@ -2062,15 +2107,45 @@ var initAppIntents = function(){
 
     $("#app_youtube").click(     function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.youtube.googletv/com.google.android.youtube.googletv.MainActivity;end');  showOptionsPanel();   });
 
-    $("#app_settings").click(     function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.settings/com.google.tv.settings.Settings;end');  showOptionsPanel();   });
+    $("#app_settings").click(    function () { fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.settings/com.google.tv.settings.Settings;end');  showOptionsPanel();   });
 }
 
-var gridster = null;
-var draggableButtonsEnabled = false;
+
+
+function saveButtonLayoutSettings(){
+    buttonLayoutJson = JSON.parse("["
+                     + JSON.stringify( gridster[0].serialize() ).replaceAll("[","").replaceAll("]","") + ","
+                     + JSON.stringify( gridster[1].serialize() ).replaceAll("[","").replaceAll("]","") + ","
+                     + JSON.stringify( gridster[2].serialize() ).replaceAll("[","").replaceAll("]","") + "]" );
+    localStorage.setItem("button_layout", JSON.stringify(buttonLayoutJson) );
+    if(undoLayoutFound) undoTimeout();
+}
+function disableDraggableButtons(){  
+    for(var i=0;i<gridster.length;i++) gridster[i].disable(); 
+    $("#btn_lock_checkbox").prop("checked", false);
+    draggableButtonsEnabled = false; 
+    localStorage.setItem("buttons_draggable", false);
+}
+function enableDraggableButtons() {  
+    for(var i=0;i<gridster.length;i++) gridster[i].enable(); 
+    $("#btn_lock_checkbox").prop("checked", true); 
+    draggableButtonsEnabled = true;  
+    localStorage.setItem("buttons_draggable", true);
+}
+
 //Init drag/drop sorting.
-$(function () { //DOM Ready
+function initGridster() {
     
-    gridster = $(".gridster ul").gridster({
+    if(localStorage.getItem("button_layout")){
+        buttonLayoutJson = JSON.parse( localStorage.getItem("button_layout") );
+        for(var i=0; i < document.getElementsByClassName("drag_btn").length; i++){
+                         document.getElementsByClassName("drag_btn")[i].setAttribute("data-row", buttonLayoutJson[i].row);
+                         document.getElementsByClassName("drag_btn")[i].setAttribute("data-col", buttonLayoutJson[i].col);  }
+    } else buttonLayoutJson = JSON.parse( defaultButtonLayoutStr );
+
+    //Init gridster on all three button panels.
+    gridster[0] = $("#remote_button_panel_main ul").gridster({
+        namespace: '#remote_button_panel_main',
         widget_margins: [0, 0],
         widget_base_dimensions: [64, 48],
         shift_larger_widgets_down: false,
@@ -2079,21 +2154,58 @@ $(function () { //DOM Ready
         min_rows: 7,
         min_cols: 5,
         max_size_x: 5,
-        max_size_y: 7
+        max_size_y: 7,
+        draggable: {
+            start:function(e, ui, $widget) {},
+            drag: function(e, ui, $widget) {},
+            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+          }
+    }).data('gridster');
+    gridster[1] = $("#remote_button_panel_alt ul").gridster({
+        namespace: '#remote_button_panel_alt',
+        widget_margins: [0, 0],
+        widget_base_dimensions: [64, 48],
+        shift_larger_widgets_down: false,
+        max_rows: 7,
+        max_cols: 5,
+        min_rows: 7,
+        min_cols: 5,
+        max_size_x: 5,
+        max_size_y: 7,
+        draggable: {
+            start:function(e, ui, $widget) {},
+            drag: function(e, ui, $widget) {},
+            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+          }
+    }).data('gridster');
+    gridster[2] = $("#remote_button_panel_touch ul").gridster({
+        namespace: '#remote_button_panel_touch',
+        widget_margins: [0, 0],
+        widget_base_dimensions: [64, 48],
+        shift_larger_widgets_down: false,
+        max_rows: 7,
+        max_cols: 5,
+        min_rows: 7,
+        min_cols: 5,
+        max_size_x: 5,
+        max_size_y: 7,
+        draggable: {
+            start:function(e, ui, $widget) {},
+            drag: function(e, ui, $widget) {},
+            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+          }
     }).data('gridster');
 
-    //console.log(gridster.serialize());
-    //gridster.disable();
+    //Check for user setting, then lock or unlock button dragging.
+    if(localStorage.getItem("buttons_draggable")){
+        var isDraggableString = localStorage.getItem("buttons_draggable")+"";
+        console.log(isDraggableString);
+        if(isDraggableString === "true") enableDraggableButtons();
+        else disableDraggableButtons();
+    }
 
-});
-var enableDraggableButtons = function () { 
-    draggableButtonsEnabled = true;
-    gridster.enable();
 }
-var disableDraggableButtons = function () { 
-    draggableButtonsEnabled = false;
-    gridster.disable();
-}
+
 
 var touchPadMouseDown = false;
 var mouseDownX = 0;
@@ -2701,10 +2813,8 @@ function colorPickerInputChangeEvent(){
         if(initVal != '#'+value)
             $('#custom_theme_color_input').val('#' + value);
 
-        if(value.length == 3 || value.length == 6){
-            
+        if(value.length == 3 || value.length == 6)            
             $.farbtastic('#colorpicker').setColor('#' + value);
-        }
     }, 20);    
 }
 
@@ -2763,8 +2873,6 @@ function changeThemeColor(hex) {
 
     if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
 
-
-
     $(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
     $('.remote_button').css("border-left-color", borderColor);
 
@@ -2773,14 +2881,12 @@ function changeThemeColor(hex) {
 
     $('#remote_touch_pad').css("border-top-color", borderColor);
 
-
     $('#menu_items').css("border-top-color",   borderColor);
     $('#menu_items').css("border-right-color", borderColor);
     $('.menu_item').css("border-bottom-color", borderColor);
     $('.menu_panel_category').css("border-bottom-color", borderColor);
 
     $('.sub_menu_panel').css("border-bottom-color", borderColor);
-
 
     localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
 }

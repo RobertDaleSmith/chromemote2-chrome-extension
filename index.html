@@ -63,14 +63,20 @@
                         <div class="menu_item" id="menu_item_settings">Settings</div>
                         <div id="menu_panel_settings">
                             <div class="menu_panel_category">Button Config Settings</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Buttons Rearrangeable</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Reset to Defaults</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Edit Bookmarks</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Edit Macros</div>
-                            <div class="menu_panel_category">Appearance Settings</div>
+                            <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_btn_lock">Draggable Remote Buttons
+                                <div class="checkBoxSquaredThree" id="btn_lock_checkbox_holder">    
+                                    <input type="checkbox" value="None" id="btn_lock_checkbox" name="check" />
+                                    <label for="btn_lock_checkbox"></label>
+                                </div>
+                                <div id="btn_lock_checkbox_cover"></div>
+                            </div>
+                            <div class="menu_item menu_item_sub_cat" id="menu_item_settings_reset_default_layout">Reset to Default Layout
+                                <div id="undo_default_reset">undo?
+                                    <div id="undo_default_timeleft_holder"><div id="undo_default_timeleft"></div></div>
+                                </div>
+                            </div>
+                            <div class="menu_panel_category" id="menu_panel_category_appearance">Appearance Settings</div>
                             <div class="menu_item menu_item_sub_cat" id="menu_item_settings_select_theme">Select Theme</div>
-                            
-
                             <div id="menu_panel_settings_select_theme" class="sub_menu_panel">
                                 <div class="theme_color_preset" id="theme_color_preset_0" color="#000000" border="false">Default<div class="theme_color_border"></div></div>
                                 <div class="theme_color_preset" id="theme_color_preset_1" color="#6abae2" border="true" >Water  <div class="theme_color_border"></div></div>
@@ -84,29 +90,30 @@
                                 <div class="theme_color_preset" id="theme_color_preset_8" color="#f21307" border="true" >Lava   <div class="theme_color_border"></div></div>
                                 <div class="theme_color_preset" id="theme_color_preset_9" color="#c316ca" border="true" >UV     <div class="theme_color_border"></div></div>
                             </div>
-
-
                             <div class="menu_item menu_item_sub_cat" id="menu_item_settings_custom_theme">Custom Theme</div>
                             <div id="menu_panel_settings_custom_theme" class="sub_menu_panel">
                                 <div id="colorpicker"></div>
                                 <div id="custom_theme_color_input_holder">&nbsp;&nbsp;
                                     <input id="custom_theme_color_input" name="color" value="#000000" maxlength="7"/>
+                                </div>                                
+                                <div class="checkBoxSquaredThree" style="position:absolute;right:20px;top:13px;width:20px;height:20px;margin:0px;">    
+                                    <input type="checkbox" value="None" id="border_color_checkbox" name="check2" />
+                                    <label for="border_color_checkbox"></label>
                                 </div>
                                 <div id="border_color_checkbox_holder">
-                                    <div id="border_color_checkbox_label">Borders</div>
-                                    <input type="checkbox" id="border_color_checkbox">
+                                    <div id="border_color_checkbox_label">Borders</div>                                    
                                 </div>
                             </div>
-                            <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div>
+                            <!-- <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div> -->
                             <div class="menu_item menu_item_sub_cat" id="">Dark Background (Full Mode) </div>
                             <div class="menu_panel_category">User Settings</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Sign In / Sign Up</div>                            
-                            <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div>
+                            <div class="menu_item menu_item_sub_cat" id="">Sign In</div>                            
+                            <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div> -->
                             <div class="menu_panel_category">Network Settings</div>
-                            <div class="menu_item menu_item_sub_cat" id="">Device Name</div>
+                            <!-- <div class="menu_item menu_item_sub_cat" id="">Device Name</div> -->
                             <div class="menu_item menu_item_sub_cat" id="">Mote Server IP</div>
                             <div class="menu_item menu_item_sub_cat" id="">Enable GTV NPAPI Plugin</div>                            
-                            <div class="menu_item menu_item_sub_cat" id="">Sync Settings to Mote Server</div>                            
+                            <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings to Mote Server</div>  -->                           
                             <div class="menu_panel_category">Other Settings</div>
                             <div class="menu_item menu_item_sub_cat" id="">View Changelog</div>
                         </div>                        
@@ -123,94 +130,94 @@
                 </div>
                 <div id="remote_button_panel_main" class="gridster">
                     <ul id="main_button_list" class="sortable grid">
-                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_home">
-                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tv_power">
-                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_avr_power">
-                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_power">
-                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_search">
+                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_home">
+                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_tv_power">
+                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_avr_power">
+                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_stb_power">
+                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_search">
 
-                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_rewind">
-                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_previous">
-                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_play">
-                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_next">
-                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_fast_forward">
+                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_rewind">
+                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_previous">
+                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_play">
+                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_next">
+                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_fast_forward">
                     
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down"></div></li>
-                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_stop">
-                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_pause">
-                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_live">
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down"></div></li>
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down"></div></li>
+                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_stop">
+                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_pause">
+                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_live">
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down"></div></li>
                     
                         <!--channel_down-->
-                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_escape">
-                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_up">
-                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_menu">
+                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_escape">
+                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dpad_up">
+                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_menu">
                         <!--volume down-->
 
-                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">PG<div class="remote_button keycode rocker_up" id="keycode_page_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_page_down"></div></li>
-                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_left">
-                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_center">
-                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_right">
-                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_mute">
+                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker">PG<div class="remote_button keycode rocker_up" id="keycode_page_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_page_down"></div></li>
+                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dpad_left">
+                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dpad_center">
+                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dpad_right">
+                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_mute">
 
                         <!--page down-->
-                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_back">
-                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dpad_down">
-                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bookmark">
-                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_window">
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_back">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dpad_down">
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_bookmark">
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_window">
 
-                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tab">
-                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_info">
-                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_guide">
-                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_dvr">
-                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_media_record">
+                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_tab">
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_info">
+                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_guide">
+                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_dvr">
+                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_record">
                     </ul>
                 </div>
             
                 <div id="remote_button_panel_alt" class="gridster">
                     <ul id="alt_button_list" class="sortable grid">
                      
-                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_menu">            
-                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_tv_input">
-                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_avr_input">
-                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_stb_input">
-                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_settings">    
+                        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_stb_menu">            
+                        <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_tv_input">
+                        <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_avr_input">
+                        <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_stb_input">
+                        <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_settings">    
 
-                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_eject">
-                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_audio">
-                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_popup_menu">
-                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_top_menu">
-                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_bd_input">
+                        <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_eject">
+                        <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_audio">
+                        <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_bd_popup_menu">
+                        <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_bd_top_menu">
+                        <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_bd_input">
                     
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_all_power">
-                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_yellow">
-                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_blue">
-                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_red">
-                        <li data-row="3" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_prog_green">
+                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_all_power">
+                        <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_prog_yellow">
+                        <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_prog_blue">
+                        <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_prog_red">
+                        <li data-row="3" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_prog_green">
 
-                        <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_1">
-                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_2">
-                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_3">
-                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_4">
-                        <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_5">
+                        <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_1">
+                        <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_2">
+                        <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_3">
+                        <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_4">
+                        <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_5">
 
-                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_6">
-                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_7">
-                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_8">
-                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_9">
-                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_0">
+                        <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_6">
+                        <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_7">
+                        <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_8">
+                        <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_9">
+                        <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_0">
                     
-                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" class="remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out"></div></li>
-                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out"></div></li>
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
 
                         <!-- keycode_zoom_out -->
-                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="remote_button">
-                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="remote_button">
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
+                        <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" class="drag_btn remote_button">
                     </ul>
                 </div>
 
@@ -218,16 +225,16 @@
                 <div id="remote_button_panel_touch" class="gridster">
                     <div id="remote_touch_pad"></div>
                     <ul id="touch_button_list" class="sortable grid">
-                        <li data-row="1" data-col="1" data-sizex="5" data-sizey="5" class="touch_pad_filler">
+                        <li data-row="1" data-col="1" data-sizex="5" data-sizey="5" class="drag_btn touch_pad_filler">
                     
-                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_home">
-                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_menu">
-                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="2" class="remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="KEYCODE_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_channel_down"></div></li>
-                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="2" class="remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="KEYCODE_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_volume_down"></div></li>
-                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="2" class="remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="KEYCODE_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_zoom_out"></div></li>
+                        <li data-row="6" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_home">
+                        <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_menu">
+                        <li data-row="6" data-col="3" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker">CH<div class="remote_button keycode rocker_up" id="KEYCODE_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_channel_down"></div></li>
+                        <li data-row="6" data-col="4" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="KEYCODE_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_volume_down"></div></li>
+                        <li data-row="6" data-col="5" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker">ZOOM<div class="remote_button keycode rocker_up" id="KEYCODE_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_zoom_out"></div></li>
                     
-                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_back">
-                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="remote_button keycode" id="keycode_search">
+                        <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_back">
+                        <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_search">
                         <!--keycode_channel_down-->
                         <!--keycode_volume_down-->
                         <!--keycode_zoom_out-->

@@ -90,6 +90,7 @@
     border-right-width: 1px;
     border-right-color: rgba(0, 0, 0, 0.25);
 
+    /*zoom:0.99;*/
 }
 
 /* Uncomment this if you set helper : "clone" in draggable options */
