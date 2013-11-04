@@ -45,7 +45,8 @@
         <link rel="stylesheet" href="libs/farbtastic/farbtastic.css" type="text/css" />
 
     </head>
-    <body>        
+    <body>
+        <div id="background_container"><div id="background_full_mode"></div></div>
         <div id="main_container">
             <div id="title_bar_container">
                 <div id="full_mode_button"></div>
@@ -129,6 +130,8 @@
                     
                 </div>
                 <div id="remote_button_panel_main" class="gridster">
+                    <div class="options_tabs_bottom_filler alt_mid_bottom_filler"><div class="options_tabs_bottom_filler_inner"></div></div>
+                    <div class="options_tabs_bottom_filler"><div class="options_tabs_bottom_filler_inner"></div></div>
                     <ul id="main_button_list" class="sortable grid">
                         <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_home">
                         <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_tv_power">
@@ -146,7 +149,7 @@
                         <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_media_stop">
                         <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_pause">
                         <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_live">
-                        <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down"></div></li>
+                        <li data-row="3" data-col="5" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker" id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down"></div></li>
                     
                         <!--channel_down-->
                         <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_escape">
@@ -226,6 +229,8 @@
                     <div id="remote_touch_pad"></div>
                     <ul id="touch_button_list" class="sortable grid">
                         <li data-row="1" data-col="1" data-sizex="5" data-sizey="5" class="drag_btn touch_pad_filler">
+                            <div id="keyboard_activity_indicator"></div>
+                        </li>
                     
                         <li data-row="6" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_home">
                         <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_menu">
@@ -330,6 +335,17 @@
                 <div class="apps_context_menu_option" id="apps_context_menu_edit">Edit</div>
                 <div class="apps_context_menu_option bottom" id="apps_context_menu_delete">Delete</div>
             </div>
+
+
+
+            <div id="mouse_lock_cover">
+                <div id="mouse_lock_cover_label1">
+                    Mouse Cursor Locked to Google TV                    
+                </div>
+                <div id="mouse_lock_cover_label2">
+                    press <b>esc</b> to return control
+                </div>
+            </div>
         </div>
 
         <!-- Debug/Prototyping Stuff -->
@@ -379,5 +395,7 @@
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');">Netflix</button>
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
         </div> -->
+
+        <script type="text/javascript" src="js/ui_logic.js"></script>
     </body>
 </html>

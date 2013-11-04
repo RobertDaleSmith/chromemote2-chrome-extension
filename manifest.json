@@ -9,11 +9,11 @@
   "description": "A better way to control Google TV. Fling videos, links, images, launch apps, plus full remote control of all your Google TVs.",
   
   "browser_action": {
-    "default_popup": "index.html",
+    "default_popup": "index.html?pop",
     "default_title": "Chromemote - The Google TV Remote for Chrome" 
   },
   
-  "options_page" : "index.html",
+  "options_page" : "index.html?tab",
   
   "permissions": [
     "http://*/*", "https://*/*", "tabs", "background", "contextMenus","storage"

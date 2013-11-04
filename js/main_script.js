@@ -104,6 +104,8 @@ var sendMacro = function (macro, callback) {
 var prevSendMovementTime = 0;
 var sendMovement = function (deltaX, deltaY, callback) {
 
+    if(deltaX == 0.0 && deltaY == 0.0) return;
+
     deltaX = deltaX * 10;
     deltaY = deltaY * 10;
 
@@ -151,6 +153,16 @@ var sendScroll = function (scrollX, scrollY, callback) {
 
 //App UI Logic--------------------------------------------------
 
+var isInPopUpMode = false; if(document.URL.indexOf("?pop") != -1) isInPopUpMode = true;
+var isInFullTabMode = false; if(document.URL.indexOf("?tab") != -1) isInFullTabMode = true;
+if( isInFullTabMode ) {
+    console.log("Full Tab Mode Starting...");
+} else if (isInPopUpMode) {
+    console.log("Popup Mode Starting...");
+} else {
+    console.log("Misc Mode Starting...");
+}
+
 var devices_options_active  = false,
     apps_options_active     = false,
     channels_options_active = false;
@@ -197,18 +209,20 @@ function initUndoDefaults() {
                     timeNow   = date.getTime(),
                     timeSince = timeNow - timeThen,
                     timeLeft  = 60000 - timeSince,
-                  percentLeft = (timeLeft / 60000) * 100;                
+                  percentLeft = (timeLeft / 60000) * 100;
+                   pixelWidth = Math.round($("#undo_default_timeleft_holder").width() * percentLeft / 100);
                 $("#undo_default_timeleft").css("width", percentLeft+"%");
-            }, 250);
+                //$("#undo_default_timeleft").css("width", pixelWidth+"px");
+            }, 10);
         } else undoTimeout();
     }
 }
 function undoTimeout(){
     if(undoLayoutFound){
-        $("#undo_default_reset").css("display","none");        
-        localStorage.removeItem("button_layout_undo");
-        undoLayoutFound = false;        
-        window.clearInterval(undoCountDown);
+        $("#undo_default_reset").css("display","none");
+        undoLayoutFound = false;
+        if(localStorage.getItem("button_layout_undo")) localStorage.removeItem("button_layout_undo");
+        if(undoCountDownInterval) window.clearInterval(undoCountDownInterval);
     }
 }
 
@@ -222,9 +236,13 @@ window.onload = function () {
 
     initMoteServer();
 
+    
+
     initGridster();
 
     initUndoDefaults();
+
+    
 
     initColorPicker();
 
@@ -269,6 +287,10 @@ window.onload = function () {
     
     $("#menu_button").click(function () {
         showSettingsMenuPanel();
+    });
+
+    $("#full_mode_button").click(function () {
+        openCrxOptionsPage();
     });
 
     $("#alt_panel_button").click(function () {
@@ -1336,14 +1358,18 @@ var showSettingsMenuPanel = function() {
                 //$("#settings_menu_panel").toggleClass('title_open_alt_button title_close_alt_button');
 
                 $("#menu_button").toggleClass('title_open_menu_button title_close_menu_button');
-                $("#touch_pad_open_button").css("display","none");                
-                $("#full_mode_button").css("display","block");
+                $("#touch_pad_open_button").css("display","none");
                 document.getElementById("title_bar_title").textContent = "menu";
-                $("#title_bar_title").css("width","192px");
+                if(!isInFullTabMode) {                    
+                    $("#full_mode_button").css("display","block");
+                    $("#title_bar_title").css("width","192px");
+                } else {
+                    $(".title_close_menu_button").css("float","left");
+                }
         });
         if(altActive && !touchActive){    
 
-            $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
+            if(!isInFullTabMode) $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
 
             $("#remote_button_panel_alt").stop().animate({
                 left: "320"
@@ -1354,8 +1380,11 @@ var showSettingsMenuPanel = function() {
 
         } else if(touchActive){    
 
-            if(altActive) $("#settings_menu_panel").css("background-image","url('images/bg_alt.png')");
-            else          $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
+            if(!isInFullTabMode) {
+                if(altActive) $("#settings_menu_panel").css("background-image","url('images/bg_alt.png')");
+                else          $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
+            }
+            
 
             $("#remote_button_panel_touch").stop().animate({
                 left: "320"
@@ -1366,7 +1395,7 @@ var showSettingsMenuPanel = function() {
 
         } else {
 
-            $("#settings_menu_panel").css("background-image","url('images/bg_settings.png')");
+            if(!isInFullTabMode) $("#settings_menu_panel").css("background-image","url('images/bg_settings.png')");
             
             $("#remote_button_panel_main").stop().animate({
                 left: "320"
@@ -1388,10 +1417,16 @@ var showSettingsMenuPanel = function() {
             //$("#settings_menu_panel").toggleClass('title_close_alt_button title_open_alt_button');
 
             $("#menu_button").toggleClass('title_close_menu_button title_open_menu_button');
-            $("#touch_pad_open_button").css("display","block");            
-            $("#full_mode_button").css("display","none");
-            document.getElementById("title_bar_title").textContent = "remote";
-            $("#title_bar_title").css("width","128px");
+            if(!isInFullTabMode) $("#touch_pad_open_button").css("display","block");            
+            
+            if(!isInFullTabMode) {
+                $("#full_mode_button").css("display","none");
+                document.getElementById("title_bar_title").textContent = "remote";
+                $("#title_bar_title").css("width","128px");    
+            } else {
+                document.getElementById("title_bar_title").textContent = "full remote";
+            }
+            
 
         });
 
@@ -1410,7 +1445,7 @@ var showSettingsMenuPanel = function() {
                 left: "0"
             }, 320, function () {
                 // Animation complete.
-                $("#lock_mouse_button").css("display","block");
+                if(!isInPopUpMode) $("#lock_mouse_button").css("display","block");
             });
 
         } else {
@@ -1419,7 +1454,7 @@ var showSettingsMenuPanel = function() {
                 left: "0"
             }, 320, function () {
                 // Animation complete.
-                $("#alt_panel_button").css("display","block");
+                if(!isInFullTabMode) $("#alt_panel_button").css("display","block");
             });
 
         }
@@ -1513,7 +1548,7 @@ var showTouchPad = function () {
             // Animation complete.
             document.getElementById("title_bar_title").textContent = "touch pad";
 
-            $("#lock_mouse_button").css("display", "block");
+            if(!isInPopUpMode) $("#lock_mouse_button").css("display", "block");
             $("#alt_panel_button").css("display", "none");
             $("#touch_pad_open_button").toggleClass('title_open_touch_button title_close_alt_button');
         });
@@ -1570,15 +1605,63 @@ var showTouchPad = function () {
 
 var toggleMouseLock = function () {
 
+    if(!isInPopUpMode){
+        var havePointerLock = 'pointerLockElement' in document ||
+                           'mozPointerLockElement' in document ||
+                        'webkitPointerLockElement' in document;
+        var element = document.getElementById("remote_touch_pad");
+
+        if(havePointerLock){
+            element.requestPointerLock = element.requestPointerLock ||
+                                      element.mozRequestPointerLock ||
+                                   element.webkitRequestPointerLock;
+            // Ask the browser to lock the pointer
+            element.requestPointerLock();
+
+            // Hook pointer lock state change events
+            document.addEventListener('pointerlockchange', mouseLockChange, false);
+            document.addEventListener('mozpointerlockchange', mouseLockChange, false);
+            document.addEventListener('webkitpointerlockchange', mouseLockChange, false);
+
+            // Hook mouse move events
+            element.addEventListener("mousemove", mouseLockMove, false);
+        }
+    } else { //IS POPUP MODE
+        //TODO: Open Options and auto start mouse lock.
+    }
+    
+}
+
+var toggleMouseLockUI = function () {
     if (!mouseLocked) {
         $("#lock_mouse_button").toggleClass('title_mouse_unlocked_button title_mouse_locked_button');
+        $("#mouse_lock_cover").css("display","block");
         mouseLocked = true;
     } else {
         $("#lock_mouse_button").toggleClass('title_mouse_locked_button title_mouse_unlocked_button');
-        mouseLocked = false;
+        $("#mouse_lock_cover").css("display","none");
+        mouseLocked = false; firstMoveDone = false;
     }
-
 }
+
+var firstMoveDone = false;
+
+function mouseLockChange(e){
+    toggleMouseLockUI();
+}
+
+function mouseLockMove(e) {
+    if(mouseLocked && firstMoveDone) {
+        var deltaX = e.movementX || e.mozMovementX || e.webkitMovementX || 0,
+            deltaY = e.movementY || e.mozMovementY || e.webkitMovementY || 0;
+        sendMovement(deltaX, deltaY);
+        //console.log("(" + deltaX + ", " + deltaY + ")");
+    } else if(mouseLocked && !firstMoveDone) {
+        firstMoveDone = true;
+    }
+}
+
+
 
 var showOptionsPanel = function (enable) {
     if(settingsActive) showSettingsMenuPanel();
@@ -1589,16 +1672,20 @@ var showOptionsPanel = function (enable) {
 
     if (!optionsActive) { //Open Options
 
+        var closeOffset = 50;
+        if(isInFullTabMode) closeOffset = 0;
+
         $("#options_panel_container").stop().animate({
-            bottom: "50"
+            bottom: closeOffset
         }, 320, function () {
             // Animation complete.
-
+            if(!isInFullTabMode) $("#title_bar_title").css("width", "192px");
+            else                 $("#title_bar_title").css("width", "768px");
             document.getElementById("title_bar_title").textContent = "options";
-            $("#title_bar_title").css("width", "192");
+            
             $("#options_close_button").css("display", "block");
 
-            if (touchActive) {
+            if (touchActive || isInFullTabMode) {
                 $("#lock_mouse_button").css("display", "none");
                 $("#touch_pad_open_button").css("display", "none");
             } else {
@@ -1610,16 +1697,25 @@ var showOptionsPanel = function (enable) {
 
         optionsActive = true;
         disableKeyBoardEvents();
+        if(isInFullTabMode){
+            $("#options_panel_container").css("z-index","5");
+            $('.options_tabs_bottom_filler').css("z-index","6");
+
+        } 
 
     } else { //Close Options
 
+        var closeOffset = -286;
+        if(isInFullTabMode) closeOffset = -432;
+
         $("#options_panel_container").stop().animate({
-            bottom: "-286"
+            bottom: closeOffset
         }, 320, function () {
             // Animation complete.    
 
             $("#options_close_button").css("display", "none");
-            $("#title_bar_title").css("width", "128");
+            if(!isInFullTabMode) $("#title_bar_title").css("width", "128px");
+            else                 $("#title_bar_title").css("width", "832px");
 
             if (touchActive) {
                 document.getElementById("title_bar_title").textContent = "touch pad";
@@ -1627,11 +1723,18 @@ var showOptionsPanel = function (enable) {
                 $("#lock_mouse_button").css("display", "block");
                 $("#touch_pad_open_button").css("display", "block");
             } else {
-                document.getElementById("title_bar_title").textContent = "remote";
+                if(!isInFullTabMode) {
+                    document.getElementById("title_bar_title").textContent = "remote";
+                    $("#lock_mouse_button").css("display", "none");
+                    $("#touch_pad_open_button").css("display", "block");
+                    $("#alt_panel_button").css("display", "block");
 
-                $("#lock_mouse_button").css("display", "none");
-                $("#touch_pad_open_button").css("display", "block");
-                $("#alt_panel_button").css("display", "block");
+                }
+                else {
+                    document.getElementById("title_bar_title").textContent = "full remote";
+                    $("#lock_mouse_button").css("display", "block");
+                }
+                
 
             }
 
@@ -1654,6 +1757,10 @@ var showOptionsPanel = function (enable) {
         optionsActive = false;
         devices_options_active = false; apps_options_active = false; channels_options_active = false;
         enableKeyBoardEvents();
+        if(isInFullTabMode){
+            $("#options_panel_container").css("z-index","2");
+            $('.options_tabs_bottom_filler').css("z-index","3");
+        } 
     }
 
 }
@@ -2136,73 +2243,94 @@ function enableDraggableButtons() {
 //Init drag/drop sorting.
 function initGridster() {
     
-    if(localStorage.getItem("button_layout")){
-        buttonLayoutJson = JSON.parse( localStorage.getItem("button_layout") );
-        for(var i=0; i < document.getElementsByClassName("drag_btn").length; i++){
-                         document.getElementsByClassName("drag_btn")[i].setAttribute("data-row", buttonLayoutJson[i].row);
-                         document.getElementsByClassName("drag_btn")[i].setAttribute("data-col", buttonLayoutJson[i].col);  }
-    } else buttonLayoutJson = JSON.parse( defaultButtonLayoutStr );
+    // if(localStorage.getItem("button_layout")){
+    //     buttonLayoutJson = JSON.parse( localStorage.getItem("button_layout") );
+    //     for(var i=0; i < document.getElementsByClassName("drag_btn").length; i++){
+    //                      document.getElementsByClassName("drag_btn")[i].setAttribute("data-row", buttonLayoutJson[i].row);
+    //                      document.getElementsByClassName("drag_btn")[i].setAttribute("data-col", buttonLayoutJson[i].col);  }
+    // } else buttonLayoutJson = JSON.parse( defaultButtonLayoutStr );
 
     //Init gridster on all three button panels.
-    gridster[0] = $("#remote_button_panel_main ul").gridster({
-        namespace: '#remote_button_panel_main',
-        widget_margins: [0, 0],
-        widget_base_dimensions: [64, 48],
-        shift_larger_widgets_down: false,
-        max_rows: 7,
-        max_cols: 5,
-        min_rows: 7,
-        min_cols: 5,
-        max_size_x: 5,
-        max_size_y: 7,
-        draggable: {
-            start:function(e, ui, $widget) {},
-            drag: function(e, ui, $widget) {},
-            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
-          }
-    }).data('gridster');
-    gridster[1] = $("#remote_button_panel_alt ul").gridster({
-        namespace: '#remote_button_panel_alt',
-        widget_margins: [0, 0],
-        widget_base_dimensions: [64, 48],
-        shift_larger_widgets_down: false,
-        max_rows: 7,
-        max_cols: 5,
-        min_rows: 7,
-        min_cols: 5,
-        max_size_x: 5,
-        max_size_y: 7,
-        draggable: {
-            start:function(e, ui, $widget) {},
-            drag: function(e, ui, $widget) {},
-            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
-          }
-    }).data('gridster');
-    gridster[2] = $("#remote_button_panel_touch ul").gridster({
-        namespace: '#remote_button_panel_touch',
-        widget_margins: [0, 0],
-        widget_base_dimensions: [64, 48],
-        shift_larger_widgets_down: false,
-        max_rows: 7,
-        max_cols: 5,
-        min_rows: 7,
-        min_cols: 5,
-        max_size_x: 5,
-        max_size_y: 7,
-        draggable: {
-            start:function(e, ui, $widget) {},
-            drag: function(e, ui, $widget) {},
-            stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
-          }
-    }).data('gridster');
+    if( isInFullTabMode ){
+        gridster[0] = $("#remote_button_panel_main ul").gridster({
+            namespace: '#remote_button_panel_main',
+            widget_margins: [0, 0],
+            widget_base_dimensions: [64, 48],
+            shift_larger_widgets_down: false,
+            max_rows: 10,
+            max_cols: 15,
+            min_rows: 10,
+            min_cols: 15,
+            max_size_x: 15,
+            max_size_y: 10,
+            draggable: {
+                start:function(e, ui, $widget) {},
+                drag: function(e, ui, $widget) {},
+                stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+              }
+        }).data('gridster');
+    } else {
+        gridster[0] = $("#remote_button_panel_main ul").gridster({
+            namespace: '#remote_button_panel_main',
+            widget_margins: [0, 0],
+            widget_base_dimensions: [64, 48],
+            shift_larger_widgets_down: false,
+            max_rows: 7,
+            max_cols: 5,
+            min_rows: 7,
+            min_cols: 5,
+            max_size_x: 5,
+            max_size_y: 7,
+            draggable: {
+                start:function(e, ui, $widget) {},
+                drag: function(e, ui, $widget) {},
+                stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+              }
+        }).data('gridster');    
+        gridster[1] = $("#remote_button_panel_alt ul").gridster({
+            namespace: '#remote_button_panel_alt',
+            widget_margins: [0, 0],
+            widget_base_dimensions: [64, 48],
+            shift_larger_widgets_down: false,
+            max_rows: 7,
+            max_cols: 5,
+            min_rows: 7,
+            min_cols: 5,
+            max_size_x: 5,
+            max_size_y: 7,
+            draggable: {
+                start:function(e, ui, $widget) {},
+                drag: function(e, ui, $widget) {},
+                stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+              }
+        }).data('gridster');
+        gridster[2] = $("#remote_button_panel_touch ul").gridster({
+            namespace: '#remote_button_panel_touch',
+            widget_margins: [0, 0],
+            widget_base_dimensions: [64, 48],
+            shift_larger_widgets_down: false,
+            max_rows: 7,
+            max_cols: 5,
+            min_rows: 7,
+            min_cols: 5,
+            max_size_x: 5,
+            max_size_y: 7,
+            draggable: {
+                start:function(e, ui, $widget) {},
+                drag: function(e, ui, $widget) {},
+                stop: function(e, ui, $widget) { saveButtonLayoutSettings(); }
+              }
+        }).data('gridster');
+    }
+    
 
     //Check for user setting, then lock or unlock button dragging.
-    if(localStorage.getItem("buttons_draggable")){
-        var isDraggableString = localStorage.getItem("buttons_draggable")+"";
-        console.log(isDraggableString);
-        if(isDraggableString === "true") enableDraggableButtons();
-        else disableDraggableButtons();
-    }
+    // if(localStorage.getItem("buttons_draggable")){
+    //     var isDraggableString = localStorage.getItem("buttons_draggable")+"";
+    //     console.log(isDraggableString);
+    //     if(isDraggableString === "true") enableDraggableButtons();
+    //     else disableDraggableButtons();
+    // }
 
 }
 
@@ -2217,7 +2345,13 @@ var initTouchPadEvents = function () {
 
     $("#remote_touch_pad").on('mousedown', function (e) {
 
-        $("#remote_touch_pad").css("height", "431");
+        if( isInFullTabMode ){
+            $("#remote_touch_pad").css("width", "960px");
+            $("#remote_touch_pad").css("height", "480px");
+            $("#remote_touch_pad").css("left", "-320px");
+        } else {
+            $("#remote_touch_pad").css("height", "431px");
+        }
         $("#remote_button_panels").css("z-index", "3");
 
         touchPadMouseDown = true;
@@ -2228,7 +2362,14 @@ var initTouchPadEvents = function () {
 
     $("#remote_touch_pad").on('mouseup', function (e) {
 
-        $("#remote_touch_pad").css("height", "239");
+        if( isInFullTabMode ){
+            $("#remote_touch_pad").css("width", "640px");
+            $("#remote_touch_pad").css("height", "335px");
+            $("#remote_touch_pad").css("left", "0px");
+        } else {
+            $("#remote_touch_pad").css("height", "239px");
+        }
+        
         $("#remote_button_panels").css("z-index", "1");
 
         touchPadMouseDown = false;
@@ -2242,7 +2383,13 @@ var initTouchPadEvents = function () {
 
     $("#remote_touch_pad").on('mouseout', function () {
 
-        $("#remote_touch_pad").css("height", "239");
+        if( isInFullTabMode ){
+            $("#remote_touch_pad").css("width", "640px");
+            $("#remote_touch_pad").css("height", "335px");
+            $("#remote_touch_pad").css("left", "0px");
+        } else {
+            $("#remote_touch_pad").css("height", "239px");
+        }
         $("#remote_button_panels").css("z-index", "1");
 
     });
@@ -2251,23 +2398,14 @@ var initTouchPadEvents = function () {
     var prevY = -1;
 
     $("#remote_touch_pad").on('mousemove', function (e) {
-
         var currentX = e.clientX;
         var currentY = e.clientY;
+        var deltaX   = e.clientX - prevX;
+        var deltaY   = e.clientY - prevY;
 
-        var deltaX = e.clientX - prevX;
-        var deltaY = e.clientY - prevY;
-
-
-
-        if (touchPadMouseDown) {
-
-            //console.log(e);
-            sendMovement(deltaX, deltaY);
-            //console.log(deltaX + "  " + deltaY);
+        if (touchPadMouseDown && !mouseLocked) {
+            sendMovement(deltaX, deltaY); //console.log(deltaX + "  " + deltaY);
         }
-
-
         if (mouseDownX != e.clientX && mouseDownY != e.clientY && !mouseMoved)
             mouseMoved = true;
         prevX = e.clientX;
@@ -2275,15 +2413,10 @@ var initTouchPadEvents = function () {
     });
 
     //$('#remote_touch_pad').bind('mousewheel', function(event, delta) {
-
-    //this.scrollLeft -= (delta * 30);
-
-    //event.preventDefault();
-
-    //console.log(event);
-
-    //sendScroll(scrollX, scrollY);
-
+    //  this.scrollLeft -= (delta * 30);
+    //  event.preventDefault();
+    //  console.log(event);
+    //  sendScroll(scrollX, scrollY);
     //});
 
     //adding the event listerner for Mozilla
@@ -2331,18 +2464,13 @@ var initTouchPadEvents = function () {
 
 
 var enableKeyBoardEvents = function() {
-	
 	document.body.addEventListener('keydown', keyBoardEvents,false);
 	console.log('Enabled keyboard mode.');
-	//showKeyboardIcon();
-	
 }
 
 var disableKeyBoardEvents = function() {
-	
 	document.body.removeEventListener('keydown', keyBoardEvents, false);
 	console.log('Disabled keyboard mode.');
-	//hideKeyboardIcon();
 }
 
 var keyBoardEvents = function(e) {
@@ -2685,6 +2813,24 @@ var keyBoardEvents = function(e) {
 	    }	       
 	    if(keyCodeSent)
 	    {
+            //$("#keyboard_activity_indicator").css("opacity","1");
+            $( "#keyboard_activity_indicator" ).stop().animate({
+                    opacity: 0.75,
+            }, 100, function() {
+                $( "#keyboard_activity_indicator" ).stop().animate({
+                        opacity: 0.25,
+                }, 200, function() {
+                    // Animation complete.
+                });
+            });
+            if(keyActTimeout) clearTimeout(keyActTimeout);
+            keyActTimeout = setTimeout(function(){
+                $( "#keyboard_activity_indicator" ).stop().animate({
+                    opacity: 0,
+                }, 250, function() {
+                    // Animation complete.
+                });
+            }, 300);
 	    	//backgroundPageWindow.console.log('Keyboard code \'' + e.keyCode +'\' was sent to connected device.'); //For Debug use only. Disable for security reasons. 
 	    	//console.log('Keyboard code \'' + 'SECURED' +'\' was sent to connected device.');	    	
 	    }	    
@@ -2696,7 +2842,7 @@ var keyBoardEvents = function(e) {
 	}
 	//indicatorFlash();	
 };
-
+var keyActTimeout = null;
 
 //Replaces an occurance of a substring within a string with another substring.
 String.prototype.replaceAll = function( token, newToken, ignoreCase ) {
@@ -2870,6 +3016,7 @@ function changeThemeColor(hex) {
     var borderColor = "";
 
     document.getElementById("main_container").style.backgroundColor = hex;
+    $('.options_tabs_bottom_filler').css("background-color", hex);
 
     if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
 
@@ -2879,7 +3026,8 @@ function changeThemeColor(hex) {
     $('.remote_button_rocker').css("border-top-color", borderColor);
     $('.remote_button_rocker').css("border-left-color", borderColor);
 
-    $('#remote_touch_pad').css("border-top-color", borderColor);
+    $('.touch_pad_filler').css("border-top-color", borderColor);
+    $('.touch_pad_filler').css("border-left-color", borderColor);
 
     $('#menu_items').css("border-top-color",   borderColor);
     $('#menu_items').css("border-right-color", borderColor);
@@ -2887,6 +3035,9 @@ function changeThemeColor(hex) {
     $('.menu_panel_category').css("border-bottom-color", borderColor);
 
     $('.sub_menu_panel').css("border-bottom-color", borderColor);
+
+    
+    $('.options_tabs_bottom_filler_inner').css("background-color", borderColor);    
 
     localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
 }
@@ -2899,4 +3050,44 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+
+
+var openCrxOptionsPage = function(){
+
+    var isTab = "false";
+
+    chrome.tabs.getAllInWindow(undefined, function(tabs) {
+        for (var i = 0, tab; tab = tabs[i]; i++) {
+            isTab = "false";
+            
+            if(tab.url == chrome.extension.getURL('index.html?tab') ){ isTab = "true"; }
+                if (tab.url && isTab == "true") {
+                    if(isInFullTabMode)
+                    {
+                        chrome.tabs.update(tab.id, {'pinned': !tab.pinned, selected: true});
+                        console.log("Full Tab Mode was detected. Toggle tabs pinned state.");
+                        isTab = "true";
+                        break;
+                    }
+                    else
+                    {
+                        chrome.tabs.update(tab.id, {selected: true});
+                        console.log("Full Tab Mode was detected. Selected Full Mode Tab.");
+                        isTab = "true";
+                        break;
+                    }
+                }   
+        }
+        if(isTab == "false") {
+            chrome.tabs.create( {
+                index: 0,
+                url: chrome.extension.getURL('index.html?tab'),
+                pinned: true
+            } );
+            console.log("Full Tab Mode was not detected. Enabling Full Tab Mode.");
+        }
+    });
+
 }
