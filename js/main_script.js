@@ -211,9 +211,9 @@ function initUndoDefaults() {
                     timeLeft  = 60000 - timeSince,
                   percentLeft = (timeLeft / 60000) * 100;
                    pixelWidth = Math.round($("#undo_default_timeleft_holder").width() * percentLeft / 100);
-                $("#undo_default_timeleft").css("width", percentLeft+"%");
+                $("#undo_default_timeleft").css("width", Math.round(percentLeft)+"%");
                 //$("#undo_default_timeleft").css("width", pixelWidth+"px");
-            }, 10);
+            }, 500);
         } else undoTimeout();
     }
 }
@@ -244,7 +244,7 @@ window.onload = function () {
 
     
 
-    initColorPicker();
+    
 
     initMenuItemEvents();
 
@@ -368,7 +368,7 @@ window.onload = function () {
         $("#apps_selected").css("display", "none");
         $("#channels_selected").css("display", "none");
 
-        $("#options_button_devices").css("color", "#3ea8b7");
+        $("#options_button_devices").css("color", balanceSaturation(themeHexColor,"#dcdee0"));
         $("#options_button_apps").css("color", "#7a7b7d");
         $("#options_button_channels").css("color", "#7a7b7d");
         
@@ -455,7 +455,7 @@ window.onload = function () {
         $("#channels_selected").css("display", "none");
 
         $("#options_button_devices").css("color", "#7a7b7d");
-        $("#options_button_apps").css("color", "#3ea8b7");
+        $("#options_button_apps").css("color", balanceSaturation(themeHexColor,"#dcdee0"));
         $("#options_button_channels").css("color", "#7a7b7d");        
 
         apps_options_active = true;
@@ -527,7 +527,7 @@ window.onload = function () {
 
         $("#options_button_devices").css("color", "#7a7b7d");
         $("#options_button_apps").css("color", "#7a7b7d");
-        $("#options_button_channels").css("color", "#3ea8b7");
+        $("#options_button_channels").css("color", balanceSaturation(themeHexColor,"#dcdee0"));
 
         apps_options_active = false;
         devices_options_active = false;
@@ -1365,6 +1365,7 @@ var showSettingsMenuPanel = function() {
                     $("#title_bar_title").css("width","192px");
                 } else {
                     $(".title_close_menu_button").css("float","left");
+                    $("#lock_mouse_button").css("display","none");
                 }
         });
         if(altActive && !touchActive){    
@@ -1420,11 +1421,11 @@ var showSettingsMenuPanel = function() {
             if(!isInFullTabMode) $("#touch_pad_open_button").css("display","block");            
             
             if(!isInFullTabMode) {
-                $("#full_mode_button").css("display","none");
-                document.getElementById("title_bar_title").textContent = "remote";
-                $("#title_bar_title").css("width","128px");    
+                $("#full_mode_button").css("display","none");                
+                
             } else {
                 document.getElementById("title_bar_title").textContent = "full remote";
+                $("#lock_mouse_button").css("display","block");
             }
             
 
@@ -1437,6 +1438,13 @@ var showSettingsMenuPanel = function() {
             }, 320, function () {
                 // Animation complete.
                 $("#alt_panel_button").css("display","block");
+
+                if(!isInFullTabMode) {
+                    document.getElementById("title_bar_title").textContent = "remote";
+                    $("#title_bar_title").css("width","128px");
+                }
+                else document.getElementById("title_bar_title").textContent = "full remote";
+                
             });
 
         } else if(touchActive){    
@@ -1446,6 +1454,12 @@ var showSettingsMenuPanel = function() {
             }, 320, function () {
                 // Animation complete.
                 if(!isInPopUpMode) $("#lock_mouse_button").css("display","block");
+
+                if(!isInFullTabMode) {
+                    document.getElementById("title_bar_title").textContent = "touch pad";
+                    $("#title_bar_title").css("width","192px");
+                }
+                else document.getElementById("title_bar_title").textContent = "full remote";
             });
 
         } else {
@@ -1454,7 +1468,13 @@ var showSettingsMenuPanel = function() {
                 left: "0"
             }, 320, function () {
                 // Animation complete.
-                if(!isInFullTabMode) $("#alt_panel_button").css("display","block");
+                if(!isInFullTabMode) {
+                    $("#alt_panel_button").css("display","block");
+                    $("#title_bar_title").css("width","128px");
+                    document.getElementById("title_bar_title").textContent = "remote";
+                }
+                else document.getElementById("title_bar_title").textContent = "full remote";
+
             });
 
         }
@@ -1549,6 +1569,7 @@ var showTouchPad = function () {
             document.getElementById("title_bar_title").textContent = "touch pad";
 
             if(!isInPopUpMode) $("#lock_mouse_button").css("display", "block");
+            if(isInPopUpMode) $("#title_bar_title").css("width", "192px");
             $("#alt_panel_button").css("display", "none");
             $("#touch_pad_open_button").toggleClass('title_open_touch_button title_close_alt_button');
         });
@@ -1580,6 +1601,7 @@ var showTouchPad = function () {
             document.getElementById("title_bar_title").textContent = "remote";
 
             $("#lock_mouse_button").css("display", "none");
+            if(isInPopUpMode) $("#title_bar_title").css("width", "128px");
             $("#alt_panel_button").css("display", "block");
             $("#touch_pad_open_button").toggleClass('title_close_alt_button title_open_touch_button');
         });
@@ -1680,7 +1702,7 @@ var showOptionsPanel = function (enable) {
         }, 320, function () {
             // Animation complete.
             if(!isInFullTabMode) $("#title_bar_title").css("width", "192px");
-            else                 $("#title_bar_title").css("width", "768px");
+            else                 $("#title_bar_title").css("width", "832px");
             document.getElementById("title_bar_title").textContent = "options";
             
             $("#options_close_button").css("display", "block");
@@ -2220,10 +2242,15 @@ var initAppIntents = function(){
 
 
 function saveButtonLayoutSettings(){
-    buttonLayoutJson = JSON.parse("["
+    if(!isInFullTabMode){
+        buttonLayoutJson = JSON.parse("["
                      + JSON.stringify( gridster[0].serialize() ).replaceAll("[","").replaceAll("]","") + ","
                      + JSON.stringify( gridster[1].serialize() ).replaceAll("[","").replaceAll("]","") + ","
                      + JSON.stringify( gridster[2].serialize() ).replaceAll("[","").replaceAll("]","") + "]" );
+    } else {
+        buttonLayoutJson = gridster[0].serialize();
+    }
+    
     localStorage.setItem("button_layout", JSON.stringify(buttonLayoutJson) );
     if(undoLayoutFound) undoTimeout();
 }
@@ -2243,12 +2270,7 @@ function enableDraggableButtons() {
 //Init drag/drop sorting.
 function initGridster() {
     
-    // if(localStorage.getItem("button_layout")){
-    //     buttonLayoutJson = JSON.parse( localStorage.getItem("button_layout") );
-    //     for(var i=0; i < document.getElementsByClassName("drag_btn").length; i++){
-    //                      document.getElementsByClassName("drag_btn")[i].setAttribute("data-row", buttonLayoutJson[i].row);
-    //                      document.getElementsByClassName("drag_btn")[i].setAttribute("data-col", buttonLayoutJson[i].col);  }
-    // } else buttonLayoutJson = JSON.parse( defaultButtonLayoutStr );
+    
 
     //Init gridster on all three button panels.
     if( isInFullTabMode ){
@@ -3017,27 +3039,34 @@ function changeThemeColor(hex) {
 
     document.getElementById("main_container").style.backgroundColor = hex;
     $('.options_tabs_bottom_filler').css("background-color", hex);
+    $('#ad_block_back').css("background-color", hex);
+    $('.loaderImage').css("background-color", balanceSaturation(hex,"#f5f6f6"));
+
+    $('#devices_refresh_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
+    $('#devices_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));
+    $('#apps_sync_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
+    $('#intent_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));  
+    $('#update_channels_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
+    $('#macro_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));  
 
     if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
 
     $(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
     $('.remote_button').css("border-left-color", borderColor);
-
     $('.remote_button_rocker').css("border-top-color", borderColor);
     $('.remote_button_rocker').css("border-left-color", borderColor);
-
     $('.touch_pad_filler').css("border-top-color", borderColor);
     $('.touch_pad_filler').css("border-left-color", borderColor);
-
     $('#menu_items').css("border-top-color",   borderColor);
     $('#menu_items').css("border-right-color", borderColor);
     $('.menu_item').css("border-bottom-color", borderColor);
     $('.menu_panel_category').css("border-bottom-color", borderColor);
-
     $('.sub_menu_panel').css("border-bottom-color", borderColor);
+    $('#ad_block_back').css("border-color",   borderColor); 
+    $('.options_tabs_bottom_filler_inner').css("background-color", borderColor);
 
     
-    $('.options_tabs_bottom_filler_inner').css("background-color", borderColor);    
+
 
     localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
 }
@@ -3063,22 +3092,21 @@ var openCrxOptionsPage = function(){
             isTab = "false";
             
             if(tab.url == chrome.extension.getURL('index.html?tab') ){ isTab = "true"; }
-                if (tab.url && isTab == "true") {
-                    if(isInFullTabMode)
-                    {
-                        chrome.tabs.update(tab.id, {'pinned': !tab.pinned, selected: true});
-                        console.log("Full Tab Mode was detected. Toggle tabs pinned state.");
-                        isTab = "true";
-                        break;
-                    }
-                    else
-                    {
-                        chrome.tabs.update(tab.id, {selected: true});
-                        console.log("Full Tab Mode was detected. Selected Full Mode Tab.");
-                        isTab = "true";
-                        break;
-                    }
-                }   
+            if(tab.url && isTab == "true") {
+                if(isInFullTabMode) {
+                    chrome.tabs.update(tab.id, {'pinned': !tab.pinned, selected: true});
+                    console.log("Full Tab Mode was detected. Toggle tabs pinned state.");
+                    isTab = "true";
+                    window.close();
+                    break;
+                } else {
+                    chrome.tabs.update(tab.id, {selected: true});
+                    console.log("Full Tab Mode was detected. Selected Full Mode Tab.");
+                    isTab = "true";
+                    window.close();
+                    break;
+                }
+            }   
         }
         if(isTab == "false") {
             chrome.tabs.create( {
@@ -3087,7 +3115,56 @@ var openCrxOptionsPage = function(){
                 pinned: true
             } );
             console.log("Full Tab Mode was not detected. Enabling Full Tab Mode.");
+            window.close();
         }
     });
 
+}
+
+
+function balanceSaturation(hex, bgHex){
+    var newHex = hex;
+    if(!bgHex) bgHex = "#dcdee0";
+
+    //console.log(hex[1] + hex[3] + hex[5]);
+    var r1 = hex[1], r2 = hex[2],
+        g1 = hex[3], g2 = hex[4],
+        b1 = hex[5], b2 = hex[6],
+        r = hex[1] + hex[2],
+        g = hex[3] + hex[4],
+        b = hex[5] + hex[6];
+
+    var saturation = parseInt(r1, 16) + parseInt(g1, 16) + parseInt(b1, 16);
+    console.log("Saturation LVL: " + saturation);
+
+    var bgDiff = (parseInt(bgHex[1]+bgHex[2]+"", 16) + parseInt(bgHex[3]+bgHex[4]+"", 16) + parseInt(bgHex[5]+bgHex[6]+"", 16)) - (parseInt(r, 16) + parseInt(g, 16) + parseInt(b, 16));
+    console.log("BG Difference: " + bgDiff);
+
+
+    //if(bgDiff < 0) bgDiff = bgDiff * -1;
+    if(bgDiff <=  50 && bgDiff >= 0) newHex = "#" + intToHex((hexToInt(r) - 40)) + intToHex((hexToInt(g) - 40)) + intToHex((hexToInt(b) - 40));
+    if(bgDiff >= -50 && bgDiff <  0) newHex = "#" + intToHex((hexToInt(r) + 40)) + intToHex((hexToInt(g) + 40)) + intToHex((hexToInt(b) + 40));
+
+    console.log("newHex: " + newHex   );
+
+    
+    if(saturation < 4) newHex = "#3ea8b7";
+    if(saturation <= 10 && saturation >= 4) newHex = "#" + intToHex((hexToInt(r) + 80)) + intToHex((hexToInt(g) + 80)) + intToHex((hexToInt(b) + 80));
+
+    bgDiff = (parseInt("dc", 16) + parseInt("de", 16) + parseInt("e0", 16)) - (parseInt(intToHex((hexToInt(r) - 40)), 16) + parseInt(intToHex((hexToInt(g) - 40)), 16) + parseInt(intToHex((hexToInt(b) - 40)), 16));
+        console.log("BG Difference: " + bgDiff);
+
+
+    return newHex;
+}
+
+function hexToInt(hex){ 
+    var integer = 0;
+    integer = parseInt(hex, 16 );
+    return integer;
+}
+function intToHex(integer){ 
+    var hex = "";
+    hex = integer.toString( 16 );
+    return hex; 
 }

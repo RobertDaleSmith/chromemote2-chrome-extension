@@ -5,7 +5,7 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 
-    
+    /*-webkit-filter: invert(100%);  */
 }
 
 #background_container{
@@ -18,6 +18,8 @@ body {
     min-height: 480px;
 
     overflow: hidden;
+
+
 }
 #background_full_mode{
     position: absolute;
@@ -107,14 +109,37 @@ body::-webkit-scrollbar {
 }
 
 #ad_block {
-    display: block;
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 320px;
-    height: 50px;
+    display: block; position: absolute;
+    bottom: 0px;    left: 0px;
+    width: 320px;   height: 50px;
     
     background-image: url("../images/ad_1.png");
+    background-size: 320px 50px;
+    
+}
+
+#ad_block_back {
+    display: block; position: absolute;
+    bottom: 0px;    left: 0px;
+    width: 319px;   height: 47px;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0,0,0,0.25);
+
+    border-right-width: 0px;
+    border-bottom-width: 2px;
+
+    background-color:#000;
+    background-image: url("../images/bg_full_remote.png");
+    background-position: 0px -480px;
+    
+}
+
+#ad_block_holder {
+    display: block; position: absolute;
+    bottom: 0px;    left: 0px;
+    width: 320px;   height: 50px;
     z-index: 2;
 }
 
@@ -1298,7 +1323,7 @@ body::-webkit-scrollbar {
     left: 64px;
     top: 0px;
     
-    width: 192px;
+    width: 190px;
     height: 25px;
     
     margin-top: 5px;
@@ -1330,7 +1355,7 @@ body::-webkit-scrollbar {
     left: 64px;
     top: 0px;
     
-    width: 60%;
+    width: 190px;
     height: 25px;
     
     margin-top: 5px;
@@ -1395,7 +1420,7 @@ body::-webkit-scrollbar {
     left: 64px;
     top: 0px;
     
-    width: 60%;
+    width: 190px;
     height: 25px;
     
     margin-top: 5px;
@@ -1454,57 +1479,23 @@ body::-webkit-scrollbar {
 }
 
 
-#loaderImage {
+.loaderImage {
     display: none;
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 64px;
-    height: 25px;
-    
+    width: 16px;
+    height: 16px;
     float:left;
     clear:none;
-        
-    background-color: transparent;
-        
+    border-top-width: 10px;
+    border-bottom-width: 9px;
+    border-left-width: 24px;
+    border-right-width:24px;
+    border-style: solid;
+    border-color: #f5f6f6;
+    background-color: #3ea8b7;
     text-align: center;
-    
-    padding-top: 10px;
-}
-
-#loaderImage2 {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 64px;
-    height: 25px;
-    
-    float:left;
-    clear:none;
-        
-    background-color: transparent;
-        
-    text-align: center;
-    
-    padding-top: 10px;
-}
-#loaderImage3 {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 64px;
-    height: 25px;
-    
-    float:left;
-    clear:none;
-        
-    background-color: transparent;
-        
-    text-align: center;
-    
-    padding-top: 10px;
 }
 
 .loaderImage img {

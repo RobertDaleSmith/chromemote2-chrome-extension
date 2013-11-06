@@ -1,5 +1,21 @@
+
+//Load saved custom layout configuration.
+if(localStorage.getItem("button_layout")){
+    buttonLayoutJson = JSON.parse( localStorage.getItem("button_layout") );
+    for(var i=0; i < document.getElementsByClassName("drag_btn").length; i++) {
+		document.getElementsByClassName("drag_btn")[i].setAttribute("data-row", buttonLayoutJson[i].row);
+		document.getElementsByClassName("drag_btn")[i].setAttribute("data-col", buttonLayoutJson[i].col);  
+	}
+
+	console.log(document.getElementsByClassName("drag_btn").length);
+	//Backup everything at/after length-9; create JSON string to be stored when saving in full mode.
+	//document.getElementsByClassName("drag_btn").length-9
+
+} else buttonLayoutJson = JSON.parse( defaultButtonLayoutStr );
+
 function initFullTabMode(){
 
+	//Shift positions to fit on fulltab mode.
 	var altButtonElements = document.getElementById("alt_button_list").getElementsByClassName("drag_btn");
 	for(var i=0; i < altButtonElements.length ; i++){
 
@@ -24,8 +40,8 @@ function initFullTabMode(){
 	$("#main_button_list").append( '<li data-row="10" data-col="1"  data-sizex="5" data-sizey="1" class=" fiveByOneFiller"></li>' );
 	$("#main_button_list").append( '<li data-row="10" data-col="11" data-sizex="5" data-sizey="1" class=" fiveByOneFiller"></li>' );
 	
-	var adBlockElementHtml = document.getElementById("ad_block").outerHTML + "";
-	$('#ad_block').remove();
+	var adBlockElementHtml = document.getElementById("ad_block_holder").outerHTML + "";
+	$('#ad_block_holder').remove();
 	$("#remote_button_panel_main").append(adBlockElementHtml);
 
 	var optionsElementHtml = document.getElementById("options_panel_container").outerHTML + "";
@@ -104,13 +120,17 @@ function initFullTabMode(){
     $("#mouse_lock_cover_label2").css("padding-left","320px");
 } 
 
-if(isInFullTabMode) {
+if(isInFullTabMode) { //IS FULL TAB MODE
 
 	initFullTabMode();
 
-} else { //IS POPUP MODE
+} else if(isInPopUpMode) { //IS POPUP MODE
 
 	$("#lock_mouse_button").css("display","none");
 
+} else { //IS MISC MODE
+	
 }
+
+initColorPicker();
 
