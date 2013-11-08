@@ -153,15 +153,11 @@ var sendScroll = function (scrollX, scrollY, callback) {
 
 //App UI Logic--------------------------------------------------
 
-var isInPopUpMode = false; if(document.URL.indexOf("?pop") != -1) isInPopUpMode = true;
+var isInPopUpMode   = false; if(document.URL.indexOf("?pop") != -1) isInPopUpMode   = true;
 var isInFullTabMode = false; if(document.URL.indexOf("?tab") != -1) isInFullTabMode = true;
-if( isInFullTabMode ) {
-    console.log("Full Tab Mode Starting...");
-} else if (isInPopUpMode) {
-    console.log("Popup Mode Starting...");
-} else {
-    console.log("Misc Mode Starting...");
-}
+if( isInFullTabMode )     { console.log("Full Tab Mode Starting...");
+} else if (isInPopUpMode) { console.log("Popup Mode Starting..."   );
+} else                    { console.log("Misc Mode Starting..."    ); }
 
 var devices_options_active  = false,
     apps_options_active     = false,
@@ -227,7 +223,7 @@ function undoTimeout(){
 }
 
 var gridster = [];
-var draggableButtonsEnabled = false;
+var draggableButtonsEnabled = false, darkBackEnabled = false;
 var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":2},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":2},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":2},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":1},{"col":1,"row":4,"size_x":1,"size_y":1},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":5,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":1},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":1,"row":6,"size_x":1,"size_y":2},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":5,"size_y":5},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":2},{"col":4,"row":6,"size_x":1,"size_y":2},{"col":5,"row":6,"size_x":1,"size_y":2},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1}]';
 
 
@@ -236,15 +232,9 @@ window.onload = function () {
 
     initMoteServer();
 
-    
+    if(!isInFullTabMode) initGridster();
 
-    initGridster();
-
-    initUndoDefaults();
-
-    
-
-    
+    initUndoDefaults();   
 
     initMenuItemEvents();
 
@@ -656,7 +646,7 @@ window.onload = function () {
 
 //DISABLES right-click globally.
 document.oncontextmenu = function() {
-    // return false;
+    //return false;
 }
 
 var updateChannelsListUI = function() {
@@ -1215,8 +1205,15 @@ var refreshCustomMacroListUI = function () {
 
 var showContextMenu = function (x, y, id, name, type) {
 
-    if (x > 205) x = 205;
-    if (y > 398) y = 398;
+    x = x - $("#main_container").offset().left;
+    if(isInFullTabMode) {  
+        if (x > 846) x = x - 110;
+        if (y > 448) y = y - 78;
+    } else {
+        if (x > 205) x = x - 110;
+        if (y > 398) y = y - 78;
+    }
+
 
     $("#apps_context_menu").css("display", "block");
     $("#apps_context_menu").css("left", x);
@@ -1351,9 +1348,13 @@ var showSettingsMenuPanel = function() {
 
         disableKeyBoardEvents();
 
-        $("#settings_menu_panel").stop().animate({
-                left: "0"
-            }, 320, function () {
+        if(isInFullTabMode){
+            $("#remote_button_panel_touch").stop().animate({ width:"320", left: "640" }, 320, function () { });
+            $("#remote_touch_pad").stop().animate({ width:"320" }, 320, function () { });
+            $(".touch_pad_filler").stop().animate({ 'background-position-x': "0px" }, 320, function () { });
+        }
+
+        $("#settings_menu_panel").stop().animate({ left: "0" }, 320, function () {
                 // Animation complete.
                 //$("#settings_menu_panel").toggleClass('title_open_alt_button title_close_alt_button');
 
@@ -1372,9 +1373,7 @@ var showSettingsMenuPanel = function() {
 
             if(!isInFullTabMode) $("#settings_menu_panel").css("background-image","url('images/bg_main.png')");
 
-            $("#remote_button_panel_alt").stop().animate({
-                left: "320"
-            }, 320, function () {
+            $("#remote_button_panel_alt").stop().animate({ left: "320" }, 320, function () {
                 // Animation complete.
                 $("#alt_panel_button").css("display","none");
             });
@@ -1387,9 +1386,7 @@ var showSettingsMenuPanel = function() {
             }
             
 
-            $("#remote_button_panel_touch").stop().animate({
-                left: "320"
-            }, 320, function () {
+            $("#remote_button_panel_touch").stop().animate({ left: "320" }, 320, function () {
                 // Animation complete.
                 $("#lock_mouse_button").css("display","none");
             });
@@ -1398,9 +1395,7 @@ var showSettingsMenuPanel = function() {
 
             if(!isInFullTabMode) $("#settings_menu_panel").css("background-image","url('images/bg_settings.png')");
             
-            $("#remote_button_panel_main").stop().animate({
-                left: "320"
-            }, 320, function () {
+            $("#remote_button_panel_main").stop().animate({ left: "320" }, 320, function () {
                 // Animation complete.
                 $("#alt_panel_button").css("display","none");
             });    
@@ -1411,9 +1406,13 @@ var showSettingsMenuPanel = function() {
 
         enableKeyBoardEvents();
 
-        $("#settings_menu_panel").stop().animate({
-            left: "-320"
-        }, 320, function () {
+        if(isInFullTabMode){
+            $("#remote_button_panel_touch").stop().animate({ width:"640", left: "320" }, 320, function () { });
+            $("#remote_touch_pad").stop().animate({ width:"640" }, 320, function () { });
+            $(".touch_pad_filler").stop().animate({ 'background-position-x': "160px" }, 320, function () { });
+        }
+
+        $("#settings_menu_panel").stop().animate({ left: "-320" }, 320, function () {
             // Animation complete.
             //$("#settings_menu_panel").toggleClass('title_close_alt_button title_open_alt_button');
 
@@ -1433,9 +1432,7 @@ var showSettingsMenuPanel = function() {
 
         if(altActive && !touchActive){  
 
-            $("#remote_button_panel_alt").stop().animate( {
-                left: "0"
-            }, 320, function () {
+            $("#remote_button_panel_alt").stop().animate( { left: "0" }, 320, function () {
                 // Animation complete.
                 $("#alt_panel_button").css("display","block");
 
@@ -1449,9 +1446,7 @@ var showSettingsMenuPanel = function() {
 
         } else if(touchActive){    
 
-            $("#remote_button_panel_touch").stop().animate( {
-                left: "0"
-            }, 320, function () {
+            $("#remote_button_panel_touch").stop().animate( { left: "0" }, 320, function () {
                 // Animation complete.
                 if(!isInPopUpMode) $("#lock_mouse_button").css("display","block");
 
@@ -1464,9 +1459,7 @@ var showSettingsMenuPanel = function() {
 
         } else {
 
-            $("#remote_button_panel_main").stop().animate( {
-                left: "0"
-            }, 320, function () {
+            $("#remote_button_panel_main").stop().animate( { left: "0" }, 320, function () {
                 // Animation complete.
                 if(!isInFullTabMode) {
                     $("#alt_panel_button").css("display","block");
@@ -1694,6 +1687,12 @@ var showOptionsPanel = function (enable) {
 
     if (!optionsActive) { //Open Options
 
+        if(isInFullTabMode){
+            $("#remote_button_panel_touch").stop().animate({ width:"320", left: "320" }, 320, function () { });
+            $("#remote_touch_pad").stop().animate({ width:"320" }, 320, function () { });
+            $(".touch_pad_filler").stop().animate({ 'background-position-x': "0px" }, 320, function () { });
+        }
+
         var closeOffset = 50;
         if(isInFullTabMode) closeOffset = 0;
 
@@ -1726,6 +1725,12 @@ var showOptionsPanel = function (enable) {
         } 
 
     } else { //Close Options
+
+        if(isInFullTabMode){
+            $("#remote_button_panel_touch").stop().animate({ width:"640", left: "320" }, 320, function () { });
+            $("#remote_touch_pad").stop().animate({ width:"640" }, 320, function () { });
+            $(".touch_pad_filler").stop().animate({ 'background-position-x': "160px" }, 320, function () { });
+        }
 
         var closeOffset = -286;
         if(isInFullTabMode) closeOffset = -432;
@@ -2155,6 +2160,12 @@ var initMenuItemEvents = function(){
         else                        disableDraggableButtons();
     });
 
+    $("#menu_item_settings_toggle_dark_back").click( function () {         
+        if(!darkBackEnabled) enableDarkBack(true);            
+        else                 enableDarkBack(false);
+    });
+
+
     $("#menu_item_settings_reset_default_layout").click( function () {
         if(!undoLayoutFound){
             var date = new Date(), time = date.getTime();
@@ -2240,6 +2251,23 @@ var initAppIntents = function(){
 }
 
 
+function enableDarkBack(bool) {
+    if(bool == null) bool = true;
+    darkBackEnabled = bool;
+    $("#dark_back_checkbox").prop("checked", bool);
+    localStorage.setItem("dark_back_full_mode", bool);
+
+    if(bool) $("#background_container").css("-webkit-filter","invert(100%)");
+    else     $("#background_container").css("-webkit-filter","");
+}
+function initDarkBackSetting() {
+    if(localStorage.getItem("dark_back_full_mode")){
+        var isDarkBackString = localStorage.getItem("dark_back_full_mode")+"";
+        console.log(isDarkBackString);
+        if(isDarkBackString === "true") enableDarkBack(true);
+        else enableDarkBack(false);
+    }
+}
 
 function saveButtonLayoutSettings(){
     if(!isInFullTabMode){
@@ -2266,6 +2294,9 @@ function enableDraggableButtons() {
     draggableButtonsEnabled = true;  
     localStorage.setItem("buttons_draggable", true);
 }
+
+
+
 
 //Init drag/drop sorting.
 function initGridster() {
@@ -2347,12 +2378,12 @@ function initGridster() {
     
 
     //Check for user setting, then lock or unlock button dragging.
-    // if(localStorage.getItem("buttons_draggable")){
-    //     var isDraggableString = localStorage.getItem("buttons_draggable")+"";
-    //     console.log(isDraggableString);
-    //     if(isDraggableString === "true") enableDraggableButtons();
-    //     else disableDraggableButtons();
-    // }
+    if(localStorage.getItem("buttons_draggable")){
+        var isDraggableString = localStorage.getItem("buttons_draggable")+"";
+        console.log(isDraggableString);
+        if(isDraggableString === "true") enableDraggableButtons();
+        else disableDraggableButtons();
+    } else enableDraggableButtons();
 
 }
 
@@ -3049,6 +3080,8 @@ function changeThemeColor(hex) {
     $('#update_channels_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
     $('#macro_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));  
 
+    
+
     if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
 
     $(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
@@ -3067,6 +3100,91 @@ function changeThemeColor(hex) {
 
     
 
+    var css = '.device_found_active{border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '                 background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                           hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                           hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+
+              '.device_found:active{color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              '.app_icon_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                               hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                               hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+              '.app_icon_item:active{color:'      + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              '.custom_intent_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+              '.custom_intent_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+              '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+              '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              '.system_channels_list_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+              '.system_channels_list_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                    hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+
+              '.device_found:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                                                              hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
+                                                              hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
+
+              
+              '.device_found_active .device_found_name_input:disabled{color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' +
+              '.device_found_active .device_found_name_input:disabled:active{color:'+ balanceSaturation(hex,"#f5f6f6") + '} \n' +
+              '.device_found_active .device_found_name_input:disabled:hover{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
+              '.device_found_active .device_found_ip{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
+              
+              // '#devices_refresh_button:active{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+              // '#devices_add_button:active{background-color:'     + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+              // '#apps_sync_button:active{background-color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+              // '#intent_add_button:active{background-color:'      + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+              // '#update_channels_button:active{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+              // '#macro_add_button:active{background-color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+
+
+              '';
+    $("#options_colors").remove();
+    var style=document.createElement('style');
+    style.id = "options_colors";
+    if (style.styleSheet) style.styleSheet.cssText=css; else style.appendChild(document.createTextNode(css));
+    document.getElementsByTagName('head')[0].appendChild(style);
+
+
+
 
     localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
 }
@@ -3084,13 +3202,10 @@ function hexToRgb(hex) {
 
 
 var openCrxOptionsPage = function(){
-
     var isTab = "false";
-
     chrome.tabs.getAllInWindow(undefined, function(tabs) {
         for (var i = 0, tab; tab = tabs[i]; i++) {
             isTab = "false";
-            
             if(tab.url == chrome.extension.getURL('index.html?tab') ){ isTab = "true"; }
             if(tab.url && isTab == "true") {
                 if(isInFullTabMode) {
@@ -3138,22 +3253,20 @@ function balanceSaturation(hex, bgHex){
     console.log("Saturation LVL: " + saturation);
 
     var bgDiff = (parseInt(bgHex[1]+bgHex[2]+"", 16) + parseInt(bgHex[3]+bgHex[4]+"", 16) + parseInt(bgHex[5]+bgHex[6]+"", 16)) - (parseInt(r, 16) + parseInt(g, 16) + parseInt(b, 16));
-    console.log("BG Difference: " + bgDiff);
-
+    //console.log("BG Difference: " + bgDiff);
 
     //if(bgDiff < 0) bgDiff = bgDiff * -1;
     if(bgDiff <=  50 && bgDiff >= 0) newHex = "#" + intToHex((hexToInt(r) - 40)) + intToHex((hexToInt(g) - 40)) + intToHex((hexToInt(b) - 40));
     if(bgDiff >= -50 && bgDiff <  0) newHex = "#" + intToHex((hexToInt(r) + 40)) + intToHex((hexToInt(g) + 40)) + intToHex((hexToInt(b) + 40));
 
-    console.log("newHex: " + newHex   );
+    //console.log("newHex: " + newHex   );
 
-    
     if(saturation < 4) newHex = "#3ea8b7";
-    if(saturation <= 10 && saturation >= 4) newHex = "#" + intToHex((hexToInt(r) + 80)) + intToHex((hexToInt(g) + 80)) + intToHex((hexToInt(b) + 80));
+    if(saturation <= 10 && saturation >= 4 && saturation < 40) newHex = "#" + intToHex((hexToInt(r) + 80)) + intToHex((hexToInt(g) + 80)) + intToHex((hexToInt(b) + 80));
+    if(saturation >= 40) newHex = "#79797a";
 
     bgDiff = (parseInt("dc", 16) + parseInt("de", 16) + parseInt("e0", 16)) - (parseInt(intToHex((hexToInt(r) - 40)), 16) + parseInt(intToHex((hexToInt(g) - 40)), 16) + parseInt(intToHex((hexToInt(b) - 40)), 16));
-        console.log("BG Difference: " + bgDiff);
-
+    //console.log("BG Difference: " + bgDiff);
 
     return newHex;
 }

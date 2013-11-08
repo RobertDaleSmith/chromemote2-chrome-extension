@@ -5,6 +5,12 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 
+    width: 100%;
+    min-width: 320px;
+
+    height: 100%;
+    min-height: 480px;
+
     /*-webkit-filter: invert(100%);  */
 }
 
@@ -15,7 +21,7 @@ body {
     height:100%;
 
     min-width: 320px;
-    min-height: 480px;
+    min-height: 530px;
 
     overflow: hidden;
 
@@ -1524,10 +1530,11 @@ body::-webkit-scrollbar {
     
     background-position:0px -672px; 
     
+    
 }
 #devices_refresh_button:active {
     background-position:-128px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 
@@ -1553,7 +1560,7 @@ body::-webkit-scrollbar {
 }
 #devices_add_button:active {
     background-position:-192px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 
@@ -1576,11 +1583,11 @@ body::-webkit-scrollbar {
     background-attachment:initial;
     
     background-position:0px -672px; 
-    
+
 }
 #apps_sync_button:active {
     background-position:-128px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 #update_channels_button {
@@ -1606,7 +1613,7 @@ body::-webkit-scrollbar {
 }
 #update_channels_button:active {
     background-position:-128px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 #intent_add_button {
@@ -1628,10 +1635,11 @@ body::-webkit-scrollbar {
     background-attachment:initial;
     
     background-position:-64px -672px; 
+
 }
 #intent_add_button:active {
     background-position:-192px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 #macro_add_button {
@@ -1653,10 +1661,11 @@ body::-webkit-scrollbar {
     background-attachment:initial;
     
     background-position:-64px -672px; 
+
 }
 #macro_add_button:active {
     background-position:-192px -672px; 
-    background-color: rgba(53, 168, 184, 0.10);
+    
 }
 
 #devices_list {
@@ -1706,11 +1715,12 @@ body::-webkit-scrollbar {
     
     background-color: #e0f5fa;
     background-color: rgba(53, 168, 184, 0.10);
+    
         
 }
 .device_found:active {
     color: #3ea8b8;
-    background-position:-640px -624px; 
+    /*background-position:-640px -624px; */
     border-style: solid;    
     border-width: 1px;
     border-color: #3ea8b8;
@@ -1737,7 +1747,8 @@ body::-webkit-scrollbar {
     background-repeat:no-repeat;
     background-attachment:initial;
     
-    background-position:-640px -624px;  
+    background-position:-640px -288px; 
+    /*background-position:-640px -624px;  */
     
     color: #3ea8b8;
 }
@@ -1810,7 +1821,7 @@ body::-webkit-scrollbar {
 }
 .installed_app_item:active {
     color: #3ea8b8;
-    background-position:-256px -672px;
+    /*background-position:-256px -672px;*/
     border-style: solid;
     border-width: 1px;
     border-color: #3ea8b8;
@@ -1866,7 +1877,7 @@ body::-webkit-scrollbar {
 }
 .custom_intent_item:active {
     color: #3ea8b8;
-    background-position:-0px -35px; 
+    /*background-position:-0px -35px; */
     border-style: solid;
     border-width: 1px;
     border-color: #3ea8b8;
@@ -1922,7 +1933,7 @@ body::-webkit-scrollbar {
 }
 .custom_macro_item:active {
     color: #3ea8b8;
-    background-position:-0px -94px; 
+    /*background-position:-0px -94px; */
     border-style: solid;
     border-width: 1px;
     border-color: #3ea8b8;
@@ -2263,7 +2274,7 @@ body::-webkit-scrollbar {
     padding-top: 10px;
     padding-left: 63px;
     padding-right: 63px;
-    padding-bottom: 22px;
+    padding-bottom: 24px;
 
     cursor: pointer;
     background-color:transparent;    
@@ -3473,6 +3484,21 @@ body::-webkit-scrollbar {
     right:15px;
 }
 
+#dark_back_checkbox_cover{
+    position: absolute;
+    display: block;
+    top:0px;
+    right:0px;
+    width:15%;
+    height:100%;
+
+}
+#dark_back_checkbox_holder{
+    position: absolute;
+    display: block;
+    top:7px;
+    right:15px;
+}
 
 
 

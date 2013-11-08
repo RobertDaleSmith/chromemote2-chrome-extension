@@ -3,6 +3,10 @@
     <head>
 	    <title>Chromemote 2</title>
 
+        <meta name="viewport" content="width=320, width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0" /> <!-- This will force the device viewport to maintain the correct scale -->
+        <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- This will remove the Safari web browsers address bar & bookmarks bar giving your web page a native appearance -->
+
+
        <!--jQuery Lib and Plugins | START -->
         <script type="text/javascript" src="libs/jquery/jquery.js"></script>
         <script type="text/javascript" src="libs/jquery/jquery.caret.js"></script>
@@ -106,7 +110,13 @@
                                 </div>
                             </div>
                             <!-- <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div> -->
-                            <div class="menu_item menu_item_sub_cat" id="">Dark Background (Full Mode) </div>
+                            <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_dark_back">Dark Background (Full Mode)
+                                <div class="checkBoxSquaredThree" id="dark_back_checkbox_holder">    
+                                    <input type="checkbox" value="None" id="dark_back_checkbox" name="check" />
+                                    <label for="dark_back_checkbox"></label>
+                                </div>
+                                <div id="dark_back_checkbox_cover"></div>
+                            </div>
                             <div class="menu_panel_category">User Settings</div>
                             <div class="menu_item menu_item_sub_cat" id="">Sign In</div>                            
                             <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div> -->

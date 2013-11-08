@@ -92,6 +92,8 @@ function initFullTabMode(){
     $("#touch_button_list .touch_pad_filler").css("width","639px");
     $("#touch_button_list .touch_pad_filler").css("height","335px");
 
+    $('#touch_button_list').css("display","none");
+
     $("#remote_touch_pad").css("width","640px");
     $("#remote_touch_pad").css("height","336px");
 
@@ -124,6 +126,9 @@ if(isInFullTabMode) { //IS FULL TAB MODE
 
 	initFullTabMode();
 
+	initGridster();
+
+
 } else if(isInPopUpMode) { //IS POPUP MODE
 
 	$("#lock_mouse_button").css("display","none");
@@ -132,5 +137,6 @@ if(isInFullTabMode) { //IS FULL TAB MODE
 	
 }
 
+initDarkBackSetting();
 initColorPicker();
 
