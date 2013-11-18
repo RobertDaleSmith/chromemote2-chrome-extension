@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>English</string>
+    <key>CFBundleExecutable</key>
+    <string>gtvremote.dylib</string>
+    <key>CFBundleGetInfoString</key>
+    <string>Copyright 2010 Google, Inc.</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.google.gtvremote</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Google TV Remote Plugin</string>
+    <key>CFBundlePackageType</key>
+    <string>BRPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFPlugInDynamicRegisterFunction</key>
+    <string></string>
+    <key>CFPlugInDynamicRegistration</key>
+    <string>NO</string>
+    <key>WebPluginDescription</key>
+    <string>Plugin to control Google TV devices</string>
+    <key>WebPluginMIMETypes</key>
+    <dict>
+      <key>application/x-gtvremote</key>
+      <dict>
+        <key>WebPluginTypeDescription</key>
+        <string>Google TV Remote</string>
+      </dict>
+    </dict>
+    <key>WebPluginName</key>
+    <string>Google TV Remote Plugin</string>
+  </dict>
+</plist>
+

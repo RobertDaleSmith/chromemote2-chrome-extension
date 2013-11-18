@@ -1,5 +1,5 @@
 {
-  "name": "Chromemote",
+  "name": "Chromemote 2 - Remote for Google TV™",
   "version": "2.1309.29",
   "manifest_version": 2,
   "incognito": "spanning",
@@ -7,14 +7,32 @@
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com; object-src 'self'",
   
   "description": "A better way to control Google TV. Fling videos, links, images, launch apps, plus full remote control of all your Google TVs.",
-  
+  "icons":{ 
+        "16": "images/icons/icon16.png",
+        "48": "images/icons/icon48.png",
+       "128": "images/icons/icon128.png" },
   "browser_action": {
     "default_popup": "index.html?pop",
-    "default_title": "Chromemote - The Google TV Remote for Chrome" 
+    "default_icon" : "images/icons/icon19.png",
+    "default_title": "Chromemote - The Google TV Remote for Chrome"
   },
-  
+  "background": {
+    "scripts": ["js/background_script.js",
+          "libs/anymote_npapi/js/bgpage_anymote_session_controller_.js",
+          "libs/anymote_npapi/js/bgpage_googletvremote_constants.js"]
+  },
   "options_page" : "index.html?tab",
-  
+  "plugins": [
+    { "path": "libs/anymote_npapi/plugins/gtvremote64_chromemote2_plugin.so" },
+    { "path": "libs/anymote_npapi/plugins/gtvremote32_chromemote2_plugin.so" },
+    { "path": "libs/anymote_npapi/plugins/gtvremote_chromemote2_plugin.plugin" },
+    { "path": "libs/anymote_npapi/plugins/gtvremote_chromemote2_plugin.dll" }
+  ],
+  "requirements": {
+    "plugins": {
+      "npapi": false
+    }
+  },
   "permissions": [
     "http://*/*", "https://*/*", "tabs", "background", "contextMenus","storage"
   ],

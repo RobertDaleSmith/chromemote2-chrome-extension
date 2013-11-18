@@ -1,155 +1,20 @@
-//Chrome AnyMote API Stuff---------------------------
-var anyMotePluginActive = false;
-
-//MoteServer API-------------------------------------
-var moteServerAddress = null,
-    moteServerActive  = false;
-if(localStorage.getItem("mote_server_ip")!= null) moteServerAddress = localStorage.getItem("mote_server_ip");
-
-var initMoteServer = function() {
-    $("#mote_server_ip_input_box").val(moteServerAddress);
+//Event Tracking Init--------------------------------------------------
+if(chrome.extension.getURL("/").indexOf("bhcjclaangpnjgfllaoodflclpdfcegb") >= 0)
+{
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-34201638-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = 'https://ssl.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    console.log("__CWS_MODE__");
 }
-var setMoteServer = function (address) {
-    moteServerAddress = address;
-    localStorage.setItem("mote_server_ip", moteServerAddress);
-    discoverDevices();
-    initMoteServer();
-    console.log("Mote Server set to " + address + ".");
-}
-var sendMoteCommand = function (key, value, callback) {
+else
+    console.log("__DEV_MODE__");
 
-    if (moteServerAddress) {
-        var url = 'http://' + moteServerAddress + ':8085/mote?' + key + '=' + value + '&time=' + new Date().getTime();
-        $.getJSON(url, function (data) {
-            console.log(JSON.stringify(data));
-            if (callback) callback(JSON.stringify(data));
-            moteServerActive = true;
-        }).fail(function () {
-            console.log("No response.");
-            moteServerActive = false;
-        });
-    } else { 
-        console.log("Mote Server not set.");
-    }
-
-}
-var sendKeyCode = function (keyCode, callback) {
-    sendMoteCommand("keycode", keyCode, callback);
-}
-var discoverDevices = function (callback) {
-    sendMoteCommand("discoverDevices", true, callback);
-}
-var isDiscovering = function (callback) {
-    sendMoteCommand("isDiscovering", true, callback);    
-}
-var getDeviceList = function (callback) {
-    sendMoteCommand("getDeviceList", true, callback);
-}
-var connectDevice = function (deviceIP, callback) {
-    sendMoteCommand("connectDevice", deviceIP, callback);
-}
-var isAwaitingPin = function (callback) {
-    sendMoteCommand("isAwaitingPin", true, callback);
-}
-var cancelPairCode = function (callback) {
-    sendMoteCommand("cancelPairCode", true, callback);
-}
-var sendPairCode = function (pinCode, callback) {
-    sendMoteCommand("sendPairCode", pinCode, callback);
-}
-var isConnectingNow = function (callback) {
-    sendMoteCommand("isConnectingNow", true, callback);
-}
-var connectSuccessOrFail = function (callback) {
-    sendMoteCommand("connectSuccessOrFail", true, callback);
-}
-var fling = function (flingUrl, callback) {
-    //url = url.replace("#", "%23");
-    //sendMoteCommand("fling", flingUrl, callback);
-
-    var url = "http://"+ moteServerAddress +":8085/mote?fling=" + flingUrl.replaceAll("#","%23") + "&time=" + new Date().getTime();
-    $.getJSON(url, function (data) {
-        console.log(JSON.stringify(data));
-        if(callback) callback(JSON.stringify(data));
-    }).fail(function () {
-        console.log("No response.");
-        moteServerActive = false;
-    });
-}
-var sendMacro = function (macro, callback) {
-    console.log(macro);
-    var macroKeyListObj = JSON.parse('["' + macro.replaceAll(',', '","') + '"]');
-
-
-    var qty = macroKeyListObj.length;
-    var counter = -1;
-
-    function next() {
-        counter++
-        if (counter < qty) {           
-            if (macroKeyListObj[counter].indexOf("DELAY_SEC_") != -1) {
-                var seconds = parseInt(macroKeyListObj[counter].replace("DELAY_SEC_", "")) * 1000;
-                setTimeout(next, seconds);
-            } else {
-                sendKeyCode("KEYCODE_" + macroKeyListObj[counter]);
-                setTimeout(next, 250);
-            }
-        }
-    }
-    next();
-
-
-
-}
-var prevSendMovementTime = 0;
-var sendMovement = function (deltaX, deltaY, callback) {
-
-    if(deltaX == 0.0 && deltaY == 0.0) return;
-
-    deltaX = deltaX * 10;
-    deltaY = deltaY * 10;
-
-
-    var time = new Date().getTime();
-    if (time - prevSendMovementTime > 15) {
-        //console.log(time - prevSendMovementTime);
-        prevSendMovementTime = time;
-        
-        var url = "http://" + moteServerAddress + ":8085/mote?sendMovement=true&deltaX=" + deltaX + "&deltaY=" + deltaY + "&time=" + new Date().getTime();
-        $.getJSON(url, function (data) {
-            console.log(JSON.stringify(data));
-            if (callback) callback(JSON.stringify(data));
-        }).fail(function () {
-            console.log("No response.");
-            moteServerActive = false;
-        });
-    }
-}
-var getInstalledApps = function (callback) {
-    sendMoteCommand("getInstalledApps", true, callback);
-}
-
-var getChannelListing = function (callback) {
-    sendMoteCommand("getChannelListing", true, callback);
-}
-
-
-var sendScroll = function (scrollX, scrollY, callback) {
-
-    scrollX = scrollX * -1;
-    scrollY = scrollY * -1;
-
-    var url = "http://" + moteServerAddress + ":8085/mote?sendScroll=true&scrollX=" + scrollX + "&scrollY=" + scrollY + "&time=" + new Date().getTime();
-    $.getJSON(url, function (data) {
-        console.log(JSON.stringify(data));
-        if (callback) callback(JSON.stringify(data));
-    }).fail(function () {
-        console.log("No response.");
-        moteServerActive = false;
-    });
-}
-
-
+var backgroundPageWindow = chrome.extension.getBackgroundPage();
 
 //App UI Logic--------------------------------------------------
 
@@ -186,6 +51,7 @@ if(localStorage.getItem("theme_colors")!= null) {
 
 var undoCountDownInterval = null;
 var buttonLayoutJson = [];                      //Load saved button layout if exist.
+var touchButtonLayoutJson = [];
 var undoButtonLayoutJSON = [];  var undoLayoutFound = false;
 function initUndoDefaults() {
     if( localStorage.getItem("button_layout_undo") ){
@@ -224,13 +90,18 @@ function undoTimeout(){
 
 var gridster = [];
 var draggableButtonsEnabled = false, darkBackEnabled = false;
-var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":2},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":2},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":2},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":1,"size_y":1},{"col":2,"row":1,"size_x":1,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":1,"size_y":1},{"col":3,"row":2,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":1,"size_y":1},{"col":5,"row":2,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":4,"row":3,"size_x":1,"size_y":1},{"col":5,"row":3,"size_x":1,"size_y":1},{"col":1,"row":4,"size_x":1,"size_y":1},{"col":2,"row":4,"size_x":1,"size_y":1},{"col":3,"row":4,"size_x":1,"size_y":1},{"col":4,"row":4,"size_x":1,"size_y":1},{"col":5,"row":4,"size_x":1,"size_y":1},{"col":1,"row":5,"size_x":1,"size_y":1},{"col":2,"row":5,"size_x":1,"size_y":1},{"col":3,"row":5,"size_x":1,"size_y":1},{"col":4,"row":5,"size_x":1,"size_y":1},{"col":5,"row":5,"size_x":1,"size_y":1},{"col":1,"row":6,"size_x":1,"size_y":2},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":1},{"col":4,"row":6,"size_x":1,"size_y":1},{"col":5,"row":6,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1},{"col":3,"row":7,"size_x":1,"size_y":1},{"col":4,"row":7,"size_x":1,"size_y":1},{"col":5,"row":7,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":5,"size_y":5},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":2},{"col":4,"row":6,"size_x":1,"size_y":2},{"col":5,"row":6,"size_x":1,"size_y":2},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1}]';
+var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false}]';
+
 
 
 document.onselectstart = function(){ return false; }
 window.onload = function () {
 
     initMoteServer();
+
+    googletvremoteInitializePlugin();
+    if (backgroundPageWindow.gTvPluginLoaded == false)
+        console.log('Plug-in Not Detected');
 
     if(!isInFullTabMode) initGridster();
 
@@ -241,6 +112,8 @@ window.onload = function () {
     initAppIntents();
 
     initTouchPadEvents();
+
+    initColorPicker();
 
     enableKeyBoardEvents();
 
@@ -255,7 +128,7 @@ window.onload = function () {
     $(".keycode").on('mousedown', function () {
           var thisButton = $(this);
           setTimeout(function () {
-              console.log('down');
+              //console.log('down');
               //console.log(thisButton.attr('class'));
               if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) {
                   return;
@@ -267,12 +140,12 @@ window.onload = function () {
 
     $(".keycode").on('mouseup', function () {
           var thisButton = $(this);
-          console.log('up');
+          //console.log('up');
           //console.log(thisButton.attr('class'));
           if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) {
               return;
           }
-          sendKeyCode(thisButton.attr('id'));
+          sendKeyCode(thisButton.attr('id').replaceAll("_2",""));
     });
     
     $("#menu_button").click(function () {
@@ -2263,7 +2136,7 @@ function enableDarkBack(bool) {
 function initDarkBackSetting() {
     if(localStorage.getItem("dark_back_full_mode")){
         var isDarkBackString = localStorage.getItem("dark_back_full_mode")+"";
-        console.log(isDarkBackString);
+        //console.log(isDarkBackString);
         if(isDarkBackString === "true") enableDarkBack(true);
         else enableDarkBack(false);
     }
@@ -2271,14 +2144,76 @@ function initDarkBackSetting() {
 
 function saveButtonLayoutSettings(){
     if(!isInFullTabMode){
-        buttonLayoutJson = JSON.parse("["
-                     + JSON.stringify( gridster[0].serialize() ).replaceAll("[","").replaceAll("]","") + ","
-                     + JSON.stringify( gridster[1].serialize() ).replaceAll("[","").replaceAll("]","") + ","
-                     + JSON.stringify( gridster[2].serialize() ).replaceAll("[","").replaceAll("]","") + "]" );
+        buttonLayoutJson = [];
+        var buttonElements = document.getElementById("main_button_list").getElementsByClassName("drag_btn");
+        for(var i=0; i<buttonsList.length; i++) {
+            var jsonString = '{"col":'    + $("#"+buttonsList[i].keycode).attr("data-col")   + 
+                             ',"row":'    + $("#"+buttonsList[i].keycode).attr("data-row")   + 
+                             ',"size_x":' + $("#"+buttonsList[i].keycode).attr("data-sizex") + 
+                             ',"size_y":' + $("#"+buttonsList[i].keycode).attr("data-sizey");
+            if(i<=65) jsonString = jsonString + ',"swap":'   + $("#"+buttonsList[i].keycode).attr("swap");
+            jsonString = jsonString + '}';
+            var jsonObj = JSON.parse(jsonString);
+            buttonLayoutJson.push(jsonObj);
+        }
+        //console.dir(buttonLayoutJson);
+
+        //buttonLayoutJson = JSON.parse("[" + JSON.stringify( gridster[0].serialize() ).replaceAll("[","").replaceAll("]","") + "," + JSON.stringify( gridster[1].serialize() ).replaceAll("[","").replaceAll("]","") + "," + JSON.stringify( gridster[2].serialize() ).replaceAll("[","").replaceAll("]","") + "]" );
+        //buttonLayoutJson.splice(73, 1);
     } else {
         buttonLayoutJson = gridster[0].serialize();
-    }
-    
+        buttonLayoutJson.splice(66, 3);
+
+        
+        var buttonElements = document.getElementById("main_button_list").getElementsByClassName("drag_btn");
+        
+        for(var i=0; i <= 65 ; i++){
+
+            buttonLayoutJson[i].swap = false;
+            if( i < 32 && !(buttonLayoutJson[i].row <= 7 && buttonLayoutJson[i].col <= 5) ) {
+                //MAIN Panel Buttons moved to ALT
+                console.log(  buttonElements[i].id + " was moved to ALT panel." );
+                buttonLayoutJson[i].swap = true;
+
+                if(buttonLayoutJson[i].col >= 1 && buttonLayoutJson[i].col <= 5) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 7;
+                } else if(buttonLayoutJson[i].col >= 6 && buttonLayoutJson[i].col <= 10) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 5;
+                    buttonLayoutJson[i].col = buttonLayoutJson[i].col - 5;
+                } else if(buttonLayoutJson[i].col >= 11 && buttonLayoutJson[i].col <= 15) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 2;
+                    buttonLayoutJson[i].col = buttonLayoutJson[i].col - 10;
+                }
+
+
+            } else if( i >= 32 && !(buttonLayoutJson[i].row >= 8) ) {
+                //ALT Panel Buttons moved to MAIN
+                console.log(  buttonElements[i].id + " was moved to MAIN panel." );
+                buttonLayoutJson[i].swap = true;
+
+            } else if( i >= 32 && i <= 65) { 
+                //ALT Panel Buttons Non-Swapped
+                if(buttonLayoutJson[i].col >= 1 && buttonLayoutJson[i].col <= 5) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 7;
+                } else if(buttonLayoutJson[i].col >= 6 && buttonLayoutJson[i].col <= 10) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 5;
+                    buttonLayoutJson[i].col = buttonLayoutJson[i].col - 5;
+                } else if(buttonLayoutJson[i].col >= 11 && buttonLayoutJson[i].col <= 15) {
+                    buttonLayoutJson[i].row = buttonLayoutJson[i].row - 2;
+                    buttonLayoutJson[i].col = buttonLayoutJson[i].col - 10;
+                }
+
+            }
+
+        }   
+        //Reinclude saved touchpad layout.
+
+        console.log(touchButtonLayoutJson);
+
+        for(var i=0; i < touchButtonLayoutJson.length; i++) {
+            buttonLayoutJson.push(touchButtonLayoutJson[i]);
+        }  
+    }  //console.dir(buttonLayoutJson);
     localStorage.setItem("button_layout", JSON.stringify(buttonLayoutJson) );
     if(undoLayoutFound) undoTimeout();
 }
@@ -2380,7 +2315,7 @@ function initGridster() {
     //Check for user setting, then lock or unlock button dragging.
     if(localStorage.getItem("buttons_draggable")){
         var isDraggableString = localStorage.getItem("buttons_draggable")+"";
-        console.log(isDraggableString);
+        //console.log(isDraggableString);
         if(isDraggableString === "true") enableDraggableButtons();
         else disableDraggableButtons();
     } else enableDraggableButtons();
@@ -3071,6 +3006,9 @@ function changeThemeColor(hex) {
     document.getElementById("main_container").style.backgroundColor = hex;
     $('.options_tabs_bottom_filler').css("background-color", hex);
     $('#ad_block_back').css("background-color", hex);
+    
+    $('body').css("background-color", 'rgba(' + giveHex(hex[1]+hex[2]+"") + ',' + giveHex(hex[3]+hex[4]+"") + ',' + giveHex(hex[5]+hex[6]+"") + ', 0.5)' );
+    
     $('.loaderImage').css("background-color", balanceSaturation(hex,"#f5f6f6"));
 
     $('#devices_refresh_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
@@ -3097,6 +3035,8 @@ function changeThemeColor(hex) {
     $('.sub_menu_panel').css("border-bottom-color", borderColor);
     $('#ad_block_back').css("border-color",   borderColor); 
     $('.options_tabs_bottom_filler_inner').css("background-color", borderColor);
+
+    if(isInFullTabMode) $('#main_button_list').css("border-color", borderColor);
 
     
 
@@ -3199,6 +3139,41 @@ function hexToRgb(hex) {
     } : null;
 }
 
+function getInverseHex(theString)
+{
+    theString = theString[0] + theString[1] + theString[2] + theString[3] + theString[4] + theString[5];
+    if(theString.length<6||theString.length>6){
+        window.alert('You Must Enter a six digit color code')
+        document.rin.reset();
+        return false;
+    }
+    a=theString.slice(0,2);
+    b=theString.slice(2,4);
+    c=theString.slice(4,6);
+    a1=16*giveHex(a.slice(0,1));
+    a2=giveHex(a.slice(1,2));
+    a=a1+a2;
+    b1=16*giveHex(b.slice(0,1));
+    b2=giveHex(b.slice(1,2));
+    b=b1+b2;
+    c1=16*giveHex(c.slice(0,1));
+    c2=giveHex(c.slice(1,2));
+    c=c1+c2;
+    newColor=DecToHex(255-a)+""+DecToHex(255-b)+""+DecToHex(255-c)
+    return "#" + newColor;
+    // alert("You Entered "+theString+" and \nYour inversed Color is \n"+newColor);
+    // myText="<table cellspacing='4' bgColor='#efefef' border='0' width='50%'><tr><td bgcolor='#"
+    // +""+newColor+"'><font color='#"+theString+"' size=2>Background='#"+newColor+"'<"
+    // +"\/font><\/td><td bgColor='#"+newColor+"'><font color='#"+theString+"' face=arial"
+    // +">Snippet1<\/font><\/td><\/tr><tr><td bgcolor='#"+theString+"'><font color='#"
+    // +""+newColor+"' size=2>Background='#"+theString+"'</font><\/td><td bgColor="
+    // +"'#"+theString+"'><font color='#"+newColor+"'>Snippet2<\/font><\/td><\/tr><\/table>"
+    // stat.innerHTML=myText
+    
+}
+var hexbase="0123456789ABCDEF";
+function DecToHex(number) { return hexbase.charAt((number>> 4)& 0xf)+ hexbase.charAt(number& 0xf); }
+function giveHex(s){ s=s.toUpperCase(); return parseInt(s,16); }
 
 
 var openCrxOptionsPage = function(){
@@ -3250,7 +3225,7 @@ function balanceSaturation(hex, bgHex){
         b = hex[5] + hex[6];
 
     var saturation = parseInt(r1, 16) + parseInt(g1, 16) + parseInt(b1, 16);
-    console.log("Saturation LVL: " + saturation);
+    //console.log("Saturation LVL: " + saturation);
 
     var bgDiff = (parseInt(bgHex[1]+bgHex[2]+"", 16) + parseInt(bgHex[3]+bgHex[4]+"", 16) + parseInt(bgHex[5]+bgHex[6]+"", 16)) - (parseInt(r, 16) + parseInt(g, 16) + parseInt(b, 16));
     //console.log("BG Difference: " + bgDiff);

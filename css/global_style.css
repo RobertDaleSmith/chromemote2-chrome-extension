@@ -5,13 +5,13 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 
-    width: 100%;
-    min-width: 320px;
-
-    height: 100%;
+    /*width: 100%;
+    height: 100%;*/
+    
+    min-width: 320px;    
     min-height: 480px;
 
-    /*-webkit-filter: invert(100%);  */
+    background-color: #fff;
 }
 
 #background_container{
@@ -26,13 +26,16 @@ body {
     overflow: hidden;
 
 
+    background-image:url("../images/bg_full_remote.png");
+    background-size: 100% 100%;
+
 }
 #background_full_mode{
     position: absolute;
-    background-image:url("../images/bg_full_mode.png");
-    /*background-size: 1440px 810px;*/
-    background-size: 100% 100%;
+    background-image:url("../images/bg_full_tile.png");
+    background-size: 6px 6px;
 
+    
     width:100%;
     height:100%;
 
@@ -426,6 +429,10 @@ body::-webkit-scrollbar {
     width: 320px;
     height: 336px;
 
+    border-style: solid;
+    border-width: 0px;
+    border-color: transparent;
+
     overflow: hidden;
 }
 
@@ -713,30 +720,29 @@ body::-webkit-scrollbar {
 
 .keycode {
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     background-position:0px 48px; 
     cursor: pointer;
 }
 
-#keycode_volume_rocker {
+#keycode_volume_rocker, #keycode_volume_rocker_2 {
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     background-position:0px 48px; 
     background-position:-256px -96px; 
 }
-#keycode_volume_rocker:active {
+#keycode_volume_rocker:active, #keycode_volume_rocker_2:active {
     background-position:-256px -432px; 
 }
 
-
-#keycode_home {
+#keycode_home,#keycode_home_2{
     background-position:0px 0px; 
 }
-#keycode_home:active {
+#keycode_home:active,#keycode_home_2:active {
     background-position:0px -336px; 
 }
 
@@ -761,10 +767,10 @@ body::-webkit-scrollbar {
     background-position:-192px -336px; 
 }
 
-#keycode_search {
+#keycode_search, #keycode_search_2 {
     background-position:-256px 0px; 
 }
-#keycode_search:active {
+#keycode_search:active, #keycode_search_2:active {
     background-position:-256px -336px; 
 }
 
@@ -885,10 +891,10 @@ body::-webkit-scrollbar {
     background-position:-128px -480px; 
 }
 
-#keycode_menu {
+#keycode_menu,#keycode_menu_2 {
     background-position:-192px -144px; 
 }
-#keycode_menu:active {
+#keycode_menu:active,#keycode_menu_2:active {
     background-position:-192px -480px; 
 }
 
@@ -1024,10 +1030,10 @@ body::-webkit-scrollbar {
     background-position:0px -480px; 
 }
 
-#keycode_back {
+#keycode_back, #keycode_back_2 {
     background-position:-64px -240px; 
 }
-#keycode_back:active {
+#keycode_back:active, #keycode_back_2:active {
     background-position:-64px -576px; 
 }
 
@@ -1524,9 +1530,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:0px -672px; 
     
@@ -1552,9 +1558,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-64px -672px; 
 }
@@ -1578,9 +1584,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:0px -672px; 
 
@@ -1604,9 +1610,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:0px -672px; 
     
@@ -1630,9 +1636,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-64px -672px; 
 
@@ -1656,9 +1662,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-64px -672px; 
 
@@ -1703,9 +1709,9 @@ body::-webkit-scrollbar {
     cursor: pointer;
     
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-640px -288px; 
     
@@ -1715,7 +1721,7 @@ body::-webkit-scrollbar {
     
     background-color: #e0f5fa;
     background-color: rgba(53, 168, 184, 0.10);
-    
+
         
 }
 .device_found:active {
@@ -1743,9 +1749,9 @@ body::-webkit-scrollbar {
     cursor: pointer;
     
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-640px -288px; 
     /*background-position:-640px -624px;  */
@@ -1792,9 +1798,9 @@ body::-webkit-scrollbar {
     cursor: pointer;
     
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-576px -672px; 
     
@@ -1847,12 +1853,12 @@ body::-webkit-scrollbar {
     
     cursor: pointer;
     
-    background-image: url("../images/options_icons.png");
-    background-size:64px 336px;
+    background-image: url("../images/remote_button_icons.png");
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
     
-    background-position:-0px -0px; 
+    
+    background-position:-704px -0px; 
     
     color: #545454;
     
@@ -1903,12 +1909,12 @@ body::-webkit-scrollbar {
     
     cursor: pointer;
     
-    background-image: url("../images/options_icons.png");
-    background-size:64px 336px;
+    background-image: url("../images/remote_button_icons.png");
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
     
-    background-position:-0px -64px; 
+    
+    background-position:-704px -64px; 
     
     color: #545454;
     
@@ -1975,9 +1981,9 @@ body::-webkit-scrollbar {
     
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-640px -288px; 
     
@@ -2060,9 +2066,9 @@ body::-webkit-scrollbar {
     
         
     /*background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-640px -288px;*/ 
     
@@ -2322,9 +2328,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     background-position:-384px -288px; 
 }
 #full_mode_button:active {
@@ -2346,9 +2352,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
         
 }
 
@@ -2366,9 +2372,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
 }
 
@@ -2386,9 +2392,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:0px -192px;  
 }
@@ -2411,9 +2417,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     
 }
@@ -2433,9 +2439,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
 }
 
 
@@ -2453,9 +2459,9 @@ body::-webkit-scrollbar {
     cursor: pointer;    
         
     background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
 
     background-position:0px -149px; 
 }
@@ -2781,7 +2787,7 @@ body::-webkit-scrollbar {
     background-image: url("../images/app_icon_sprites.png");
     background-size:320px 320px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     cursor: pointer;
     
@@ -2999,9 +3005,9 @@ body::-webkit-scrollbar {
     cursor: pointer;
     
     /*background-image: url("../images/remote_button_icons.png");*/
-    background-size:704px 707px;
+    background-size:768px 707px;
     background-repeat:no-repeat;
-    background-attachment:initial;
+    
     
     background-position:-576px -672px; 
     
@@ -3230,6 +3236,26 @@ body::-webkit-scrollbar {
     margin-left: 303px;
 }
 
+.menu_item .menu_item_icon{
+    display: block; position: absolute;
+    top: 0px; left:0px;
+    width: 64px; height:34px;
+
+    border-width: 0px;
+    border-style: solid;
+    border-right-width: 256px;
+    border-right-color: transparent;
+
+    -moz-background-clip: padding;     /* Firefox 3.6 */
+    -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
+    background-clip: padding-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+
+    background-image: url("../images/remote_button_icons.png");
+    background-size:768px 707px;
+    background-repeat:no-repeat;
+
+}
+
 .menu_item{
 
     display: block;
@@ -3238,7 +3264,7 @@ body::-webkit-scrollbar {
 
     width: calc(100% - 64px);
     height:34px;
-    line-height: 34px;
+    line-height: 36px;
     color: rgba(255, 255, 255, 0.75);
 
     padding-left: 64px;
@@ -3254,10 +3280,8 @@ body::-webkit-scrollbar {
 
     overflow: hidden;
 
-    background-image: url("../images/remote_button_icons.png");
-    background-size:704px 707px;
-    background-repeat:no-repeat;
-    background-attachment:initial;
+    
+    
 
     font-family: RobotoRegular;
 }
@@ -3281,59 +3305,59 @@ body::-webkit-scrollbar {
     background-image: none;
 }
 
-#menu_item_settings{    
+#menu_item_settings .menu_item_icon{    
     background-position:-640px -1px; 
 }
-#menu_item_settings:active{
+#menu_item_settings .menu_item_icon:active{
     background-position:-640px -337px; 
 }
 
-#menu_item_help{    
+#menu_item_help .menu_item_icon{    
     background-position:-640px -36px; 
 }
-#menu_item_help:active{
+#menu_item_help .menu_item_icon:active{
     background-position:-640px -372px; 
 }
 
-#menu_item_about{    
+#menu_item_about .menu_item_icon{    
     background-position:-640px -72px; 
 }
-#menu_item_about:active{
+#menu_item_about .menu_item_icon:active{
     background-position:-640px -408px; 
 }
 
-#menu_item_support{    
+#menu_item_support .menu_item_icon{    
     background-position:-640px -106px; 
 }
-#menu_item_support:active{
+#menu_item_support .menu_item_icon:active{
     background-position:-640px -442px; 
 }
 
-#menu_item_bugs{    
+#menu_item_bugs .menu_item_icon{    
     background-position:-640px -142px; 
 }
-#menu_item_bugs:active{
+#menu_item_bugs .menu_item_icon:active{
     background-position:-640px -478px; 
 }
 
-#menu_item_suggest{    
+#menu_item_suggest .menu_item_icon{    
     background-position:-640px -176px; 
 }
-#menu_item_suggest:active{
+#menu_item_suggest .menu_item_icon:active{
     background-position:-640px -512px; 
 }
 
-#menu_item_updates{    
+#menu_item_updates .menu_item_icon{    
     background-position:-640px -211px; 
 }
-#menu_item_updates:active{
+#menu_item_updates .menu_item_icon:active{
     background-position:-640px -547px; 
 }
 
-#menu_item_blog{    
+#menu_item_blog .menu_item_icon{    
     background-position:-640px -246px; 
 }
-#menu_item_blog:active{
+#menu_item_blog .menu_item_icon:active{
     background-position:-640px -582px; 
 }
 
@@ -3397,77 +3421,6 @@ body::-webkit-scrollbar {
     border-color: rgba(0, 0, 0, 0.25);
 }
 
-
-/*#theme_color_preset_0{
-    background-color: #000000;
-}
-
-#theme_color_preset_1{
-    background-color: #6abae2;
-}
-#theme_color_preset_1 .theme_color_border{
-    border-color: #6abae2;
-}
-
-#theme_color_preset_2{
-    background-color: #a3d5f5;
-}
-#theme_color_preset_2 .theme_color_border{
-    border-color: #a3d5f5;
-}
-
-#theme_color_preset_3{
-    background-color: #16a73c;
-}
-#theme_color_preset_3 .theme_color_border{
-    border-color: #16a73c;
-}
-
-
-#theme_color_preset_4{
-    background-color: #17a652;
-}
-
-#theme_color_preset_5{
-    background-color: #f1f386;
-}
-#theme_color_preset_5 .theme_color_border{
-    border-color: #f1f386;
-}
-
-#theme_color_preset_6{
-    background-color: #f48083;
-}
-#theme_color_preset_6 .theme_color_border{
-    border-color: #f48083;
-}
-
-
-#theme_color_preset_7{
-    background-color: #a36305;
-}
-
-#theme_color_preset_8{
-    background-color: #f21307;
-}
-#theme_color_preset_8 .theme_color_border{
-    border-color: #f21307;
-}
-
-
-#theme_color_preset_9{
-    background-color: #c316ca;
-}
-#theme_color_preset_9 .theme_color_border{
-    border-color: #c316ca;
-}*/
-
-
-
-
-
-
-
 #btn_lock_checkbox_cover{
     position: absolute;
     display: block;
@@ -3499,11 +3452,6 @@ body::-webkit-scrollbar {
     top:7px;
     right:15px;
 }
-
-
-
-
-
 
 input[type=checkbox] {
     visibility: hidden;
