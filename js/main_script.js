@@ -90,18 +90,15 @@ function undoTimeout(){
 
 var gridster = [];
 var draggableButtonsEnabled = false, darkBackEnabled = false;
-var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false}]';
-
+var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":2},{"col":4,"row":6,"size_x":1,"size_y":2},{"col":5,"row":6,"size_x":1,"size_y":2},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1}]';
 
 
 document.onselectstart = function(){ return false; }
-window.onload = function () {
+$(window).bind("load", function() { //Not after DOM, but after everything is loaded.
 
     initMoteServer();
 
-    googletvremoteInitializePlugin();
-    if (backgroundPageWindow.gTvPluginLoaded == false)
-        console.log('Plug-in Not Detected');
+    initAnyMoteNPAPI();
 
     if(!isInFullTabMode) initGridster();
 
@@ -514,7 +511,7 @@ window.onload = function () {
         });
     });
 
-};   //END ONLOAD
+});   //END ONLOAD
 
 
 //DISABLES right-click globally.
@@ -563,7 +560,9 @@ var updateAppsListUI = function() {
     }
 }
 
-var showAddPinInputBox = function() {
+var showAddPinInputBox = function(address) {
+
+    //address = address.replaceAll(".","_");
 
     if (document.getElementsByClassName("new_device_ip_input").length > 0) {
         $("#add_new_device").remove();
@@ -573,20 +572,26 @@ var showAddPinInputBox = function() {
 
         var newDeviceInputEl = document.createElement("div");
         newDeviceInputEl.id = "enter_pin_code_container";
-        newDeviceInputEl.innerHTML = "<div id='cancel_pair_button'>cancel</div><input class='pair_code_input' type='text' placeholder='enter pin' maxlength='4'/><div id='send_pair_code_button'>connect</div>";
+        newDeviceInputEl.setAttribute("ip", address);
+        newDeviceInputEl.innerHTML = "<div id='cancel_pair_button'>cancel</div><input id='pair_code_input_box' class='pair_code_input' type='text' placeholder='enter pin' maxlength='4' /><div id='send_pair_code_button'>connect</div>";
 
         $("#devices_list").prepend(newDeviceInputEl);
 
         $("#send_pair_code_button").click( sendPairCodeButtonEvent );
 
         $("#cancel_pair_button").click(function () {
-            cancelPairCode(function () {
-                $("#enter_pin_code_container").remove();
 
-                document.getElementById("devices_status_label").textContent = "Pairing canceled";
-                $("#loaderImage").css("display", "none");
-                $("#devices_refresh_button").css("display", "block");
-            });
+            if(anyMotePluginActive) {       //AnyMote                
+                cancelChallengeResponse();
+            } else {                        //MoteBridge                
+                cancelPairCode(function () {});
+            }
+
+            $("#enter_pin_code_container").remove();            
+            $("#loaderImage").css("display", "none");
+            $("#devices_refresh_button").css("display", "block");
+            setDevicesStatusLabel("Pairing canceled", true);
+            
         });
 
         $(function () {
@@ -597,14 +602,19 @@ var showAddPinInputBox = function() {
         $("#loaderImage").css("display", "none");
         $("#devices_refresh_button").css("display", "block");
         //discoverDevices();
-        $('.pair_code_input').alphanumeric();
+        //$('.pair_code_input').alphanumeric();
         $('.pair_code_input').focus();
         $(".pair_code_input").select();
 
-        $(".pair_code_input").keypress(function (e) {
-            if (e.which == 13) { //Enter Press
-                sendPairCodeButtonEvent();
+        $("#pair_code_input_box").bind('keydown', function (event) {
+            //Block non-alphanumeric keycode input.
+            if ( ( event.which >  90 && !(event.which >= 96 && event.which <= 105) && event.which != 13) || 
+                 ((event.which >= 48 && event.which <= 57) && event.shiftKey   )    ) {
+                event.preventDefault();
+                return false;
             }
+            //Enter Press detected, then send pin in input box.
+            if (event.which == 13) { sendPairCodeButtonEvent(); }  
         });
     }
 
@@ -615,83 +625,168 @@ var sendPairCodeButtonEvent = function () {
 
     if (secretEntered.length == 4) {
 
-        document.getElementById("devices_status_label").textContent = "Pairing";
+        setDevicesStatusLabel("Pairing", false);
         $("#loaderImage").css("display", "block");
         $("#devices_refresh_button").css("display", "none");
 
-        sendPairCode(secretEntered, function (response) {
+        if( !anyMotePluginActive ) {       //MoteBridge
+            sendPairCode(secretEntered, function (response) {
 
-            var pairSuccessLoop = setInterval(function () {
+                var pairSuccessLoop = setInterval(function () {
 
-                connectSuccessOrFail(function (response) {
+                    connectSuccessOrFail(function (response) {
 
-                    if (JSON.parse(response).connectionSuccess && !JSON.parse(response).connectionFailed) {
-                        //success, no fail
-                        clearInterval(pairSuccessLoop);
-                        clearInterval(pairSuccessTimeout);
-                        document.getElementById("devices_status_label").textContent = "Connected to " + pairingTo.replaceAll('_','.');
-                        $("#loaderImage").css("display", "none");
-                        $("#devices_refresh_button").css("display", "block");
+                        if (JSON.parse(response).connectionSuccess && !JSON.parse(response).connectionFailed) {
+                            //success, no fail
+                            clearInterval(pairSuccessLoop);
+                            clearInterval(pairSuccessTimeout);
 
-                        if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found_active";
+                            setDevicesStatusLabel("Connected to " + pairingTo.replaceAll('_','.'), true);
+                            $("#loaderImage").css("display", "none");
+                            $("#devices_refresh_button").css("display", "block");
 
-                        if (document.getElementsByClassName("new_device_ip_input").length > 0) {
-                            $("#add_new_device").remove();
-                        }
+                            if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found_active";
 
-                        $("#enter_pin_code_container").remove();
+                            if (document.getElementsByClassName("new_device_ip_input").length > 0) {
+                                $("#add_new_device").remove();
+                            }
 
-                        discoverDevices();
+                            $("#enter_pin_code_container").remove();
 
-                        showOptionsPanel();
+                            discoverDevices();
 
-                    } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
-                        //no success, fail
-                        clearInterval(pairSuccessLoop);
-                        clearInterval(pairSuccessTimeout);
-                        document.getElementById("devices_status_label").textContent = "Pairing failed";
-                        $("#loaderImage").css("display", "none");
-                        $("#devices_refresh_button").css("display", "block");
+                            showOptionsPanel();
 
-                        if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found";
+                        } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
+                            //no success, fail
+                            clearInterval(pairSuccessLoop);
+                            clearInterval(pairSuccessTimeout);
 
-                        runPairing(pairingTo);
+                            setDevicesStatusLabel("Pairing failed", true);
+                            
+                            $("#loaderImage").css("display", "none");
+                            $("#devices_refresh_button").css("display", "block");
 
-                        $(".new_device_ip_input").css("border-color", "#f00");
-                        setTimeout(function () {
-                            $(".new_device_ip_input").css("border-color", "#e8e9e9");
+                            if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found";
+
+                            runPairing(pairingTo);
+
+                            $(".new_device_ip_input").css("border-color", "#f00");
                             setTimeout(function () {
-                                $(".new_device_ip_input").css("border-color", "#f00");
+                                $(".new_device_ip_input").css("border-color", "#e8e9e9");
                                 setTimeout(function () {
-                                    $(".new_device_ip_input").css("border-color", "");
+                                    $(".new_device_ip_input").css("border-color", "#f00");
                                     setTimeout(function () {
-                                        $(".pair_code_input").val('');
-                                        $(".pair_code_input").focus();
-                                        $(".pair_code_input").select();
+                                        $(".new_device_ip_input").css("border-color", "");
+                                        setTimeout(function () {
+                                            $(".pair_code_input").val('');
+                                            $(".pair_code_input").focus();
+                                            $(".pair_code_input").select();
+                                        }, 150);
                                     }, 150);
                                 }, 150);
                             }, 150);
-                        }, 150);
 
 
-                    } else if (!JSON.parse(response).connectionSuccess && !JSON.parse(response).connectionFailed) {
-                        //no success, no fail
-                        
+                        } else if (!JSON.parse(response).connectionSuccess && !JSON.parse(response).connectionFailed) {
+                            //no success, no fail
+                            
+                        }
+
+                    });
+
+                }, 1000);
+
+
+                var pairSuccessTimeout = setTimeout(function () {
+                    clearInterval(pairSuccessLoop);
+                    setDevicesStatusLabel(address.replaceAll('_','.') + " did not respond", true);
+                    $("#loaderImage").css("display", "none");
+                    $("#devices_refresh_button").css("display", "block");
+                }, 15000);
+
+            });
+
+        } else {                        //AnyMote
+
+
+            pairingTo = document.getElementById("enter_pin_code_container").getAttribute("ip").replaceAll(".","_");
+            deviceName = $("#"+pairingTo).attr("name"); 
+
+
+            sendChallengeResponse(secretEntered);
+
+            var pairSuccessLoop = setInterval(function () {
+
+                if ( wasChallengeResponseAccepted() ) {
+                    //success, no fail
+                    clearInterval(pairSuccessLoop);
+                    clearInterval(pairSuccessTimeout);
+
+                    setDevicesStatusLabel("Connected to " + pairingTo.replaceAll('_','.'), true);
+                    $("#loaderImage").css("display", "none");
+                    $("#devices_refresh_button").css("display", "block");
+
+                    if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found_active";
+
+                    if (document.getElementsByClassName("new_device_ip_input").length > 0) {
+                        $("#add_new_device").remove();
                     }
 
-                });
+                    $("#"+pairingTo).remove();
+                    $("#enter_pin_code_container").remove();
 
-            }, 1000);
+                    addDeviceFound(deviceName, pairingTo.replaceAll('_','.'), true, true);
+
+                    //discoverDevices();
+
+                    showOptionsPanel(); //Closes options panel when open.
+
+                } else {
+                    //no success, fail
+                    clearInterval(pairSuccessLoop);
+                    clearInterval(pairSuccessTimeout);
+
+                    setDevicesStatusLabel("Incorrect PIN", true);
+                    
+                    $("#loaderImage").css("display", "none");
+                    $("#devices_refresh_button").css("display", "block");
+
+                    if (document.getElementById(pairingTo) != null) document.getElementById(pairingTo).className = "device_found";
+
+                    //runPairing(pairingTo);
+
+                    $(".pair_code_input").css("border-color", "#f00");
+                    setTimeout(function () {
+                        $(".pair_code_input").css("border-color", "#e8e9e9");
+                        setTimeout(function () {
+                            $(".pair_code_input").css("border-color", "#f00");
+                            setTimeout(function () {
+                                $(".pair_code_input").css("border-color", "");
+                                setTimeout(function () {
+                                    $(".pair_code_input").val('');
+                                    $(".pair_code_input").focus();
+                                    $(".pair_code_input").select();
+                                }, 150);
+                            }, 150);
+                        }, 150);
+                    }, 150);
+
+                }               
+
+            }, 500);
 
 
             var pairSuccessTimeout = setTimeout(function () {
                 clearInterval(pairSuccessLoop);
-                document.getElementById("devices_status_label").textContent = address.replaceAll('_','.') + " did not respond";
+
+                setDevicesStatusLabel(address.replaceAll('_','.') + " did not respond", true);
                 $("#loaderImage").css("display", "none");
                 $("#devices_refresh_button").css("display", "block");
             }, 15000);
 
-        });
+        }
+
 
     } else {
         $(".pair_code_input").css("border-color", "#f00");
@@ -1181,7 +1276,8 @@ var addNewDeviceButtonEvent = function () {
             setMoteServer(ipEntered);
         }
 
-        document.getElementById("devices_status_label").textContent = "Connecting to " + ipEntered;
+        setDevicesStatusLabel("Connecting to " + ipEntered, false);
+
         runPairing(ipEntered);
     } else {
         $(".ip_container").css("border-color", "#f00");
@@ -1665,11 +1761,25 @@ var showOptionsPanel = function (enable) {
 
 }
 
-var addDeviceFound = function (name, ip, current) {
+var addDeviceFound = function (name, ip, current, saved) {
 
-    var deviceListEl = document.getElementById("devices_list");
+    var deviceListEl = document.getElementById("devices_list_discovered");
+    if(saved) deviceListEl = document.getElementById("devices_list_saved");
     var deviceFoundID = ip.replaceAll('.','_');
 
+    //Don't continue to add if device ip is present in saved device list.
+    if(  !saved && $("#devices_list_saved #"+deviceFoundID).length > 0 ) return false;
+
+    if(   saved && $("#devices_list_saved #"+deviceFoundID).length > 0 ) $("#devices_list_saved #"+deviceFoundID).remove();
+
+    if( current && $("#devices_list_discovered #"+deviceFoundID).length > 0 ) $("#devices_list_discovered #"+deviceFoundID).remove();
+
+    if( current ) for(var i=0; i < $("#devices_list_saved .device_found_active").length; i++) {
+        console.dir($("#devices_list_saved .device_found_active")[i]);
+        $("#devices_list_saved .device_found_active")[i].className = 'device_found';
+        i--;
+    }
+    
     var newDeviceEl = document.createElement("div");
     if (!current) newDeviceEl.className = "device_found"; else newDeviceEl.className = "device_found_active";
     newDeviceEl.id = "" + deviceFoundID;
@@ -1679,9 +1789,23 @@ var addDeviceFound = function (name, ip, current) {
 
     newDeviceEl.addEventListener("click", function () {
         if( !hasClass(document.getElementById(deviceFoundID),"device_renaming") ){
-            var ipAddress = this.id.replaceAll('_','.');
-            document.getElementById("devices_status_label").textContent = "Connecting to "+ ipAddress;
-            runPairing(ipAddress);            
+            var ipAddress = this.id.replaceAll('_','.'),
+                deviceName = $(this).attr("name");
+
+            setDevicesStatusLabel("Connecting to "+ ipAddress, false);
+            
+            if(!anyMotePluginActive) {
+                runPairing(ipAddress);
+            } else {
+                console.log("Connect to: " + deviceName);
+                if(saved) {
+                    stopDiscoveryClient();
+                    anymoteConnectToExistingSingleDevice(ipAddress);                    
+                } else {  
+                    stopDiscoveryClient();
+                    pairingSessionPair(deviceName, ipAddress);
+                } 
+            }
         }        
     });
     
@@ -1697,7 +1821,8 @@ var addDeviceFound = function (name, ip, current) {
         return true;
     });
 
-    deviceListEl.appendChild(newDeviceEl);
+    if(!current) deviceListEl.appendChild(newDeviceEl);
+    else        $(deviceListEl).prepend(newDeviceEl);
 
     //KeyPress Listener for Enter press on rename text input.
     $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).keypress(function (e) {
@@ -1736,8 +1861,6 @@ var addDeviceFound = function (name, ip, current) {
             }, 150);
 
         }
-
-        
 
     });
 }
@@ -1786,8 +1909,8 @@ var addNewSavedDevice = function(originalName, ip, newName){
 var delSavedDevice = function(originalName, ip){
 
     //FIND AND REMOVE DEVICE WITH ORIGINAL NAME AND IP
-    console.log(originalName);
-    console.log(ip);
+    //console.log(originalName);
+    //console.log(ip);
 
     for(var i=0 ; i < savedDeviceList.length ; i++){        
         if(savedDeviceList[i].originalName == originalName && savedDeviceList[i].ip == ip){
@@ -1797,6 +1920,19 @@ var delSavedDevice = function(originalName, ip){
         }
     }
 
+
+    if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) {
+
+        devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+        var devicesInStorageJSON = JSON.parse(devicesInStorage);
+        for(var i=0 ; i < devicesInStorageJSON.length ; i++){        
+            if(devicesInStorageJSON[i].name == originalName && devicesInStorageJSON[i].address == ip){
+                devicesInStorageJSON.splice(i, 1);
+                localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(devicesInStorageJSON));
+                break;
+            }
+        }
+    }
 }
 
 var getSavedName = function(name, ip){    
@@ -1822,7 +1958,7 @@ var runPairing = function (address) {
 
         isAwaitingPin(function (response) {
             if (JSON.parse(response).isAwaitingPin) {
-                showAddPinInputBox();
+                showAddPinInputBox(address);
                 clearInterval(pinWaitLoop);
                 clearTimeout(pinWaitTimeout);
             } else {
@@ -1832,7 +1968,9 @@ var runPairing = function (address) {
                         //success, no fail
                         clearInterval(pinWaitLoop);
                         clearTimeout(pinWaitTimeout);
-                        document.getElementById("devices_status_label").textContent = "Connected to " + pairingTo;
+
+                        setDevicesStatusLabel("Connected to " + pairingTo, true);
+
                         console.log("pairingTo "+pairingTo);
                         $("#loaderImage").css("display", "none");
                         $("#devices_refresh_button").css("display", "block");
@@ -1841,7 +1979,7 @@ var runPairing = function (address) {
                         if (document.getElementById(deviceFoundID) != null) 
                             document.getElementById(deviceFoundID).className = "device_found_active";
                         else
-                            addDeviceFound("Google TV Device", address, true);
+                            addDeviceFound("Google TV Device", address, true, true);
 
                         if (document.getElementsByClassName("new_device_ip_input").length > 0)
                             $("#add_new_device").remove();
@@ -1856,7 +1994,9 @@ var runPairing = function (address) {
                         //no success, fail
                         clearInterval(pinWaitLoop);
                         clearTimeout(pinWaitTimeout);
-                        document.getElementById("devices_status_label").textContent = "Pairing failed";
+
+                        setDevicesStatusLabel("Pairing failed", true);
+
                         $("#loaderImage").css("display", "none");
                         $("#devices_refresh_button").css("display", "block");
 
@@ -1882,7 +2022,8 @@ var runPairing = function (address) {
 
     var pinWaitTimeout = setTimeout(function () {
         clearInterval(pinWaitLoop);
-        document.getElementById("devices_status_label").textContent = address.replaceAll('_','.') + " did not respond";
+
+        setDevicesStatusLabel(address.replaceAll('_','.') + " did not respond", true);
         $("#loaderImage").css("display", "none");
         $("#devices_refresh_button").css("display", "block");
     }, 15000);
@@ -1891,68 +2032,82 @@ var runPairing = function (address) {
 
 
 var discoveryLoop = null;
-var runDiscovery = function () {
+var runDiscovery = function() {
 
     clearInterval(discoveryLoop);
-    discoverDevices();
 
-    document.getElementById("devices_status_label").textContent = "Discovering devices";
-    $("#loaderImage").css("display", "block");
-    $("#devices_refresh_button").css("display", "none");
+    if(!anyMotePluginActive) {                      //MoteBridge
+        discoverDevices();
 
-    discoveryLoop = setInterval(function () {
+        setDevicesStatusLabel("Discovering devices", false);
 
+        $("#loaderImage").css("display", "block");
+        $("#devices_refresh_button").css("display", "none");
 
+        discoveryLoop = setInterval(function () {
 
-        if (document.getElementById("devices_status_label").textContent.indexOf("Discovering devices") >= 0)
-            document.getElementById("devices_status_label").textContent = document.getElementById("devices_status_label").textContent + ".";
+            if (document.getElementById("devices_status_label").textContent.indexOf("Discovering devices") >= 0)
+                setDevicesStatusLabel(document.getElementById("devices_status_label").textContent + ".", false);
 
-        isDiscovering(function (response) {
+            isDiscovering(function (response) {
 
-            if (!JSON.parse(response).isDiscovering) {
-                clearInterval(discoveryLoop);
-                $("#loaderImage").css("display", "none");
-                $("#devices_refresh_button").css("display", "block");
-            }
-            getDeviceList(function (responseText) {
-                try {
-                    var tvDevices = JSON.parse(responseText);
-                    //document.getElementById('ip_address_box').value = tvDevices[0].address;
+                if (!JSON.parse(response).isDiscovering) {
+                    clearInterval(discoveryLoop);
+                    $("#loaderImage").css("display", "none");
+                    $("#devices_refresh_button").css("display", "block");
+                }
+                getDeviceList(function (responseText) {
+                    try {
+                        var tvDevices = JSON.parse(responseText);
+                        //document.getElementById('ip_address_box').value = tvDevices[0].address;
 
-                    //console.log(responseText);
+                        //console.log(responseText);
 
-                    //Clear UI List and update it with new results.
-                    document.getElementById("devices_list").innerHTML = "";
+                        //Clear UI List and update it with new results.
+                        document.getElementById("devices_list_discovered").innerHTML = "";
+                        if (document.getElementsByClassName("new_device_ip_input").length > 0) { $("#add_new_device").remove(); }
 
-                    var updatedDeviceList = JSON.parse(responseText);
-                    for (var i = 0; i < updatedDeviceList.length; i++)
-                        addDeviceFound(updatedDeviceList[i].name, updatedDeviceList[i].address, updatedDeviceList[i].current);
+                        var updatedDeviceList = JSON.parse(responseText);
+                        for (var i = 0; i < updatedDeviceList.length; i++)
+                            addDeviceFound(updatedDeviceList[i].name, updatedDeviceList[i].address, updatedDeviceList[i].current, true);
 
-                    var statusMsg = "";
-                    if (updatedDeviceList.length == 1)
-                        statusMsg = updatedDeviceList.length + " Google TV found";
-                    else
-                        statusMsg = updatedDeviceList.length + " Google TVs found";
+                        var statusMsg = "";
+                        if (updatedDeviceList.length == 1)
+                            statusMsg = updatedDeviceList.length + " Google TV found";
+                        else
+                            statusMsg = updatedDeviceList.length + " Google TVs found";
 
+                        setDevicesStatusLabel(statusMsg, false);
 
-                    document.getElementById("devices_status_label").textContent = statusMsg;
+                    } catch (e) { console.log('No devices found.'); }
+                });
 
-                } catch (e) { console.log('No devices found.'); }
             });
 
-        });
+
+        }, 1000);
 
 
-    }, 1000);
+        setTimeout(function(){
+            clearInterval(discoveryLoop);
+            $("#loaderImage").css("display", "none");
+            $("#devices_refresh_button").css("display", "block");
+            if (document.getElementById("devices_status_label").textContent.indexOf("Discovering devices") >= 0)
+                setDevicesStatusLabel("Discovery timed out", true);
+        },15000);
+
+    } else {                                //AnyMote
+
+        document.getElementById("devices_list_discovered").innerHTML = "";
+        if (document.getElementsByClassName("new_device_ip_input").length > 0) { $("#add_new_device").remove(); }
+        startDiscoveryClient();
 
 
-    setTimeout(function(){
-        clearInterval(discoveryLoop);
-        $("#loaderImage").css("display", "none");
-        $("#devices_refresh_button").css("display", "block");
-        if (document.getElementById("devices_status_label").textContent.indexOf("Discovering devices") >= 0)
-            document.getElementById("devices_status_label").textContent = "Discovery timed out";
-    },15000);
+    }
+
+
+
+
 
 }
 
@@ -2208,7 +2363,7 @@ function saveButtonLayoutSettings(){
         }   
         //Reinclude saved touchpad layout.
 
-        console.log(touchButtonLayoutJson);
+        //console.log(touchButtonLayoutJson);
 
         for(var i=0; i < touchButtonLayoutJson.length; i++) {
             buttonLayoutJson.push(touchButtonLayoutJson[i]);
@@ -3001,130 +3156,113 @@ function setInputSelection(input, startPos, endPos) {
 function changeThemeColor(hex) {
     var rgb = hexToRgb(hex);
     var red = rgb.r, green = rgb.g, blue = rgb.b;
-    var borderColor = "";
-
-    document.getElementById("main_container").style.backgroundColor = hex;
-    $('.options_tabs_bottom_filler').css("background-color", hex);
-    $('#ad_block_back').css("background-color", hex);
-    
-    $('body').css("background-color", 'rgba(' + giveHex(hex[1]+hex[2]+"") + ',' + giveHex(hex[3]+hex[4]+"") + ',' + giveHex(hex[5]+hex[6]+"") + ', 0.5)' );
-    
-    $('.loaderImage').css("background-color", balanceSaturation(hex,"#f5f6f6"));
-
-    $('#devices_refresh_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
-    $('#devices_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));
-    $('#apps_sync_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
-    $('#intent_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));  
-    $('#update_channels_button').css("background-color", balanceSaturation(hex,"#f5f6f6")); 
-    $('#macro_add_button').css("background-color", balanceSaturation(hex,"#f5f6f6"));  
-
-    
-
-    if(borderColorsEnabled){ borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; borderColor = hex;}
-
-    $(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
-    $('.remote_button').css("border-left-color", borderColor);
-    $('.remote_button_rocker').css("border-top-color", borderColor);
-    $('.remote_button_rocker').css("border-left-color", borderColor);
-    $('.touch_pad_filler').css("border-top-color", borderColor);
-    $('.touch_pad_filler').css("border-left-color", borderColor);
-    $('#menu_items').css("border-top-color",   borderColor);
-    $('#menu_items').css("border-right-color", borderColor);
-    $('.menu_item').css("border-bottom-color", borderColor);
-    $('.menu_panel_category').css("border-bottom-color", borderColor);
-    $('.sub_menu_panel').css("border-bottom-color", borderColor);
-    $('#ad_block_back').css("border-color",   borderColor); 
-    $('.options_tabs_bottom_filler_inner').css("background-color", borderColor);
-
-    if(isInFullTabMode) $('#main_button_list').css("border-color", borderColor);
-
-    
-
-    var css = '.device_found_active{border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '                 background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+    var borderColor = "";   
+    if(borderColorsEnabled) borderColor = hex;//borderColor = "rgba(" + red + ", " + green + ", " + green + ", 0.75)"; 
+            
+    var css  =  '.device_found_active{border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '                 background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                            hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                            hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-
-              '.device_found:active{color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.device_found:active{color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              '.app_icon_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.app_icon_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                                hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                                hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
-              '.app_icon_item:active{color:'      + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.app_icon_item:active{color:'      + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              '.custom_intent_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_intent_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
-              '.custom_intent_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_intent_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
-              '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_macro_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
-              '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.custom_macro_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              '.system_channels_list_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.system_channels_list_item:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
-              '.system_channels_list_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
-              '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
-              '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.system_channels_list_item:active{color:' + balanceSaturation(hex,"#f5f6f6") + '; \n' + 
+                '              border-color:'       + balanceSaturation(hex,"#f5f6f6") + '; \n' +
+                '          background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                     hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-
-              '.device_found:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
+                '.device_found:hover{background-color: rgba(' + hexToRgb(balanceSaturation(hex,"#f5f6f6")).r + ',' + 
                                                               hexToRgb(balanceSaturation(hex,"#f5f6f6")).g + ',' + 
                                                               hexToRgb(balanceSaturation(hex,"#f5f6f6")).b + ', 0.10 )} \n' +
 
-              
-              '.device_found_active .device_found_name_input:disabled{color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' +
-              '.device_found_active .device_found_name_input:disabled:active{color:'+ balanceSaturation(hex,"#f5f6f6") + '} \n' +
-              '.device_found_active .device_found_name_input:disabled:hover{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
-              '.device_found_active .device_found_ip{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
-              
-              // '#devices_refresh_button:active{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
-              // '#devices_add_button:active{background-color:'     + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
-              // '#apps_sync_button:active{background-color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
-              // '#intent_add_button:active{background-color:'      + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
-              // '#update_channels_button:active{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
-              // '#macro_add_button:active{background-color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '.device_found_active .device_found_name_input:disabled{color:'       + balanceSaturation(hex,"#f5f6f6") + '} \n' +
+                '.device_found_active .device_found_name_input:disabled:active{color:'+ balanceSaturation(hex,"#f5f6f6") + '} \n' +
+                '.device_found_active .device_found_name_input:disabled:hover{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
+                '.device_found_active .device_found_ip{color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' +
 
-
-              '';
+                '#main_container{background-color:' + hex + '} \n' + 
+                '.options_tabs_bottom_filler{background-color:' + hex + '} \n' + 
+                '#ad_block_back{background-color:' + hex + '} \n' +                 
+                '.loaderImage{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#devices_refresh_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#devices_add_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#intent_add_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#update_channels_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#apps_sync_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '#macro_add_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
+                '.remote_button:not(.remote_button_no_border){ border-top-color:' + borderColor + '} \n' + 
+                '.remote_button{border-left-color:' + borderColor + '} \n' + 
+                '.remote_button_rocker{border-top-color:' + borderColor + '} \n' + 
+                '.remote_button_rocker{border-left-color:' + borderColor + '} \n' + 
+                '.touch_pad_filler{border-top-color:' + borderColor + '} \n' + 
+                '.touch_pad_filler{border-left-color:' + borderColor + '} \n' + 
+                '#menu_items{border-top-color:' + borderColor + '; \n' + 
+                '           border-left-color:' + borderColor + '; \n' + 
+                '          border-right-color:' + borderColor + ';} \n' + 
+                '.menu_item{border-bottom-color:' + borderColor + '} \n' + 
+                '.menu_panel_category{border-bottom-color:' + borderColor + '} \n' + 
+                '.sub_menu_panel{border-bottom-color:' + borderColor + '} \n' + 
+                '#ad_block_back{border-color:' + borderColor + '} \n' + 
+                '.options_tabs_bottom_filler_inner{background-color:' + borderColor + '} \n' + 
+                //'body{background-color:' + 'rgba(' + giveHex(hex[1]+hex[2]+"") + ',' + giveHex(hex[3]+hex[4]+"") + ',' + giveHex(hex[5]+hex[6]+"") + ', 0.5)' + '} \n' + 
+                //$(".remote_button:not(.remote_button_no_border)").css("border-top-color", borderColor);
+        
+          '';
+          if(isInFullTabMode) {
+            css = css + '#main_button_list{border-color:' + borderColor + '} \n';
+            $('body').css("background-color", 'rgba(' + giveHex(hex[1]+hex[2]) + ',' + giveHex(hex[3]+hex[4]) + ',' + giveHex(hex[5]+hex[6]) + ', 0.5)' );
+        }
+              
+              
     $("#options_colors").remove();
     var style=document.createElement('style');
     style.id = "options_colors";
     if (style.styleSheet) style.styleSheet.cssText=css; else style.appendChild(document.createTextNode(css));
     document.getElementsByTagName('head')[0].appendChild(style);
-
-
-
 
     localStorage.setItem("theme_colors", '{ "baseColor": "' + hex + '", "borders": ' + borderColorsEnabled + ' }');
 }
@@ -3255,4 +3393,11 @@ function intToHex(integer){
     var hex = "";
     hex = integer.toString( 16 );
     return hex; 
+}
+
+var devicesStatusLabelTimeout = setTimeout(function(){}, 1);
+function setDevicesStatusLabel(msg, timeOut){
+    document.getElementById("devices_status_label").textContent = msg;
+    clearTimeout(devicesStatusLabelTimeout);
+    if(timeOut) devicesStatusLabelTimeout = setTimeout(function(){ document.getElementById("devices_status_label").textContent = ""; }, 5000);
 }

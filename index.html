@@ -46,19 +46,21 @@
 
         <script type="text/javascript" src="js/anymote_bridge_script.js"></script>
         <script type="text/javascript" src="js/main_script.js"></script>
+
+        <script type="text/javascript" src="libs/farbtastic/farbtastic.js"></script>
+        <!-- <link rel="stylesheet" href="libs/farbtastic/farbtastic.css"> -->
        <!--Chromemote's CSS and JS source | END   -->
 
        <!--AnyMote NPAPI JS Lib | START -->
-        <script type="text/javascript" src="libs/anymote_npapi/js/googletvremote_controller.js"></script>
         <script type="text/javascript" src="libs/anymote_npapi/js/googletvremote_constants.js"></script>
+        <script type="text/javascript" src="libs/anymote_npapi/js/googletvremote_controller.js"></script>
         <script type="text/javascript" src="js/anymote_npapi_script.js"></script>
         <script type="text/javascript" src="libs/anymote_npapi/js/discovery_client_controller.js"></script>
         <script type="text/javascript" src="libs/anymote_npapi/js/anymote_session_controller.js"></script>
         <script type="text/javascript" src="libs/anymote_npapi/js/pairing_session_controller.js"></script>
-       <!--AnyMote NPAPI JS Lib | END   -->
+       <!--AnyMote NPAPI JS Lib | END  -->
 
-        <script type="text/javascript" src="libs/farbtastic/farbtastic.js"></script>
-        <link rel="stylesheet" href="libs/farbtastic/farbtastic.css" type="text/css" />
+        
 
     </head>
     <body>
@@ -282,7 +284,10 @@
                             <div id="devices_status_label"></div>
                             <div id="devices_add_button" title="Manually add a device by IP address."></div>
                         </div>
-                        <div id="devices_list"></div>                    
+                        <div id="devices_list">
+                            <div id="devices_list_saved"></div>
+                            <div id="devices_list_discovered"></div>
+                        </div>
                     </div>
                     <div id="options_panel_apps" class="options_panel">
 
@@ -419,6 +424,7 @@
             <button onclick="fling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.entertailion.android.gtvtasker/com.entertailion.android.gtvtasker.MainActivity;end');">GTVTasker</button>
         </div> -->
 
-        <script type="text/javascript" src="js/ui_logic_script.js"></script>
+        <script type="text/javascript" src="js/ui_logic_script.js"></script>        
     </body>
 </html>
+<noscript></noscript>

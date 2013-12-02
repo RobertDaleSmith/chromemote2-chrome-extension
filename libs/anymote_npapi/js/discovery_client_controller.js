@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Controls the discoveryClient object.  The discoveryClient object is created
  * by the googletvremote plugin during initialization.
@@ -29,47 +28,61 @@
  *     stopDiscovery()
  */
 
-
 /** Discovery client object that this controller manages. */
 var discoveryClient = backgroundPageWindow.discoveryClient;
-
 
 /** Id of a timer that is used to automatically stop discovery. */
 var stopDiscoveryClientTimerId;
 
+var discoveredCount = 0;
 
 /** Start searching for Anymote services advertised on the local network. */
-var startDiscoveryClient = function() {
-	
-  backgroundPageWindow.console.log('Discovery session started.');
+function startDiscoveryClient() {
+	stopDiscoveryClient();
+  console.log('Discovery session started.');
+  setDevicesStatusLabel("Discovering devices", false);
+
+  discoveryLoop = setInterval( function () {
+    if (document.getElementById("devices_status_label").textContent.indexOf("Discovering devices") >= 0)
+      setDevicesStatusLabel(document.getElementById("devices_status_label").textContent + ".", false);
+  },1000);
+
+  $("#loaderImage").css("display", "block");
+  $("#devices_refresh_button").css("display", "none");
+  discoveredCount = 0;
+ 
   discoveryClient.startDiscovery(function(advertisedDevice) {
-	  
-	  //window.addDevice(advertisedDevice.instanceName, advertisedDevice.address, true);
-	  backgroundPageWindow.console.log('Device named ' + advertisedDevice.instanceName + ' at ' + advertisedDevice.address + ' discovered and added to device list.');
-    
+    discoveredCount++;
+    addDeviceFound(advertisedDevice.instanceName, advertisedDevice.address, false, false);
+	  console.log('Device named ' + advertisedDevice.instanceName + ' at ' + advertisedDevice.address + ' discovered and added to device list.');
   }, function() {
-	  
-	  backgroundPageWindow.console.log('Error trying to start Discovery Session.');
-	  
+	  console.log('Error trying to start Discovery Session.');
   });
-  
-  document.getElementById('start-discovery').style.display = 'none';
-  
+
   //Set a timer to stop discover after a short time interval.
-  stopDiscoveryClientTimerId = window.setTimeout(function() {
+  stopDiscoveryClientTimerId = setTimeout(function() {
       stopDiscoveryClient();
       //document.getElementById('start-discovery').style.display = 'inline-block';
-      backgroundPageWindow.console.log('Discovery session timed out.');
-  }, 5000);  // Auto stop discovery after 5 seconds.
-};
+      console.log('Discovery session timed out.');
 
+      var statusMsg = "";
+      if (discoveredCount == 1) statusMsg = discoveredCount + " Google TV discovered";
+      else                      statusMsg = discoveredCount + " Google TVs discovered";
+      setDevicesStatusLabel(statusMsg, false);
+
+  }, 5000);  // Auto stop discovery after 5 seconds.
+
+}
 
 /** Stop searching for Anymote services advertised on the local network. */
-var stopDiscoveryClient = function() {
- discoveryClient.stopDiscovery();
-  window.clearTimeout(stopDiscoveryClientTimerId);
-  
-  document.getElementById('start-discovery').style.display = 'inline-block';
-  backgroundPageWindow.console.log('Discovery session stopped.');
-  //setDiscoveryLabel('');
-};
+function stopDiscoveryClient() {
+
+  console.log('Discovery session stopped.');
+  $("#loaderImage").css("display", "none");
+  $("#devices_refresh_button").css("display", "block");
+
+  discoveryClient.stopDiscovery();
+  clearTimeout(stopDiscoveryClientTimerId);
+  clearInterval(discoveryLoop);
+
+}

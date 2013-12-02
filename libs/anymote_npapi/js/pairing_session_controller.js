@@ -32,7 +32,6 @@
 /** Pairing session object that this controller manages. */
 var pairingSession = backgroundPageWindow.pairingSession;
 
-
 var challengeAccepted = false;
 var challengeResponseAccepted = false;
 
@@ -48,96 +47,82 @@ var challengeResponseAccepted = false;
  */
 var pairingSessionPair = function(googleTvName, googleTvIpAddress) {
 	
-    challengeAccepted = false;
-    challengeResponseAccepted = false;
+  challengeAccepted = false;
+  challengeResponseAccepted = false;
+
+  var gtvDevice = JSON.parse( '{ "name": "' + googleTvName + '" , "address": "' + googleTvIpAddress + '" }' );
   
-  pairingSession.pair('Chromemote', googleTvIpAddress, 9551 + 1,
-    function(e) {
-  switch (e.type) {
-    case googletvremote.pairing.EventType.NETWORK_ERROR:
-	  challengeResponseAccepted = false;
-	  console.log('Received Pairing session event... INVALID');
-      backgroundPageWindow.console.log('Received Pairing session event... INVALID');
-      break;
-    case googletvremote.pairing.EventType.SESSION_CREATED:
-      backgroundPageWindow.console.log('Received Pairing session event... SESSION_CREATED');
+  console.log(googleTvIpAddress);
 
-      break;
-    case googletvremote.pairing.EventType.SESSION_ENDED:
-      backgroundPageWindow.console.log('Received Pairing session event... SESSION_ENDED');
-      console.log('Received Pairing session event... SESSION_ENDED');
-      //window.closePinDialogBox();
-      break;
-    case googletvremote.pairing.EventType.PERFORM_INPUT:
-      backgroundPageWindow.console.log('Received Pairing session event... PERFORM_INPUT');
-      console.log('Google TV issued a pairing challenge.');
-      challengeAccepted = true;
-            
-      break;
-    case googletvremote.pairing.EventType.SUCCESS:
-      
-      challengeResponseAccepted = true;
-      //closePinDialogBox();
-      // DONE: Save paired device here.
-      var pairedDevices = [];
-      var devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-      if (devicesInStorage) {
-          pairedDevices = JSON.parse(devicesInStorage);
-      }
-      
-      for (var i=0; i < pairedDevices.length; i++)
-      {
-    	  var fields        	  = pairedDevices[i].split('~');
-    	  var deviceName    	  = fields[0];
-    	  var deviceAddress 	  = fields[1];
-    	  if(deviceAddress == googleTvIpAddress)
-    	  {
-    		  pairedDevices[i] = googleTvName + '~' + googleTvIpAddress;
-    		  localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-          //updatePairedDevicesList();  // Updates the UI in this demo page
-    	  }    	  
-    	  
-      }
-      
-      if (pairedDevices.indexOf(googleTvName + '~' + googleTvIpAddress) == -1) {
-          pairedDevices.unshift(googleTvName + '~' + googleTvIpAddress);  // Add to beginning of array
-          localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-          //updatePairedDevicesList();  // Updates the UI in this demo page
-      }
-
-      
-      stopDiscoveryClientTimerId = window.setTimeout(function() {
+  pairingSession.pair('Chromemote', googleTvIpAddress, 9551 + 1, function(e) {
+    switch (e.type) {
+      case googletvremote.pairing.EventType.NETWORK_ERROR:
+        challengeResponseAccepted = false;
+        console.log('Received Pairing session event... INVALID');
+        backgroundPageWindow.console.log('Received Pairing session event... INVALID');
+        break;
+      case googletvremote.pairing.EventType.SESSION_CREATED:
+        console.log('Received Pairing session event... SESSION_CREATED');
+        break;
+      case googletvremote.pairing.EventType.SESSION_ENDED:
+        backgroundPageWindow.console.log('Received Pairing session event... SESSION_ENDED');
+        console.log('Received Pairing session event... SESSION_ENDED');
+        //window.closePinDialogBox();
+        break;
+      case googletvremote.pairing.EventType.PERFORM_INPUT:
+        console.log('Received Pairing session event... PERFORM_INPUT');
+        console.log('Google TV issued a pairing challenge.');
+        challengeAccepted = true;
+        showAddPinInputBox(googleTvIpAddress);
+        break;
+      case googletvremote.pairing.EventType.SUCCESS:
+        challengeResponseAccepted = true;
+        //closePinDialogBox();
+        // DONE: Save paired device here.
+        var pairedDevices = [];
+        if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+        else devicesInStorage = "[]";
+        
+        if (devicesInStorage != "[]") {
+            pairedDevices = JSON.parse(devicesInStorage);
+        }
+        for (var i=0; i < pairedDevices.length; i++) {
           
-          anymoteStartSession(googleTvName + '~' + googleTvIpAddress,
-                  function(e) {
-                    if (e.type == googletvremote.anymote.EventType.CONNECTED) {
-                      backgroundPageWindow.console.log('Successful Anymote session connection.');
+          if(pairedDevices[i].address == googleTvIpAddress) {
+            pairedDevices[i] = gtvDevice;
+            localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            //updatePairedDevicesList();  // Updates the UI in this demo page
+          }
+          
+        }
+        if (pairedDevices.indexOf( gtvDevice ) == -1) {
+            pairedDevices.unshift(  gtvDevice  );  // Add to beginning of array
+            localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            //updatePairedDevicesList();  // Updates the UI in this demo page
+        }
+        stopDiscoveryClientTimerId = window.setTimeout(function() {
+          anymoteStartSession(gtvDevice,
+            function(e) {
+              if (e.type == googletvremote.anymote.EventType.CONNECTED) {
+                console.log('Successful Anymote session connection.');
 
-                    } else {
-                      backgroundPageWindow.console.log('Unsuccessful Anymote session connection.');
-                    }
-                  });
+              } else {
+                console.log('Unsuccessful Anymote session connection.');
+              }
+          });
           //enableKeyBoardEvents();
           //window.addDevice(googleTvName, googleTvIpAddress, false);
           //closeConnectMan();
-          
-      }, 1000);  // Auto stop discovery after 5-10 seconds.
-      
-      
-      
-   	  break;
-    case googletvremote.pairing.EventType.CANCELLED:
-      backgroundPageWindow.console.log('Received Pairing session event... CANCELLED');
-      //window.closePinDialogBox();
-      break;
-    case googletvremote.pairing.EventType.ERROR:
-      backgroundPageWindow.console.log('Received Pairing session event... ERROR');
-      console.log('Pairing error ' +
-      googletvremote.pairing.ErrorCodeStrings[e.errorCode] +
-      ' with ' + googleTvIpAddress);
-      break;      
-    
-      
+        }, 1000);  // Auto stop discovery after 5-10 seconds.
+     	  break;
+      case googletvremote.pairing.EventType.CANCELLED:
+        console.log('Received Pairing session event... CANCELLED');
+        //window.closePinDialogBox();
+        break;
+      case googletvremote.pairing.EventType.ERROR:
+        console.log('Received Pairing session event... ERROR');
+        console.log('Pairing error ' + googletvremote.pairing.ErrorCodeStrings[e.errorCode] + ' with ' + googleTvIpAddress);
+        break;
     }
   });
   
@@ -153,26 +138,19 @@ var pairingSessionPair = function(googleTvName, googleTvIpAddress) {
  * @param {string} challengeValue The 4 character challenge value (hexidecimal)
  *     to send to the Google TV to complete pairing.
  */
-var sendChallengeResponse = function(challengeValue) {
-	
-	pairingSession.setChallengeResponse(challengeValue)
+var sendChallengeResponse = function(challengeValue) {	
+	pairingSession.setChallengeResponse(challengeValue);
+}
 
-
-};
-
-var wasChallengeResponseAccepted = function(){
-	
+var wasChallengeResponseAccepted = function(){	
 	return challengeResponseAccepted;
-};
+}
 
-var wasChallengeAccepted = function(){
-	
+var wasChallengeAccepted = function(){	
 	return challengeAccepted;
-};
+}
 
-var cancelChallengeResponse = function() {
-	
+var cancelChallengeResponse = function() {	
 	pairingSession.cancel();
-	
-};
+}
 

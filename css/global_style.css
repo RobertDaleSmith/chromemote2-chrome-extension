@@ -3661,3 +3661,41 @@ input[type=checkbox] {
     width: 320px;
     background-color:rgba(0,0,0,0.25);
 }
+
+
+
+.farbtastic {
+  position: relative;
+}
+.farbtastic * {
+  position: absolute;
+  cursor: crosshair;
+}
+.farbtastic, .farbtastic .wheel {
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .color, .farbtastic .overlay {
+  top: 47px;
+  left: 47px;
+  width: 101px;
+  height: 101px;
+}
+.farbtastic .wheel {
+  background: url('../libs/farbtastic/wheel.png') no-repeat;
+  background-size: 195px 195px;
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .overlay {
+  background: url('../libs/farbtastic/mask.png') no-repeat;
+  background-size: 101px 101px;
+}
+.farbtastic .marker {
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  overflow: hidden; 
+  background: url('../libs/farbtastic/marker.png') no-repeat;
+  background-size: 17px 17px;
+}

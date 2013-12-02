@@ -1,26 +1,25 @@
 
-var appVersion = chrome.i18n.getMessage("version"),
+var appVersion = "", //chrome.i18n.getMessage("version"),
 	connectedDeviceCount = 0,
-	TvPluginLoaded = false;
+	TvPluginLoaded = false,
+	gTvPluginLoaded = false;
 
 window.onload = function() {
 
-	//chrome.browserAction.setIcon({path:"icons/icon19_grey.png"});
+	chrome.browserAction.setIcon({path:"images/icons/icon19_grey.png"});
 
 	googletvremoteInitializePlugin();
-
+	
 	loadGoogleTVConstants();
 	
-    anymoteConnectToExistingDevice();
-
-
+    window.anymoteConnectToExistingDevice();
 }
 
 window.onerror = function() {
 	console.log('JS Error found!');
 };
 
-
+var discoveryClient, pairingSession, anymoteSession;
 
 var googletvremoteInitializePlugin = function() {
 
@@ -33,7 +32,7 @@ var googletvremoteInitializePlugin = function() {
 	
 	try
 	{
-		window.googletvremote = pluginEl.gtvremote.plugin.object.GTVRemote();
+		googletvremote = pluginEl.gtvremote.plugin.object.GTVRemote();
 		
 		googletvremote.init('');
 		

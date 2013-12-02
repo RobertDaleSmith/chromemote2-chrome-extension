@@ -12,10 +12,10 @@ var deviceIndex = backgroundPageWindow.deviceIndex;
  * Start an Anymote session to communicate with Google TV. Before starting an
  * Anymote session, the Google TV at this ip address must already be paired.
  */
-var anymoteStartSession = function(googleTvIpAddress, response) {
+var anymoteStartSession = function(gtvDevice, response) {
   // DONE: Set a timeout that will trigger if there is no reply from the TV.
   var anymoteSessionTimeout = window.setTimeout(function() {
-    console.log('Timeout starting Anymote session with ' + googleTvIpAddress);
+    console.log('Timeout starting Anymote session with ' + gtvDevice.name + ' at ' + gtvDevice.address);
     //document.body.className = '';
     response({type: googletvremote.anymote.EventType.ERROR});
   }, 2000);
@@ -24,28 +24,18 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
   anymoteSession.stopSession();  // No harm if there is no active connection.
 
   // DONE: Start an Anymote session.
-  
-  
   //sendGAEvent("Connection", "AnymoteSession");
 
-  
-  if(googleTvIpAddress.indexOf("~") != -1)
-  {
-	  var fields        	  = googleTvIpAddress.split('~');
-	  var deviceName    	  = fields[0];
-	  var deviceAddress 	  = fields[1];
-  }
-  else
-  {
-	  var deviceName    	  = "test";
-	  var deviceAddress 	  = googleTvIpAddress;
+  //var deviceName    = "test";
+  //var deviceAddress = googleTvIpAddress;
+
+  if(gtvDevice.address) {
+	  deviceName  	= gtvDevice.name;
+	  deviceAddress = gtvDevice.address;
   }
  
   
-  
-  
-  anymoteSession.startSession('Chromemote', 1, deviceAddress,
-      9551, // Note, assuming the Anymote port is 9551, but in a real app you
+  anymoteSession.startSession('Chromemote', 1, deviceAddress, 9551, // Note, assuming the Anymote port is 9551, but in a real app you
       // should use the servicePort returned by the discovery client.
       function(e) {
         switch (e.type) {
@@ -54,8 +44,8 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
             break;
           case googletvremote.anymote.EventType.CONNECTED:
         	
-        	enableKeyBoardEvents();
-        	setIndicatorConnected();
+        	//enableKeyBoardEvents();
+        	//setIndicatorConnected();
             backgroundPageWindow.console.log('Received Anymote session event... CONNECTED');
             backgroundPageWindow.anymoteSessionActive = true;
             
@@ -64,13 +54,14 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
             var shortDeviceName = deviceName;
             var maxNameLength = 20;
             
-    		if(deviceName.length > maxNameLength)
-    		{
-    			shortDeviceName = deviceName.substring(0, maxNameLength) + "...";
-    		}
+        		if(deviceName.length > maxNameLength)
+        		{
+        			shortDeviceName = deviceName.substring(0, maxNameLength) + "...";
+        		}
     			
             
-            //displayToast('Successful connection to <br>' + shortDeviceName + ' at ' + deviceAddress);
+            addDeviceFound(gtvDevice.name, gtvDevice.address, true, true);
+            console.log('Successful connection to ' + shortDeviceName + ' at ' + deviceAddress);
     		    console.log('Connected');
             
             backgroundPageWindow.connectedDevice = deviceAddress;
@@ -81,25 +72,31 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
             
             console.log(deviceName);
             // Make sure this device is at the top of the paired device list.
-            pairedDevices = [];
-            var devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-            if (devicesInStorage) pairedDevices = JSON.parse(devicesInStorage);
+            // pairedDevices = [];
+
+
+            // if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+            // else devicesInStorage = "[]";
+
             
-            var indexOfDevice = pairedDevices.indexOf(googleTvIpAddress);
-            if (indexOfDevice == -1) {
-              // Somehow this device was missing.  Add it to the list.
-              pairedDevices.unshift(googleTvIpAddress);  // Adds to beginning.
-              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES,
-                  JSON.stringify(pairedDevices));
-              //updatePairedDevicesList();
-            } else if (indexOfDevice != 0) {
-              // Move this device into the first slot.
-              pairedDevices.splice(indexOfDevice, 1); // Remove.
-              pairedDevices.unshift(googleTvIpAddress); // Add to beginning.
-              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES,
-                  JSON.stringify(pairedDevices));
-              //updatePairedDevicesList();
-            }
+            // pairedDevices = JSON.parse( devicesInStorage );
+            
+            // //console.dir(pairedDevices);
+            // //console.dir(gtvDevice);
+
+            // var indexOfDevice = pairedDevices.indexOf( gtvDevice );
+            // if (indexOfDevice == -1) {
+            //   // Somehow this device was missing.  Add it to the list.
+            //   //pairedDevices.unshift( gtvDevice );  // Adds to beginning.
+            //   //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            //   //updatePairedDevicesList();
+            // } else if (indexOfDevice != 0) {
+            //   // Move this device into the first slot.
+            //   //pairedDevices.splice(indexOfDevice, 1); // Remove.
+            //   //pairedDevices.unshift( gtvDevice ); // Add to beginning.
+            //   //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            //   //updatePairedDevicesList();
+            // }
             response({type: googletvremote.anymote.EventType.CONNECTED});
             
             break;
@@ -126,10 +123,10 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
             backgroundPageWindow.console.log('Received Anymote session event... ERROR');
 //            console.log('Anymote error ' +
 //                googletvremote.anymote.ErrorCodeStrings[e.errorCode] +
-//                ' with ' + googleTvIpAddress);
+//                ' with ' + gtvDevice);
             backgroundPageWindow.console.log('Anymote error ' +
                 googletvremote.anymote.ErrorCodeStrings[e.errorCode] +
-                ' with ' + googleTvIpAddress);
+                ' with ' + gtvDevice.name + ' at ' + gtvDevice.address);
             if (e.errorCode == googletvremote.anymote.ErrorCode.NOTPAIRED) {
               // Note, often you don't get an ERROR just a timeout.
               window.clearTimeout(anymoteSessionTimeout);
@@ -144,15 +141,18 @@ var anymoteStartSession = function(googleTvIpAddress, response) {
 /** Go through the paired device list and attempt to start Anymote sessions. */
 var anymoteConnectToExistingDevice = function() {
   // DONE: Pull the paired device list from localStorage
-  var devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-  if (devicesInStorage) {
+
+  if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+  else devicesInStorage = "[]";
+  
+  if (devicesInStorage != "[]") {
     deviceIndex = 0; // Try the first paired device then move through the list.
     pairedDevices = JSON.parse(devicesInStorage);
-    var googleTvIpAddress = pairedDevices[deviceIndex];
+    var gtvDevice = pairedDevices[deviceIndex];
     // DONE: Attempt to pair with the device in index 0
     // DONE: Set a callback that will try the next device if this one fails.
-    anymoteStartSession(googleTvIpAddress, anymoteExistingDeviceResponseHandler);
-    console.log('Paring to ' + googleTvIpAddress);
+    anymoteStartSession(gtvDevice, anymoteExistingDeviceResponseHandler);
+    console.log('Paring to ' + gtvDevice.name + ' at ' + gtvDevice.address);
     
   } else {
      console.log('No devices have been paired yet');
@@ -176,10 +176,9 @@ var anymoteExistingDeviceResponseHandler = function(e) {
     if (deviceIndex < pairedDevices.length) {
       backgroundPageWindow.console.log('Device ' + pairedDevices[deviceIndex - 1] + ' failed. ' +
           'Attempting to connect to device ' + pairedDevices[deviceIndex]);
-      anymoteStartSession(pairedDevices[deviceIndex],
-          anymoteExistingDeviceResponseHandler);
+      anymoteStartSession(pairedDevices[deviceIndex], anymoteExistingDeviceResponseHandler);
     } else {
-      displayToast('Unable to establish an existing connection');
+      console.log('Unable to establish an existing connection');
     }
   }
 };
@@ -231,45 +230,49 @@ var sendAnymoteMouseWheel = function(xScroll,yScroll) {
   anymoteSession.sendMouseWheel(xScroll,yScroll);
 };
 
+var recentIpConnectedTo = "";
+var devicesInStorage = "[]";
+if( localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES) ) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+
 var anymoteConnectToExistingSingleDevice = function(ipAddress) {
+
+  recentIpConnectedTo = ipAddress;
 	// DONE: Pull the paired device list from localStorage
-	  var devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-	  if (devicesInStorage) {
+    if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+    else devicesInStorage = "[]";
+    
+    if (localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) {
 	    //deviceIndex = 0; // Try the first paired device then move through the list.
 	    
-		for(deviceIndex = 0; deviceIndex < pairedDevices.length-1; deviceIndex++)
-	    {
-			var fields        	  = pairedDevices[deviceIndex].split('~');
-			var deviceName    	  = fields[0];
-			var deviceAddress 	  = fields[1];
-	    	if (deviceAddress == ipAddress)
-	    	{
+		  for(deviceIndex = 0; deviceIndex < pairedDevices.length-1; deviceIndex++) {
+  			deviceName    	  = pairedDevices[deviceIndex].name;
+  			deviceAddress 	  = pairedDevices[deviceIndex].address;
+	    	if (deviceAddress == ipAddress) {
 	    		console.log(deviceAddress + ' ' + ipAddress);
 	    		break;
 	    	}
 	    }
-		
+      		
 	    pairedDevices = JSON.parse(devicesInStorage);
-	    var googleTvIpAddress = pairedDevices[deviceIndex];
+	    var gtvDevice = pairedDevices[deviceIndex];
 	    // DONE: Attempt to pair with the device in index 0
 	    // DONE: Set a callback that will try the next device if this one fails.
 	    anymoteStartSession(pairedDevices[deviceIndex], anymoteExistingSingleDeviceResponseHandler);
-	  }
-	  else {
+	  } else {
 		  console.log('No devices have been paired yet');
 	  }
 };
 
 var anymoteExistingSingleDeviceResponseHandler = function(e) {
-	  // If the type is googletvremote.anymote.EventType.CONNECTED you are done.
-	  // DONE: Otherwise attempt to connect using the next device in the array.
-	  if (e.type == googletvremote.anymote.EventType.CONNECTED) {
-		
-		  console.log('Established an existing connection');
-		  //closeConnectMan();
-		  stopDiscoveryClient();
-	  } else {
-
-		console.log('Unable to establish an existing connection');
-	  }
-	};
+  // If the type is googletvremote.anymote.EventType.CONNECTED you are done.
+  // DONE: Otherwise attempt to connect using the next device in the array.
+  if (e.type == googletvremote.anymote.EventType.CONNECTED) {		
+    console.log('Established an existing connection to ' + recentIpConnectedTo);
+    setDevicesStatusLabel("Connected to " + recentIpConnectedTo, true);
+    showOptionsPanel(false);
+    stopDiscoveryClient();
+  } else {
+    setDevicesStatusLabel("Unable to connect", true);
+    console.log('Unable to establish an existing connection');
+  }
+};

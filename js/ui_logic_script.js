@@ -33,7 +33,7 @@ function swapButtons(){
 
 	var mainBtnElementsToSwapHTML = "";
 	var mainBtnElements = document.getElementById("main_button_list").getElementsByClassName("drag_btn");
-	console.dir(mainBtnElements);
+	//console.dir(mainBtnElements);
 	for(var i=0 ; i < mainBtnElements.length ; i++) {
 
 		//console.log(mainBtnElements[i].getAttribute("swap"));
@@ -205,5 +205,3 @@ if(isInFullTabMode) { //IS FULL TAB MODE
 }
 
 initDarkBackSetting();
-
-

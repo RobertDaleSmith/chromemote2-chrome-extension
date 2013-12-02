@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Creates the embed element and calls the one and only function on the plugin
  *   <plugin element>.gtvremote.plugin.object.GTVRemote();
@@ -30,7 +29,6 @@
  *   anymote_session_controller.js
  */
 
-
 /**
  * Creates the plugin embed, calls the one plugin method to create the
  * googletvremote. Initialize and load the 512 byte certificate, then
@@ -40,17 +38,10 @@
  *   Anymote session - Used to communicate with a paired Google TV.
  */
  
-  
-  var googletvremoteInitializePlugin = function() {
-        
-	
-	var googletvremote = backgroundPageWindow.googletvremote;
-    
-    
-	discoveryClient = backgroundPageWindow.discoveryClient;
-	pairingSession = backgroundPageWindow.pairingSession;
-	anymoteSession = backgroundPageWindow.anymoteSession;
-	backgroundPageWindow.console.log('Pop up connected to Google TV Remote Plumbing Plugin on the Background Page.');
-	  
-  
-};
+ var googletvremoteInitializePlugin = function() {
+	googletvremote = backgroundPageWindow.googletvremote;
+	//discoveryClient= backgroundPageWindow.discoveryClient;
+	//pairingSession = backgroundPageWindow.pairingSession;
+	//anymoteSession = backgroundPageWindow.anymoteSession;
+	//backgroundPageWindow.console.log('Pop up connected to Google TV Remote Plumbing Plugin on the Background Page.');
+}
