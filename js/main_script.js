@@ -123,26 +123,25 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
     updateAppsListUI();
     
     $(".keycode").on('mousedown', function () {
-          var thisButton = $(this);
-          setTimeout(function () {
-              //console.log('down');
-              //console.log(thisButton.attr('class'));
-              if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) {
-                  return;
-              }
-              //sendKeyCode(thisButton.attr('id'));
+        var thisButton = $(this);
+        setTimeout(function () {             
 
-          }, 200);
+            if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) { return; }
+            //console.log('down');
+            sendKeyCode(thisButton.attr('id').replaceAll("_b2",""), true);
+
+        }, 100);
     });
 
     $(".keycode").on('mouseup', function () {
-          var thisButton = $(this);
-          //console.log('up');
-          //console.log(thisButton.attr('class'));
-          if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) {
-              return;
-          }
-          sendKeyCode(thisButton.attr('id').replaceAll("_2",""));
+        var thisButton = $(this);
+        setTimeout(function () {      
+            
+            if (thisButton.is('.dragging') || $("#" + thisButton.attr('id')).parent().is('.dragging')) { return; }
+            //console.log('up');
+            sendKeyCode(thisButton.attr('id').replaceAll("_b2",""), false);
+
+        }, 100);
     });
     
     $("#menu_button").click(function () {
@@ -514,9 +513,9 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
 });   //END ONLOAD
 
 
-//DISABLES right-click globally.
+//DISABLES right click globally.
 document.oncontextmenu = function() {
-    //return false;
+    return false;
 }
 
 var updateChannelsListUI = function() {
@@ -1775,7 +1774,6 @@ var addDeviceFound = function (name, ip, current, saved) {
     if( current && $("#devices_list_discovered #"+deviceFoundID).length > 0 ) $("#devices_list_discovered #"+deviceFoundID).remove();
 
     if( current ) for(var i=0; i < $("#devices_list_saved .device_found_active").length; i++) {
-        console.dir($("#devices_list_saved .device_found_active")[i]);
         $("#devices_list_saved .device_found_active")[i].className = 'device_found';
         i--;
     }
@@ -3400,4 +3398,15 @@ function setDevicesStatusLabel(msg, timeOut){
     document.getElementById("devices_status_label").textContent = msg;
     clearTimeout(devicesStatusLabelTimeout);
     if(timeOut) devicesStatusLabelTimeout = setTimeout(function(){ document.getElementById("devices_status_label").textContent = ""; }, 5000);
+}
+
+
+var sendKeyCode = function (keyCode, keyDown, callback) {
+
+    if(!anyMotePluginActive) { //MoteBridge
+        if(keyDown) sendMoteCommand("keycode", keyCode, callback);
+    } else {                   //AnyMote
+        sendKeyEvent(keyCode, keyDown);
+    }
+
 }

@@ -38,6 +38,7 @@ var anymoteStartSession = function(gtvDevice, response) {
   anymoteSession.startSession('Chromemote', 1, deviceAddress, 9551, // Note, assuming the Anymote port is 9551, but in a real app you
       // should use the servicePort returned by the discovery client.
       function(e) {
+        console.log(e.type);
         switch (e.type) {
           case googletvremote.anymote.EventType.INVALID:
             backgroundPageWindow.console.log('Received Anymote session event... INVALID');
@@ -70,33 +71,39 @@ var anymoteStartSession = function(gtvDevice, response) {
   		  	
             chrome.browserAction.setIcon({path:"images/icons/icon19.png"});
             
-            console.log(deviceName);
+            //console.log(deviceName);
             // Make sure this device is at the top of the paired device list.
-            // pairedDevices = [];
+            pairedDevices = [];
 
 
-            // if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-            // else devicesInStorage = "[]";
+            if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+            else devicesInStorage = "[]";
 
             
-            // pairedDevices = JSON.parse( devicesInStorage );
+            pairedDevices = JSON.parse( devicesInStorage );
             
-            // //console.dir(pairedDevices);
-            // //console.dir(gtvDevice);
+            //console.dir(pairedDevices);
+            //console.dir(gtvDevice);
 
-            // var indexOfDevice = pairedDevices.indexOf( gtvDevice );
-            // if (indexOfDevice == -1) {
-            //   // Somehow this device was missing.  Add it to the list.
-            //   //pairedDevices.unshift( gtvDevice );  // Adds to beginning.
-            //   //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-            //   //updatePairedDevicesList();
-            // } else if (indexOfDevice != 0) {
-            //   // Move this device into the first slot.
-            //   //pairedDevices.splice(indexOfDevice, 1); // Remove.
-            //   //pairedDevices.unshift( gtvDevice ); // Add to beginning.
-            //   //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-            //   //updatePairedDevicesList();
-            // }
+            //var indexOfDevice = pairedDevices.indexOf( gtvDevice );
+            var indexOfDevice = -1;
+
+            for(var i=0; i < pairedDevices.length; i++) {
+              if(pairedDevices[i].address == gtvDevice.address)
+                indexOfDevice = i;
+            }
+
+            //backgroundPageWindow.console.log(indexOfDevice);
+            if (indexOfDevice == -1) {
+              // Somehow this device was missing.  Add it to the list.
+              pairedDevices.unshift( gtvDevice );  // Adds to beginning.
+              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            } else if (indexOfDevice >= 0) {
+              // Move this device into the first slot.
+              pairedDevices.splice(indexOfDevice, 1); // Remove.
+              pairedDevices.unshift( gtvDevice ); // Add to beginning.
+              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            }
             response({type: googletvremote.anymote.EventType.CONNECTED});
             
             break;
@@ -194,11 +201,14 @@ var sendAnymoteKeyBoardEvent = function(keycode) {
 };
 
 var sendAnymoteKeyEvent = function(keycode, keyDown) {
-	
-	if (keyDown)
+
+  if(keyDown == null){
+    sendAnymoteKeyBoardEvent(keycode);
+  } else	if (keyDown) {
 		anymoteSession.sendKeyEvent(keycode, googletvremote.anymote.Action.DOWN);
-	else
+  }	else {
 		anymoteSession.sendKeyEvent(keycode, googletvremote.anymote.Action.UP);
+  }
 	  
 };
 

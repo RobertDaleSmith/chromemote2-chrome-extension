@@ -31,9 +31,7 @@ var sendMoteCommand = function (key, value, callback) {
     }
 
 }
-var sendKeyCode = function (keyCode, callback) {
-    sendMoteCommand("keycode", keyCode, callback);
-}
+
 var discoverDevices = function (callback) {
     sendMoteCommand("discoverDevices", true, callback);
 }

@@ -58,22 +58,21 @@ var anymoteStartSession = function(gtvDevice, response) {
             
             chrome.browserAction.setIcon({path:"images/icons/icon19.png"});
             // Make sure this device is at the top of the paired device list.
-            pairedDevices = [];
-            var devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-            if (devicesInStorage) pairedDevices = JSON.parse(devicesInStorage);
-            
-            var indexOfDevice = pairedDevices.indexOf( gtvDevice );
+            var indexOfDevice = -1;
+            for(var i=0; i < pairedDevices.length; i++) {
+              if(pairedDevices[i].address == gtvDevice.address)
+                indexOfDevice = i;
+            }
+            //backgroundPageWindow.console.log(indexOfDevice);
             if (indexOfDevice == -1) {
               // Somehow this device was missing.  Add it to the list.
-              //pairedDevices.unshift(gtvDevice);  // Adds to beginning.
-              //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-              //updatePairedDevicesList();
-            } else if (indexOfDevice != 0) {
+              pairedDevices.unshift( gtvDevice );  // Adds to beginning.
+              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
+            } else if (indexOfDevice >= 0) {
               // Move this device into the first slot.
-              //pairedDevices.splice(indexOfDevice, 1); // Remove.
-              //pairedDevices.unshift(gtvDevice); // Add to beginning.
-              //localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
-              //updatePairedDevicesList();
+              pairedDevices.splice(indexOfDevice, 1); // Remove.
+              pairedDevices.unshift( gtvDevice ); // Add to beginning.
+              localStorage.setItem(STORAGE_KEY_PAIRED_DEVICES, JSON.stringify(pairedDevices));
             }
             response({type: googletvremote.anymote.EventType.CONNECTED});
             

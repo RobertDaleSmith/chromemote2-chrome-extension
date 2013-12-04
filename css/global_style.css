@@ -727,7 +727,7 @@ body::-webkit-scrollbar {
     cursor: pointer;
 }
 
-#keycode_volume_rocker, #keycode_volume_rocker_2 {
+#keycode_volume_rocker, #keycode_volume_rocker_b2 {
     background-image: url("../images/remote_button_icons.png");
     background-size:768px 707px;
     background-repeat:no-repeat;
@@ -735,14 +735,14 @@ body::-webkit-scrollbar {
     background-position:0px 48px; 
     background-position:-256px -96px; 
 }
-#keycode_volume_rocker:active, #keycode_volume_rocker_2:active {
+#keycode_volume_rocker:active, #keycode_volume_rocker_b2:active {
     background-position:-256px -432px; 
 }
 
-#keycode_home,#keycode_home_2{
+#keycode_home,#keycode_home_b2{
     background-position:0px 0px; 
 }
-#keycode_home:active,#keycode_home_2:active {
+#keycode_home:active,#keycode_home_b2:active {
     background-position:0px -336px; 
 }
 
@@ -767,10 +767,10 @@ body::-webkit-scrollbar {
     background-position:-192px -336px; 
 }
 
-#keycode_search, #keycode_search_2 {
+#keycode_search, #keycode_search_b2 {
     background-position:-256px 0px; 
 }
-#keycode_search:active, #keycode_search_2:active {
+#keycode_search:active, #keycode_search_b2:active {
     background-position:-256px -336px; 
 }
 
@@ -891,10 +891,10 @@ body::-webkit-scrollbar {
     background-position:-128px -480px; 
 }
 
-#keycode_menu,#keycode_menu_2 {
+#keycode_menu,#keycode_menu_b2 {
     background-position:-192px -144px; 
 }
-#keycode_menu:active,#keycode_menu_2:active {
+#keycode_menu:active,#keycode_menu_b2:active {
     background-position:-192px -480px; 
 }
 
@@ -1030,10 +1030,10 @@ body::-webkit-scrollbar {
     background-position:0px -480px; 
 }
 
-#keycode_back, #keycode_back_2 {
+#keycode_back, #keycode_back_b2 {
     background-position:-64px -240px; 
 }
-#keycode_back:active, #keycode_back_2:active {
+#keycode_back:active, #keycode_back_b2:active {
     background-position:-64px -576px; 
 }
 
@@ -2271,6 +2271,10 @@ body::-webkit-scrollbar {
     border-width: 1px;
     border-color: #c6c7c9;
     background-color:#f9f9f9;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .device_found_name_input:disabled {
 
