@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	    <title>Chromemote 2</title>
+
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">     
+        <meta name="viewport" content="width=320, width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0" /> <!-- This will force the device viewport to maintain the correct scale -->
+        <meta name="apple-mobile-web-app-capable" content="yes" /> <!-- This will remove the Safari web browsers address bar & bookmarks bar giving your web page a native appearance -->
+
+       <!--jQuery Lib and Plugins | START -->
+        <script type="text/javascript" src="libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.caret.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.ipaddress.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery-ui.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.sortable.js"></script>
+       <!--jQuery Lib and Plugins | END   -->
+
+       <!--Gridster Lib | START | prereq:jQuery-->
+        <link type="text/css" rel="stylesheet" href="libs/gridster/css/jquery.gridster.css">
+        <script type="text/javascript" src="libs/gridster/js/jquery.gridster.min.js"></script>
+       <!--Gridster Lib | END | prereq:jQuery  -->
+
+       <!--Textext Lib | START | prereq:jQuery-->
+        <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.core.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.tags.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.autocomplete.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.focus.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.prompt.css" />
+	    <link type="text/css" rel="stylesheet" href="libs/textext/css/textext.plugin.arrow.css" />
+	    <script type="text/javascript" src="libs/textext/js/textext.core.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.tags_mod.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.autocomplete.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.suggestions.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.filter.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.focus.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.prompt.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.ajax.js" charset="utf-8"></script>
+	    <script type="text/javascript" src="libs/textext/js/textext.plugin.arrow.js" charset="utf-8"></script>
+       <!--Textext Lib | END | prereq:jQuery  -->
+       
+       <!--Chromemote's CSS and JS source | START -->
+        <link type="text/css" rel="stylesheet" href="css/fonts/Roboto-stylesheet.css" media="all" />
+        <link type="text/css" rel="stylesheet" href="css/global_style.css" media="all" />
+
+        <script type="text/javascript" src="js/anymote_bridge_script.js"></script>
+        <script type="text/javascript" src="js/main_script.js"></script>
+
+        <script type="text/javascript" src="libs/farbtastic/farbtastic.js"></script>
+        <!-- <link rel="stylesheet" href="libs/farbtastic/farbtastic.css"> -->
+       <!--Chromemote's CSS and JS source | END   -->
+
+       <!--AnyMote NPAPI JS Lib | START -->
+        <script type="text/javascript" src="libs/anymote_npapi/js/googletvremote_constants.js"></script>
+        <script type="text/javascript" src="libs/anymote_npapi/js/googletvremote_controller.js"></script>
+        <script type="text/javascript" src="js/anymote_npapi_script.js"></script>
+        <script type="text/javascript" src="libs/anymote_npapi/js/discovery_client_controller.js"></script>
+        <script type="text/javascript" src="libs/anymote_npapi/js/anymote_session_controller.js"></script>
+        <script type="text/javascript" src="libs/anymote_npapi/js/pairing_session_controller.js"></script>
+       <!--AnyMote NPAPI JS Lib | END  -->     
+
+    </head>
+    <body>
+
+        <div id="body_container">
+            <div id="background_container"><div id="background_full_mode"></div></div>
+            <div id="main_container">
+                <div id="title_bar_container">
+                    <div id="full_mode_button" title="Switch to Full Mode"></div>
+                    <div id="popout_mode_button" title="Swith to Pop Out Mode"></div>
+                    <div id="menu_button" class="title_open_menu_button" title="Settings / Preferences"></div>
+                    <div id="title_bar_title" class="unselectable">remote</div>
+                    <div id="options_close_button"></div>                
+                    <div id="alt_panel_button" class="title_open_alt_button"></div>
+                    <div id="touch_pad_open_button" class="title_open_touch_button"></div>
+                    <div id="lock_mouse_button" class="title_mouse_unlocked_button" title="Locks mouse cursor to appear only on the Google TV."></div>
+                </div>
+                <div id="remote_button_panels" class="unselectable">
+                    <div id="settings_menu_panel">
+                        <div id="menu_items">
+                            <div class="menu_item" id="menu_item_settings"><div class="menu_item_icon"></div>Settings</div>
+                            <div id="menu_panel_settings">
+                                <div class="menu_panel_category">Button Config Settings</div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_btn_lock">Draggable Remote Buttons
+                                    <div class="checkBoxSquaredThree" id="btn_lock_checkbox_holder">    
+                                        <input type="checkbox" value="None" id="btn_lock_checkbox" name="check" />
+                                        <label for="btn_lock_checkbox"></label>
+                                    </div>
+                                    <div id="btn_lock_checkbox_cover"></div>
+                                </div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_reset_default_layout">Reset to Default Layout
+                                    <div id="undo_default_reset">undo?
+                                        <div id="undo_default_timeleft_holder"><div id="undo_default_timeleft"></div></div>
+                                    </div>
+                                </div>
+                                <div class="menu_panel_category" id="menu_panel_category_appearance">Appearance Settings</div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_select_theme">Select Theme</div>
+                                <div id="menu_panel_settings_select_theme" class="sub_menu_panel">
+                                    <div class="theme_color_preset" id="theme_color_preset_0" color="#000000" border="false">Default<div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_1" color="#6abae2" border="true" >Water  <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_2" color="#a3d5f5" border="true" >Sky    <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_3" color="#16a73c" border="true" >Grass  <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_4" color="#17a652" border="false">Forest <div class="theme_color_border"></div></div>
+
+                                    <div class="theme_color_preset" id="theme_color_preset_5" color="#f1f386" border="true" >Sand   <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_6" color="#f48083" border="true" >Clay   <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_7" color="#a36305" border="false">Dirt   <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_8" color="#f21307" border="true" >Lava   <div class="theme_color_border"></div></div>
+                                    <div class="theme_color_preset" id="theme_color_preset_9" color="#c316ca" border="true" >UV     <div class="theme_color_border"></div></div>
+                                </div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_custom_theme">Custom Theme</div>
+                                <div id="menu_panel_settings_custom_theme" class="sub_menu_panel">
+                                    <div id="colorpicker"></div>
+                                    <div id="custom_theme_color_input_holder">&nbsp;&nbsp;
+                                        <input id="custom_theme_color_input" name="color" value="#000000" maxlength="7"/>
+                                    </div>                                
+                                    <div class="checkBoxSquaredThree" style="position:absolute;right:20px;top:13px;width:20px;height:20px;margin:0px;">    
+                                        <input type="checkbox" value="None" id="border_color_checkbox" name="check2" />
+                                        <label for="border_color_checkbox"></label>
+                                    </div>
+                                    <div id="border_color_checkbox_holder">
+                                        <div id="border_color_checkbox_label">Borders</div>                                    
+                                    </div>
+                                </div>
+                                <!-- <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div> -->
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_dark_back" style="display:none;">Dark Background (Full Mode)
+                                    <div class="checkBoxSquaredThree" id="dark_back_checkbox_holder">    
+                                        <input type="checkbox" value="None" id="dark_back_checkbox" name="check" />
+                                        <label for="dark_back_checkbox"></label>
+                                    </div>
+                                    <div id="dark_back_checkbox_cover"></div>
+                                </div>
+                                <div class="menu_panel_category">User Settings</div>
+                                <div class="menu_item menu_item_sub_cat" id="">Sign In</div>                            
+                                <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div> -->
+                                <div class="menu_panel_category">Network Settings</div>
+                                <!-- <div class="menu_item menu_item_sub_cat" id="">Device Name</div> -->
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_mote_ip">Chromemote Bridge IP</div>
+                                <div id="menu_panel_settings_mote_ip" class="sub_menu_panel">
+                                    <div id="cancel_mote_ip_button">cancel</div>
+                                    <input name="ipaddress[abcd][]" class="mote_server_ip_input ip-enabled" type="text" placeholder="xxx.xxx.xxx.xxx" style="display: none;">
+                                    <div class="ip_container" style="display: inline-block;">
+                                        <input type="text" class="ip_octet" id="ipaddress_abcd__octet_1" maxlength="3" placeholder="192" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_2" maxlength="3" placeholder="168" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_3" maxlength="3" placeholder="10" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_4" maxlength="3" placeholder="12" value="">
+                                    </div>
+                                    <div id="save_mote_ip_button">save</div>
+                                </div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_npapi_enabled">GTV NPAPI Plugin Enabled
+                                    <div class="checkBoxSquaredThree" id="npapi_enabled_checkbox_holder">    
+                                        <input type="checkbox" value="None" id="npapi_enabled_checkbox" name="check" />
+                                        <label for="npapi_enabled_checkbox"></label>
+                                    </div>
+                                    <div id="btn_lock_checkbox_cover"></div>
+                                </div>
+                                <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings to Mote Server</div>  -->                           
+                                <div class="menu_panel_category">Other Settings</div>
+                                <div class="menu_item menu_item_sub_cat" id="">View Changelog</div>
+                            </div>                        
+                            <div class="menu_item" id="menu_item_about"><div class="menu_item_icon"></div>About</div>
+                            <div id="menu_panel_about" class="sub_menu_panel">
+                                <div id="menu_panel_about_logo"></div>
+                                <div id="menu_panel_about_by">By <a href="http://motelabs.com/" target="_blank">Mote Labs</a></div>
+                                <div id="menu_panel_about_version">v. <div id="menu_panel_about_version_number"></div></div>
+                                <!-- <img src="images/team.png" style="display:block;position:absolute;top:76px;left:15px;" width="200"> -->
+
+                                <div id="menu_panel_about_copyright">© 2012 - 2014 <a href="http://motelabs.com/" target="_blank" title="MoteLabs.com">Mote Labs</a></div> 
+
+                            </div>
+                            <div class="menu_item" id="menu_item_support"><div class="menu_item_icon"></div>Support Us</div>
+                            <div class="menu_item" id="menu_item_help"><div class="menu_item_icon"></div>Help</div>
+                            <div class="menu_item" id="menu_item_bugs"><div class="menu_item_icon"></div>Report Bugs</div>
+                            <div class="menu_item" id="menu_item_suggest"><div class="menu_item_icon"></div>Suggest Features</div>
+                            <div class="menu_item" id="menu_item_updates"><div class="menu_item_icon"></div>Check for Updates</div>
+                            <div class="menu_item" id="menu_item_blog"><div class="menu_item_icon"></div>Blog</div>
+                        </div>                    
+                    </div>
+                    <div id="remote_button_panel_main" class="gridster">
+                        <div class="options_tabs_bottom_filler alt_mid_bottom_filler"><div class="options_tabs_bottom_filler_inner"></div></div>
+                        <div class="options_tabs_bottom_filler"><div class="options_tabs_bottom_filler_inner"></div></div>
+                        <ul id="main_button_list" class="sortable grid">
+                            <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_home" title="Home"></li>
+                            <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_tv_power" title="TV Power"></li>
+                            <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_avr_power" title="Audio/Video Receiver Power"></li>
+                            <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_stb_power" title="Set-Top Box Power"></li>
+                            <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="fling_tab" title="Fling page to Google TV"></li>
+
+                            <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_rewind" title="Meida Rewind"></li>
+                            <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_previous" title="Media Previous"></li>
+                            <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_play" title="Media Play"></li>
+                            <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_next" title="Media Next"></li>
+                            <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_fast_forward" title="Media Fast Forward"></li>
+                        
+                            <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_channel_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up" title="Channel Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down" title="Channel Down"></div></li>
+                            <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_stop" title="Media Stop"></li>
+                            <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_pause" title="Pause"></li>
+                            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_live" title="Live"></li>
+                            <li data-row="3" data-col="5" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up" title="Volume Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down" title="Volume Down"></div></li>
+                        
+                            <!--channel_down-->
+                            <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_escape" title="Escape"></li>
+                            <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dpad_up" title="Up"></li>
+                            <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_menu" title="Menu"></li>
+                            <!--volume down-->
+
+                            <li data-row="5" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_page_rocker">PG<div class="remote_button keycode rocker_up" id="keycode_page_up" title="Page Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_page_down" title="Page Down"></div></li>
+                            <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dpad_left" title="Left"></li>
+                            <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dpad_center" title="Ok"></li>
+                            <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dpad_right" title="Right"></li>
+                            <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_mute" title="Mute"></li>
+
+                            <!--page down-->
+                            <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_back" title="Back"></li>
+                            <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dpad_down" title="Down"></li>
+                            <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_bookmark" title="Bookmark"></li>
+                            <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_window" title="Picture-in-picture"></li>
+
+                            <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_search" title="Search"></li>
+                            <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_info" title="Info"></li>
+                            <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_guide" title="Guide"></li>
+                            <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_dvr" title="DVR"></li>
+                            <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_record" title="Media Record"></li>
+                        </ul>
+                    </div>            
+                    <div id="remote_button_panel_alt" class="gridster">
+                        <ul id="alt_button_list" class="sortable grid">
+                         
+                            <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_stb_menu" title="Set-Top Box Menu"></li>       
+                            <li data-row="1" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_tv_input" title="TV Input"></li>
+                            <li data-row="1" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_avr_input" title="Audio/Video Receiver Input"></li>
+                            <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_stb_input" title="Set-Top Box Input"></li>
+                            <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_settings" title="Settings"></li>  
+
+                            <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_eject" title="Eject"></li>
+                            <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_audio" title="Audio"></li>
+                            <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_bd_popup_menu" title="Blu-ray PopUp Menu"></li>
+                            <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_bd_top_menu" title="Blu-ray Top Menu"></li>
+                            <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_bd_input" title="Blu-ray Input"></li>
+
+                            <li data-row="3" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_tab" title="Recall"></li>
+                            <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_yellow" title="Program Yellow"></li>
+                            <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_blue" title="Program Blue"></li>
+                            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_red" title="Program Red"></li>
+                            <li data-row="3" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_green" title="Program Green"></li>
+
+                            <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_1"></li>
+                            <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_2"></li>
+                            <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_3"></li>
+                            <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_4"></li>
+                            <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_5"></li>
+
+                            <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_6"></li>
+                            <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_7"></li>
+                            <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_8"></li>
+                            <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_9"></li>
+                            <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_0"></li>
+                        
+                            <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker" id="keycode_zoom_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in" title="Zoom In"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out" title="Zoom Out"></div></li>
+                            <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_all_power" title="AVR + STB + TV Power"></li>
+                            <li data-row="6" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_2"></li>
+                            <li data-row="6" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_3"></li>
+                            <li data-row="6" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_4"></li>
+
+                            <!-- keycode_zoom_out -->
+
+                            <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_power" title="GoogleTV Device Power"></li>
+                            <li data-row="7" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_6"></li>
+                            <li data-row="7" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_7"></li>
+                            <li data-row="7" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button" id="custom_btn_8"></li>
+                        </ul>
+                    </div>
+                    <div id="remote_button_panel_touch" class="gridster">
+                        <div id="remote_touch_pad"></div>
+                        <ul id="touch_button_list" class="sortable grid">
+                            <li data-row="6" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_home_b2" title="Home"></li>
+                            <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_menu_b2" title="Home"></li>
+                            <li data-row="6" data-col="3" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker"  id="keycode_channel_rocker_b2">CH<div class="remote_button keycode rocker_up" id="KEYCODE_channel_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_channel_down"></div title="Home"></li>
+                            <li data-row="6" data-col="4" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker"  id="keycode_volume_rocker_b2"><div class="remote_button keycode rocker_up" id="KEYCODE_volume_up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_volume_down"></div title="Home"></li>
+                            <li data-row="6" data-col="5" data-sizex="1" data-sizey="2" class="drag_btn remote_button_rocker"  id="keycode_zoom_rocker_b2">ZOOM<div class="remote_button keycode rocker_up" id="KEYCODE_zoom_in"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="KEYCODE_zoom_out"></div title="Home"></li>
+                        
+                            <li data-row="7" data-col="1" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_back_b2" title="Home"></li>
+                            <li data-row="7" data-col="2" data-sizex="1" data-sizey="1" class="drag_btn remote_button keycode" id="keycode_search_b2" title="Home"></li>
+                            <!--keycode_channel_down-->
+                            <!--keycode_volume_down-->
+                            <!--keycode_zoom_out-->
+
+                            <li data-row="1" data-col="1" data-sizex="5" data-sizey="5" class="touch_pad_filler"> <div id="keyboard_activity_indicator"></div></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="options_panel_container" class="unselectable">
+                    <div id="options_button_panel">
+                        <div id="options_button_devices" class="options_button" title="Discover and connect to Google TV devices.">DEVICES<div id="device_selected" class="options_button_selected"></div></div>
+                        <div id="options_button_apps" class="options_button" title="Sync and launch Google TV apps.">APPS<div class="options_button_seperator_left"></div><div class="options_button_seperator_right"></div><div id="apps_selected" class="options_button_selected"></div></div>
+                        <div id="options_button_channels" class="options_button" title="TV channel listing and macros.">CHANNELS<div id="channels_selected" class="options_button_selected"></div></div>
+                    </div>
+                    <div id="options_panels">
+                        <div id="options_panel_devices" class="options_panel" style="display:none;">
+                            <div id="device_settings_controls">
+                                <div id="devices_refresh_button" title="Discover Google TV devices."></div>
+                                <div id="loaderImage" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                                <div id="devices_status_label"></div>
+                                <div id="devices_add_button" title="Manually add a device by IP address."></div>
+                            </div>
+                            <div id="devices_list">
+                                <div id="devices_list_saved"></div>
+                                <div id="devices_list_discovered"></div>
+                            </div>
+                        </div>
+                        <div id="options_panel_apps" class="options_panel" style="display:none;">
+                            <div id="apps_settings_controls">
+                                <div id="apps_sync_button" title="Sync list of installed apps."></div>
+                                <div id="loaderImage2" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                                <div id="apps_status_label"></div>
+                                <div id="intent_add_button" title="Add custom URI/Intent to fling."></div>
+                            </div>
+                            <div id="apps_lists">                            
+                                <div id="apps_list">
+                                    <div id="app_clock"    class="app_icon_item" title="Clock"></div>
+                                    <div id="app_downloads"class="app_icon_item" title="Downloads"></div>
+                                    <div id="app_chrome"   class="app_icon_item" title="Google Chrome"></div>
+                                    <div id="app_movies"   class="app_icon_item" title="Google Play Movies & TV"></div>
+                                    <div id="app_music"    class="app_icon_item" title="Google Play Music"></div>
+
+                                    <div id="app_store"    class="app_icon_item" title="Google Play Store"></div>
+                                    <div id="app_search"   class="app_icon_item" title="Google Search"></div>
+                                    <div id="app_netflix"  class="app_icon_item" title="Netflix"></div>                            
+                                    <div id="app_pandora"  class="app_icon_item" title="Pandora"></div>
+                                    <div id="app_photos"   class="app_icon_item" title="Photos"></div>
+
+                                    <div id="app_primetime"class="app_icon_item" title="PrimeTime"></div>
+                                    <div id="app_tv"       class="app_icon_item" title="TV"></div>
+                                    <div id="app_settings" class="app_icon_item" title="Settings"></div>
+                                    <div id="app_twitter"  class="app_icon_item" title="Twitter"></div>
+                                    <div id="app_youtube"  class="app_icon_item" title="YouTube"></div>
+                                </div>
+                                <div id="custom_intent_list"></div>
+                                <div id="apps_installed_list"></div>
+                            </div>
+                        </div>
+                        <div id="options_panel_channels" class="options_panel" style="display:none;">
+                            <div id="apps_settings_controls">
+                                <div id="update_channels_button" title="Sync TV channels list."></div>
+                                <div id="loaderImage3" class="loaderImage"><img src="images/spinner.gif" alt="spinner"></div>
+                                <div id="channels_status_label"></div>
+                                <div id="macro_add_button" title="Add custom macros."></div>
+                            </div>
+                            <div id="channels_list">                            
+                                <div id="custom_macro_list"></div>
+                                <div id="system_channels_list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ad_block_holder">                
+                    <div id="ad_block_back"></div>
+                    <a href="http://chromemote.com/support-us/" target="_blank"><div id="ad_block"></div></a>
+                </div>
+
+                <div id="apps_context_menu" tabindex="-1">
+                    <div class="apps_context_menu_option" id="apps_context_menu_edit">Edit</div>
+                    <div class="apps_context_menu_option bottom" id="apps_context_menu_delete">Delete</div>
+                </div>
+
+
+
+                <div id="mouse_lock_cover">
+                    <div id="mouse_lock_cover_label1">
+                        Mouse Cursor Locked to Google TV                    
+                    </div>
+                    <div id="mouse_lock_cover_label2">
+                        press <b>esc</b> to return control
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <script type="text/javascript" src="js/full_mode_script.js"></script>        
+    </body>
+</html>

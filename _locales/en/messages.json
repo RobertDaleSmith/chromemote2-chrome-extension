@@ -1,0 +1,14 @@
+{
+   "CWS": {
+      "message": "Chrome Web Store"
+   },
+   "name": {
+   	  "message": "Chromemote 2 - Remote for Google TV™"
+   },
+   "description": {
+   	  "message": "A better way to control Google TV. Fling videos, links, images, launch apps, plus full remote control of all your Google TVs."
+   },
+   "version": {
+      "message": "2.13.12.0"
+   }
+}
