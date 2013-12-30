@@ -1,5 +1,7 @@
 //Chrome AnyMote API Stuff---------------------------
-var anyMotePluginActive = true;
+
+
+
 
 /** Key used by localStorage to store ip addresses of paired Google TVs. */
 var STORAGE_KEY_PAIRED_DEVICES = 'paired_devices';
@@ -12,7 +14,7 @@ function checkIfConnectionIsActive() {
         backgroundPageWindow.pingAck = false;
         anymoteSession.sendPing();
         var timer = window.setTimeout(function() {
-            //if(!backgroundPageWindow.pingAck)
+            if(anyMotePluginActive)
                 anymoteConnectToExistingDevice();
         }, 500); 
     }
@@ -22,23 +24,23 @@ function initAnyMoteNPAPI(){
     /* GTV NPAPI PLUMBING */
     googletvremoteInitializePlugin();
 
+    if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
+    else devicesInStorage = "[]";
+    var devicesInStorageJSON = JSON.parse( devicesInStorage );
+    for(var i = 0; i < devicesInStorageJSON.length; i++) { addDeviceFound(devicesInStorageJSON[i].name, devicesInStorageJSON[i].address, false, true); }
+
     setTimeout(function() {
         if(!backgroundPageWindow.anymoteSessionActive) {
             console.log('Discovering...');
-            startDiscoveryClient();
-            if (!devices_options_active) $("#options_button_devices").click();
+            runDiscovery();
+            if (!devices_options_active && anyMotePluginActive) $("#options_button_devices").click();
 
             //setIndicatorDisconnected();            
         } else {
             
             //enableKeyBoardEvents();
             //setIndicatorConnected();
-        }
-
-        if(localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES)) devicesInStorage = localStorage.getItem(STORAGE_KEY_PAIRED_DEVICES);
-        else devicesInStorage = "[]";
-        var devicesInStorageJSON = JSON.parse( devicesInStorage );
-        for(var i = 0; i < devicesInStorageJSON.length; i++) { addDeviceFound(devicesInStorageJSON[i].name, devicesInStorageJSON[i].address, false, true); }
+        }        
     }, 500);
     
     
@@ -59,27 +61,23 @@ window.onunload = function() {
 }
 
 window.onerror = function(e) {
-    backgroundPageWindow.console.log('JavaScript error found.');
+    backgroundPageWindow.console.log('JavaScript error found.' + e);
     console.log(e);
     //sendGAEvent("Error", "JavaScript");
-    // try {
-    //     backgroundPageWindow.console.log('Checking if embed object has crashed.');
-    //     anymoteSession.sendPing();
-    // }
-    // catch(e) {
-    //      //catch and just suppress error
-    //     //sendGAEvent("Error", "JavaScript", "Message", e.message);
-    //     backgroundPageWindow.console.log('GTV plumbing embed plugin may have crashed. Error message was: ' + e.message);
-    //     backgroundPageWindow.console.log('Restarting GTV plumbing.');
-    //     backgroundPageWindow.loadGoogleTVConstants();
-    //     backgroundPageWindow.googletvremoteInitializePlugin();
-    //     googletvremoteInitializePlugin();
-    //     discoveryClient= backgroundPageWindow.discoveryClient;
-    //     pairingSession = backgroundPageWindow.pairingSession;
-    //     anymoteSession = backgroundPageWindow.anymoteSession;
-    //     backgroundPageWindow.anymoteSessionActive = false;
-    //     anymoteConnectToExistingDevice();
-    // }
+    try {
+        backgroundPageWindow.console.log('Checking if embed object has crashed.');
+        anymoteSession.sendPing();
+    }
+    catch(e) {
+         //catch and just suppress error
+        //sendGAEvent("Error", "JavaScript", "Message", e.message);
+        backgroundPageWindow.console.log('GTV plumbing embed plugin may have crashed. Error message was: ' + e.message);
+        backgroundPageWindow.console.log('Restarting GTV plumbing.');
+        backgroundPageWindow.googletvremoteInitializePlugin();
+        googletvremoteInitializePlugin();
+        backgroundPageWindow.anymoteSessionActive = false;
+        anymoteConnectToExistingDevice();
+    }
     
 }
 
@@ -649,8 +647,8 @@ var sendKeyEvent = function(keyCode, keyDown) {
             switch ( keyCode )
             {           
                 case 'FLING_TAB': 
-                    if(!isInPopUpMode) chrome.tabs.get(backgroundPageWindow.previousTab, function(tab) {  sendAnymoteFling(tab.url);  });
-                    else chrome.tabs.getSelected(null, function(tab) {  sendAnymoteFling(tab.url);  });
+                    if(!isInPopUpMode) chrome.tabs.get(backgroundPageWindow.previousTab, function(tab) {  sendFling(tab.url);  });
+                    else chrome.tabs.getSelected(null, function(tab) {  sendFling(tab.url);  });
                     break;
                 case 'APP_CHROME':
                     sendAnymoteFling('chrome://');
@@ -729,62 +727,46 @@ var sendKeyEvent = function(keyCode, keyDown) {
     {
         backgroundPageWindow.console.log('Remote Keycode not sent because no anymote session is active.');
         console.log("No Google TV's are connected.");
+        showToast("Not Connected");
     }
     //indicatorFlash();
 };
 
 
 var sendTpadMouseMoveEvent = function(xDelta,yDelta) {
-    
-    if(backgroundPageWindow.anymoteSessionActive)
-    {
-        sendAnymoteMouseMove(xDelta,yDelta);
-        
-    }
-    else
-    {
+    if(backgroundPageWindow.anymoteSessionActive) {
+        sendAnymoteMouseMove(xDelta,yDelta);        
+    } else {
         backgroundPageWindow.console.log('Mouse cursor movement not sent because no anymote session is active.');
         console.log("No Google TV's are connected.");
+        showToast("Not Connected");
     }
     //indicatorFlash();
 };
 
 var sendTpadMouseWheelEvent = function(xDelta,yDelta) {
-    if(backgroundPageWindow.anymoteSessionActive)
-    {
-        sendAnymoteMouseWheel(xDelta,yDelta);
-        
-    }
-    else
-    {
+    if(backgroundPageWindow.anymoteSessionActive) {
+        sendAnymoteMouseWheel(xDelta,yDelta);       
+    } else {
         backgroundPageWindow.console.log('Mouse scroll movement not sent because no anymote session is active.');
         console.log("No Google TV's are connected.");
+        showToast("Not Connected");
     }
     //indicatorFlash();
 };
 
-var sendTpadKeyEvent = function(button, keyDown) {
-    
-    if(backgroundPageWindow.anymoteSessionActive)
-    {
-        switch (button)
-        {
-            case 1: 
-                sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_LEFT, keyDown);
-                break;
-            case 2: 
-                sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_RIGHT, keyDown);
-                break;
-            case 3: 
-                sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_MIDDLE, keyDown);
-                break;  
-        }
-        
-    }
-    else
-    {
+var sendTpadKeyEvent = function(button, keyDown) {    
+    if(backgroundPageWindow.anymoteSessionActive) {
+        switch (button) {
+            case 1:  sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_LEFT,   keyDown); break;
+            case 2:  sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_MIDDLE,  keyDown); break;
+            case 3:  sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_RIGHT, keyDown); break;  
+            default: sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.BTN_LEFT,   keyDown);
+        }        
+    } else {
         backgroundPageWindow.console.log('Touchpad click not sent because no anymote session is active.');
         console.log("No Google TV's are connected.");
+        showToast("Not Connected");
     }
     //sendGAEvent("KeyCode", "BTN_LEFT");
     //indicatorFlash();

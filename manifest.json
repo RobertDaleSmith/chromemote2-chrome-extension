@@ -1,27 +1,28 @@
 {
-  "name": "Chromemote 2 - Remote for Google TV™",
-  "version": "2.1312.2",
+  "default_locale": "en",
+  "name": "__MSG_name__",
+  "version": "2.13.12.0",
   "manifest_version": 2,
   "incognito": "spanning",
   "minimum_chrome_version": "18",
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://www.paypalobjects.com https://*.google.com https://*.facebook.net https://*.facebook.com https://*.fbcdn.net https://*.twitter.com; object-src 'self'",
   
-  "description": "A better way to control Google TV. Fling videos, links, images, launch apps, plus full remote control of all your Google TVs.",
+  "description": "__MSG_description__",
   "icons":{ 
         "16": "images/icons/icon16.png",
         "48": "images/icons/icon48.png",
        "128": "images/icons/icon128.png" },
   "browser_action": {
-    "default_popup": "index.html?pop",
+    "default_popup": "chromemote.html?pop",
     "default_icon" : "images/icons/icon19.png",
-    "default_title": "Chromemote - The Google TV Remote for Chrome"
+    "default_title": "__MSG_name__"
   },
   "background": {
-    "scripts": ["js/background_script.js",
-          "libs/anymote_npapi/js/bgpage_anymote_session_controller_.js",
-          "libs/anymote_npapi/js/bgpage_googletvremote_constants.js"]
+    "scripts": [ "js/background_script.js",
+                 "libs/anymote_npapi/js/anymote_session_controller_bg.js",
+                 "libs/anymote_npapi/js/googletvremote_constants_bg.js" ]
   },
-  "options_page" : "index.html?tab",
+  "options_page" : "chromemote.html?tab",
   "plugins": [
     { "path": "libs/anymote_npapi/plugins/gtvremote64_chromemote2_plugin.so" },
     { "path": "libs/anymote_npapi/plugins/gtvremote32_chromemote2_plugin.so" },
@@ -37,5 +38,22 @@
     "http://*/*", "https://*/*", "tabs", "background", "contextMenus","storage"
   ],
   "homepage_url": "http://Chromemote.com/",
-  "offline_enabled": true
+  "offline_enabled": true,
+  "content_scripts": [ 
+    {
+      "all_frames": false,
+      "js": [ "js/contentscript_youtube.js" ],
+      "matches": [ "*://*.youtube.com/*", "*://youtube.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": [ "js/contentscript_installed.js" ],
+      "matches": [ "*://*.chromemote.com/*", "*://chromemote.com/*" ],
+      "run_at": "document_end"
+    } 
+  ],
+  "web_accessible_resources": [ 
+    "images/yt_fling_icon.png"
+  ]
 }

@@ -21,7 +21,7 @@ body {
     height:100%;
 
     min-width: 320px;
-    min-height: 530px;
+    min-height: 480px;
 
     overflow: hidden;
 
@@ -98,11 +98,19 @@ body::-webkit-scrollbar {
     height: 480px;
     
     background-color: #000;
-    overflow: hidden;
+    /*overflow: hidden;*/
 
     margin: 0 auto;
 
     box-shadow: 5px 5px 0 rgba(0,0,0,0.25);
+}
+
+#body_container {
+    display: block;
+    position: absolute;
+    top:0px; left:0px;
+    width: 100%;
+    height: 100%;
 }
 
 #title_bar_container {
@@ -162,7 +170,9 @@ body::-webkit-scrollbar {
     height: 480px;
     z-index: 1;
     
-    overflow: hidden;    
+    overflow: hidden;
+    overflow-y:hidden;
+    overflow-x:hidden;  
 }
 #settings_menu_panel {
     display: block;
@@ -235,7 +245,7 @@ body::-webkit-scrollbar {
     padding: 0px;
     
     width: 100%;
-    height: 194px;
+    height: 144px;
 
     border-style: solid;
     border-width: 0px;
@@ -245,6 +255,74 @@ body::-webkit-scrollbar {
     background-color:rgba(0, 0, 0, 0.25);
     color:rgba(255, 255, 255, 0.74902);
 
+}
+
+#menu_panel_about_logo{
+    display: block;
+    position: absolute;
+
+    top:  15px;
+    left: 25px;
+    
+    width:  270px;
+    height: 56px;
+
+    background-image: url("../images/settings_about_logo.png");
+    background-size:270px 56px;
+    background-repeat:no-repeat;    
+
+}
+
+#menu_panel_about_version{
+    display: block;
+    position: absolute;
+
+    top:  76px;
+    right: 25px;
+
+    font-size: 15px;
+    font-family: RobotoRegular;
+}
+
+#menu_panel_about_version_number{
+    display: inline-block;
+    position: relative;
+}
+
+#menu_panel_about_by{
+    display: none;
+    position: absolute;
+
+    top:  76px;
+    left: 25px;
+
+    font-size: 17px;
+    font-family: RobotoRegular;
+}
+
+
+
+#menu_panel_about_copyright{
+    display: block;
+    position: absolute;
+
+    top:  114px;
+    left: 25px;
+
+    width:270px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-family: RobotoRegular;
+}
+#menu_panel_about_copyright a{
+    color:#fff;
+    text-decoration: underline;
+}
+#menu_panel_about_copyright a:hover{
+    text-decoration: underline;
+    border-bottom: 1px solid #ffffff;
 }
 
 #menu_panel_settings_custom_theme{
@@ -288,6 +366,8 @@ body::-webkit-scrollbar {
     color:rgba(255, 255, 255, 0.74902);
     
 }
+
+
 
 
 #colorpicker{
@@ -1245,6 +1325,13 @@ body::-webkit-scrollbar {
     background-position:-576px -480px; 
 }
 
+#fling_tab {
+    background-position:-706px -144px; 
+}
+#fling_tab:active {
+    background-position:-706px -191px; 
+}
+
 
 #keycode_7 {
     background-position:-320px -192px; 
@@ -1286,6 +1373,13 @@ body::-webkit-scrollbar {
 }
 #keycode_all_power:active {
     background-position:-576px -528px; 
+}
+
+#keycode_power {
+    background-position:-704px -240px; 
+}
+#keycode_power:active {
+    background-position:-704px -576px; 
 }
 
 
@@ -1480,7 +1574,7 @@ body::-webkit-scrollbar {
     
     width: 320px;
     min-height: 300px;
-    height: 100%;
+    height: calc(100% - 86px);
     max-height: 395px;
     
     overflow-x: hidden;
@@ -1683,7 +1777,7 @@ body::-webkit-scrollbar {
     
     width: 320px;
     min-height: 300px;
-    height: 100%;
+    height: calc(100% - 86px);
     max-height: 395px;
     
     background-color: transparent;
@@ -2108,6 +2202,149 @@ body::-webkit-scrollbar {
     outline: none;
 }
 
+.mote_server_ip_input {
+    
+    display: block;
+    position: absolute;
+    
+    top: 9px;    
+    left: 64px;
+    
+    width: 192px;
+    height: 28px;
+    
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-color: #e8e9e9;
+    
+    text-align: center;
+}
+.mote_server_ip_input:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+
+#menu_panel_settings_mote_ip{
+    display: none;
+    position: relative;
+    float:left;
+    margin: 0px;
+    padding:0px;
+    
+    width: 100%;    
+
+    border-style: solid;
+    border-width: 0px;
+
+    border-bottom-width: 1px;
+    border-color: transparent;
+    background-color:rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+    color:rgba(255, 255, 255, 0.74902);
+
+    height:48px;    
+}
+
+#menu_panel_settings_mote_ip .ip_container {
+    display: block;
+    position: absolute;    
+    top: 9px;     left: 64px;    
+    width: 188px; height: 30px;    
+    background-color: transparent;    
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.5);
+}
+#menu_panel_settings_mote_ip .ip_octet {
+    
+    color: rgba(255, 255, 255, 1);
+    border: 0;
+    text-align: center;
+    width: 42px;
+    height: 28px;
+    font-family: RobotoBold;
+    font-size: 14px;
+    background-color: transparent;
+}
+#menu_panel_settings_mote_ip .ip_octet:focus {
+    
+    border-color: #3ea8b8;
+    outline: none;
+}
+#menu_panel_settings_mote_ip .ip_octet::-webkit-input-placeholder { /* WebKit browsers */
+    color:    rgba(255, 255, 255, 0.25);
+}
+#menu_panel_settings_mote_ip .ip_octet:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    rgba(255, 255, 255, 0.25);
+}
+#menu_panel_settings_mote_ip .ip_octet::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    rgba(255, 255, 255, 0.25);
+}
+#menu_panel_settings_mote_ip .ip_octet:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    rgba(255, 255, 255, 0.25);
+}
+#save_mote_ip_button {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 9px;
+    width: 60px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+        
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#save_mote_ip_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#save_mote_ip_button:active {
+    color: #f6f6f6;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+#cancel_mote_ip_button {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 9px;
+    width: 60px;
+    height: 32px;
+        
+    background-color: transparent;
+    
+    border-style: solid;
+    border-width: 0px;
+        
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+    font-size: 11px;
+    font-family: RobotoBold;
+    cursor: pointer;
+}
+#cancel_mote_ip_button:hover {
+    background-color: rgba(62, 168, 184, 0.1);
+}
+#cancel_mote_ip_button:active {
+    color: #f6f6f6;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+
+
 
 .pair_code_input {
     
@@ -2341,6 +2578,29 @@ body::-webkit-scrollbar {
     background-position:-384px -624px; 
 }
 
+#popout_mode_button {
+    display: none;
+    position: relative;
+    width: 64px;
+    height: 48px;
+    
+    float:left;
+    clear:none;
+        
+    background-color: transparent;
+        
+    cursor: pointer;    
+        
+    background-image: url("../images/remote_button_icons.png");
+    background-size:768px 707px;
+    background-repeat:no-repeat;
+    
+    background-position:-706px -328px; 
+}
+#popout_mode_button:active {
+    background-position:-706px -374px; 
+}
+
 
 #menu_button {
     display: block;
@@ -2562,8 +2822,7 @@ body::-webkit-scrollbar {
     
     border-style: solid;
     border-width: 0px;
-    
-    
+        
     text-align: center;
     line-height: 30px;
     color: #3ea8b8;
@@ -2956,7 +3215,7 @@ body::-webkit-scrollbar {
     
     width: 320px;
     min-height: 300px;
-    height: 100%;
+    height: calc(100% - 86px);
     max-height: 395px;
     
     overflow-x: hidden;
@@ -3441,6 +3700,13 @@ body::-webkit-scrollbar {
     right:15px;
 }
 
+#npapi_enabled_checkbox_holder{
+    position: absolute;
+    display: block;
+    top:7px;
+    right:15px;
+}
+
 #dark_back_checkbox_cover{
     position: absolute;
     display: block;
@@ -3702,4 +3968,150 @@ input[type=checkbox] {
   overflow: hidden; 
   background: url('../libs/farbtastic/marker.png') no-repeat;
   background-size: 17px 17px;
+}
+
+.dialog_box_holder{
+    display: block;
+    position: absolute;
+    top:0px; left:0px;
+    width:100%; height:100%;
+    background-color:rgba(0,0,0,0.5);
+    z-index: 40;
+    text-align: center;
+
+}
+.dialog_box{
+    display: block;
+    position: relative;
+    margin-top:80px;
+    margin-left:auto;
+    margin-right:auto;
+    width:270px; height:auto;
+
+    background-color:#ffffff;
+
+    -webkit-border-radius: 2px; 
+    -moz-border-radius: 2px; 
+    border-radius: 2px; 
+    
+    -webkit-box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.75);
+
+
+}
+
+.dialog_box_header{
+    display: block;
+    position: relative;
+    width:calc(100% - 30px); 
+    height:56px;
+    line-height:56px;
+    border-style: solid;
+    border-width:0px;
+    border-bottom-width: 1px;
+    border-bottom-color: #23b4e5;
+
+    color: #23b4e5;
+    padding-left: 15px;
+    padding-right:15px;
+    text-align: left;
+
+    font-size: 24px;
+    font-family: RobotoRegular;
+
+    cursor: default;
+
+}
+
+.dialog_box_content{
+    display: block;
+    position: relative;
+    width:calc(100% - 30px); 
+    height:auto;
+    min-height: 100px;
+    border-style: solid;
+    border-width:0px;
+
+    color: #000000;
+    padding:15px;
+    text-align: left;
+
+    font-size: 18px;
+    font-family: RobotoRegular;
+    cursor: default;
+
+}
+
+.dialog_box_footer{
+    display: block;
+    position: relative;
+    width:100%; 
+    height:48px;
+    line-height:48px;
+    border-style: solid;
+    border-width:0px;
+
+    border-top-width: 2px;
+    border-top-color: #e9e9e9;
+
+}
+
+.dialog_box_footer_button{
+    display: inline-block;
+    position: relative;
+    float: left;
+
+    width: calc(50% - 1px);
+    height: 100%;
+
+    border-style: solid;
+    border-width: 0px;
+    border-left-width: 1px;
+    border-left-color: transparent;    
+
+    text-align: center;
+    vertical-align: middle;
+
+    font-size: 14px;
+    font-family: RobotoRegular;
+    cursor: pointer;
+}
+.dialog_box_footer_button:hover{
+    background-color: rgba(48,170,211,0.15);  
+}
+.dialog_box_footer_button:active{
+    background-color: rgba(48,170,211,0.2); 
+}
+.alt{
+    border-left-color: #e9e9e9;
+}
+
+.toast_msg{
+    display:block;
+    position: absolute;    
+    bottom:115px;    
+    left: 50%;    
+    z-index: 50;
+}
+
+.toast_msg_content{
+    display:block;
+    position: relative; 
+    left: -50%;
+    text-align: center;
+    background-color:rgba(79,79,79,0.90);
+    min-width:0px;
+    max-width:200px;
+    width: auto;
+    height:auto;
+    padding:8px 12px 8px 12px;
+    -webkit-border-radius: 2px; 
+    -moz-border-radius: 2px; 
+    border-radius: 2px;    
+    -webkit-box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.5);
+    box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.75);
+    color:#f6f6f6;
+    font-size: 14px;
+    font-family: RobotoRegular;
+    cursor: default;
 }

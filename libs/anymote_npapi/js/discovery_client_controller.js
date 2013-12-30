@@ -32,14 +32,14 @@
 var discoveryClient = backgroundPageWindow.discoveryClient;
 
 /** Id of a timer that is used to automatically stop discovery. */
-var stopDiscoveryClientTimerId;
+var stopDiscoveryClientTimerId, discoveryLoop;
 
 var discoveredCount = 0;
 
 /** Start searching for Anymote services advertised on the local network. */
 function startDiscoveryClient() {
 	stopDiscoveryClient();
-  console.log('Discovery session started.');
+  backgroundPageWindow.console.log('Discovery session started.');
   setDevicesStatusLabel("Discovering devices", false);
 
   discoveryLoop = setInterval( function () {
@@ -54,21 +54,20 @@ function startDiscoveryClient() {
   discoveryClient.startDiscovery(function(advertisedDevice) {
     discoveredCount++;
     addDeviceFound(advertisedDevice.instanceName, advertisedDevice.address, false, false);
-	  console.log('Device named ' + advertisedDevice.instanceName + ' at ' + advertisedDevice.address + ' discovered and added to device list.');
+	  backgroundPageWindow.console.log('Device named ' + advertisedDevice.instanceName + ' at ' + advertisedDevice.address + ' discovered and added to device list.');
   }, function() {
-	  console.log('Error trying to start Discovery Session.');
+	  backgroundPageWindow.console.log('Error trying to start Discovery Session.');
   });
 
   //Set a timer to stop discover after a short time interval.
   stopDiscoveryClientTimerId = setTimeout(function() {
-      stopDiscoveryClient();
-      //document.getElementById('start-discovery').style.display = 'inline-block';
-      console.log('Discovery session timed out.');
+    stopDiscoveryClient();
+    backgroundPageWindow.console.log('Discovery session timed out.');
 
-      var statusMsg = "";
-      if (discoveredCount == 1) statusMsg = discoveredCount + " Google TV discovered";
-      else                      statusMsg = discoveredCount + " Google TVs discovered";
-      setDevicesStatusLabel(statusMsg, false);
+    var statusMsg = "";
+    if (discoveredCount == 1) statusMsg = discoveredCount + " Google TV discovered";
+    else                      statusMsg = discoveredCount + " Google TVs discovered";
+    setDevicesStatusLabel(statusMsg, false);
 
   }, 5000);  // Auto stop discovery after 5 seconds.
 
@@ -76,13 +75,10 @@ function startDiscoveryClient() {
 
 /** Stop searching for Anymote services advertised on the local network. */
 function stopDiscoveryClient() {
-
-  console.log('Discovery session stopped.');
-  $("#loaderImage").css("display", "none");
-  $("#devices_refresh_button").css("display", "block");
-
   discoveryClient.stopDiscovery();
+  backgroundPageWindow.console.log('Discovery session stopped.');
+  $("#loaderImage").css("display", "none");
+  $("#devices_refresh_button").css("display", "block");  
   clearTimeout(stopDiscoveryClientTimerId);
   clearInterval(discoveryLoop);
-
 }

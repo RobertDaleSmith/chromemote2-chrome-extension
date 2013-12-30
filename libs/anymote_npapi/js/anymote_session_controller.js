@@ -8,6 +8,13 @@ var pairedDevices = backgroundPageWindow.pairedDevices;
 var deviceIndex = backgroundPageWindow.deviceIndex;
 
 
+function stopAnymoteSession(){  
+  anymoteSession.stopSession();  // No harm if there is no active connection.
+  console.log("Active Anymote session ended with: " + backgroundPageWindow.connectedDevice);
+  backgroundPageWindow.anymoteSessionActive = false;
+  backgroundPageWindow.connectedDevice = "";  
+}
+
 /**
  * Start an Anymote session to communicate with Google TV. Before starting an
  * Anymote session, the Google TV at this ip address must already be paired.
@@ -16,29 +23,29 @@ var anymoteStartSession = function(gtvDevice, response) {
   // DONE: Set a timeout that will trigger if there is no reply from the TV.
   var anymoteSessionTimeout = window.setTimeout(function() {
     console.log('Timeout starting Anymote session with ' + gtvDevice.name + ' at ' + gtvDevice.address);
-    //document.body.className = '';
     response({type: googletvremote.anymote.EventType.ERROR});
   }, 2000);
 
   // DONE: Stop the old session if one is already running.
+  // stopAnymoteSession();
   anymoteSession.stopSession();  // No harm if there is no active connection.
+  if(backgroundPageWindow.anymoteSessionActive){
+    backgroundPageWindow.connectedDevice = "";  
+  }
 
   // DONE: Start an Anymote session.
   //sendGAEvent("Connection", "AnymoteSession");
-
-  //var deviceName    = "test";
-  //var deviceAddress = googleTvIpAddress;
 
   if(gtvDevice.address) {
 	  deviceName  	= gtvDevice.name;
 	  deviceAddress = gtvDevice.address;
   }
  
-  
-  anymoteSession.startSession('Chromemote', 1, deviceAddress, 9551, // Note, assuming the Anymote port is 9551, but in a real app you
+  anymoteSession.startSession('Chromemote', 1, deviceAddress, 9551, 
+      // Note, assuming the Anymote port is 9551, but in a real app you
       // should use the servicePort returned by the discovery client.
       function(e) {
-        console.log(e.type);
+        //console.log(e.type);
         switch (e.type) {
           case googletvremote.anymote.EventType.INVALID:
             backgroundPageWindow.console.log('Received Anymote session event... INVALID');
@@ -49,7 +56,7 @@ var anymoteStartSession = function(gtvDevice, response) {
         	//setIndicatorConnected();
             backgroundPageWindow.console.log('Received Anymote session event... CONNECTED');
             backgroundPageWindow.anymoteSessionActive = true;
-            
+
             window.clearTimeout(anymoteSessionTimeout);
             
             var shortDeviceName = deviceName;
@@ -63,7 +70,7 @@ var anymoteStartSession = function(gtvDevice, response) {
             
             addDeviceFound(gtvDevice.name, gtvDevice.address, true, true);
             console.log('Successful connection to ' + shortDeviceName + ' at ' + deviceAddress);
-    		    console.log('Connected');
+    		    
             
             backgroundPageWindow.connectedDevice = deviceAddress;
 
@@ -237,6 +244,13 @@ var sendAnymoteMouseMove = function(xDelta,yDelta) {
 };
 
 var sendAnymoteMouseWheel = function(xScroll,yScroll) {
+  if( (xScroll < 1  && xScroll >= 0) ) xScroll =  2;
+  if( (yScroll < 1  && yScroll >= 0) ) yScroll =  2;
+  if( (xScroll > -1 && xScroll <= 0) ) xScroll = -2;
+  if( (yScroll > -1 && yScroll <= 0) ) yScroll = -2;
+
+  xScroll = xScroll * -1;
+  yScroll = yScroll * -1;
   anymoteSession.sendMouseWheel(xScroll,yScroll);
 };
 
@@ -279,8 +293,11 @@ var anymoteExistingSingleDeviceResponseHandler = function(e) {
   if (e.type == googletvremote.anymote.EventType.CONNECTED) {		
     console.log('Established an existing connection to ' + recentIpConnectedTo);
     setDevicesStatusLabel("Connected to " + recentIpConnectedTo, true);
+    showToast('Connected', 2000);
     showOptionsPanel(false);
     stopDiscoveryClient();
+
+    if (document.getElementsByClassName("new_device_ip_input").length > 0) $("#add_new_device").remove();
   } else {
     setDevicesStatusLabel("Unable to connect", true);
     console.log('Unable to establish an existing connection');

@@ -39,9 +39,9 @@
  */
  
  var googletvremoteInitializePlugin = function() {
-	googletvremote = backgroundPageWindow.googletvremote;
-	//discoveryClient= backgroundPageWindow.discoveryClient;
-	//pairingSession = backgroundPageWindow.pairingSession;
-	//anymoteSession = backgroundPageWindow.anymoteSession;
+	var googletvremote = backgroundPageWindow.googletvremote;
+	discoveryClient= backgroundPageWindow.discoveryClient;
+	pairingSession = backgroundPageWindow.pairingSession;
+	anymoteSession = backgroundPageWindow.anymoteSession;
 	//backgroundPageWindow.console.log('Pop up connected to Google TV Remote Plumbing Plugin on the Background Page.');
 }

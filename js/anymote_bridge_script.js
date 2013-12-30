@@ -1,23 +1,28 @@
 
 //MoteServer API-------------------------------------
 var moteServerAddress = null,
-    moteServerActive  = false;
+    moteServerActive  = false,
+    moteServerPaired  = false;
 if(localStorage.getItem("mote_server_ip")!= null) moteServerAddress = localStorage.getItem("mote_server_ip");
 
 var initMoteServer = function() {
-    $("#mote_server_ip_input_box").val(moteServerAddress);
+    $("#mote_server_ip_input").val(moteServerAddress);
 }
 var setMoteServer = function (address) {
     moteServerAddress = address;
     localStorage.setItem("mote_server_ip", moteServerAddress);
-    discoverDevices();
+    // discoverDevices();
     initMoteServer();
     console.log("Mote Server set to " + address + ".");
 }
-var sendMoteCommand = function (key, value, callback) {
+var sendMoteCommand = function (key, value, callback, ip) {
+    if( value == "keycode_all_power"){ sendMacro("TV_POWER,AVR_POWER,STB_POWER"); return; }
 
-    if (moteServerAddress) {
-        var url = 'http://' + moteServerAddress + ':8085/mote?' + key + '=' + value + '&time=' + new Date().getTime();
+    var    serverAddress = moteServerAddress;
+    if(ip) serverAddress = ip;
+
+    if (serverAddress) {
+        var url = 'http://' + serverAddress + ':8085/mote?' + key + '=' + value + '&time=' + new Date().getTime();
         $.getJSON(url, function (data) {
             console.log(JSON.stringify(data));
             if (callback) callback(JSON.stringify(data));
@@ -59,7 +64,7 @@ var isConnectingNow = function (callback) {
 var connectSuccessOrFail = function (callback) {
     sendMoteCommand("connectSuccessOrFail", true, callback);
 }
-var fling = function (flingUrl, callback) {
+var sendMBridgeFling = function (flingUrl, callback) {
     //url = url.replace("#", "%23");
     //sendMoteCommand("fling", flingUrl, callback);
 
@@ -132,9 +137,14 @@ var getChannelListing = function (callback) {
 
 var sendScroll = function (scrollX, scrollY, callback) {
 
+    if( (scrollX < 1  && scrollX > 0) ) scrollX =  2;
+    if( (scrollY < 1  && scrollY > 0) ) scrollY =  2;
+    if( (scrollX > -1 && scrollX < 0) ) scrollX = -2;
+    if( (scrollY > -1 && scrollY < 0) ) scrollY = -2;
+
     scrollX = scrollX * -1;
     scrollY = scrollY * -1;
-
+    
     var url = "http://" + moteServerAddress + ":8085/mote?sendScroll=true&scrollX=" + scrollX + "&scrollY=" + scrollY + "&time=" + new Date().getTime();
     $.getJSON(url, function (data) {
         console.log(JSON.stringify(data));
