@@ -15,26 +15,55 @@ var setMoteServer = function (address) {
     initMoteServer();
     console.log("Mote Server set to " + address + ".");
 }
+
+var dialogShowing = false;
 var sendMoteCommand = function (key, value, callback, ip) {
-    if( value == "keycode_all_power"){ sendMacro("TV_POWER,AVR_POWER,STB_POWER"); return; }
+    if( value == 'keycode_all_power'.toLowerCase() ){ sendMacro("TV_POWER,AVR_POWER,STB_POWER"); return; }
+    if( value == 'fling_tab'.toLowerCase() ){
+        if(!isInPopUpMode) chrome.tabs.get(backgroundPageWindow.previousTab, function(tab) {  sendFling(tab.url);  });
+        else chrome.tabs.getSelected(null, function(tab) {  sendFling(tab.url);  });
+        return; 
+    } 
+
 
     var    serverAddress = moteServerAddress;
     if(ip) serverAddress = ip;
 
-    if (serverAddress) {
+    if(serverAddress != null){
         var url = 'http://' + serverAddress + ':8085/mote?' + key + '=' + value + '&time=' + new Date().getTime();
-        $.getJSON(url, function (data) {
-            console.log(JSON.stringify(data));
-            if (callback) callback(JSON.stringify(data));
-            moteServerActive = true;
-        }).fail(function () {
-            console.log("No response.");
-            moteServerActive = false;
-        });
-    } else { 
-        console.log("Mote Server not set.");
+        sendToBridge(url, callback, serverAddress);    
+    } else if(!dialogShowing){
+        showNoBridgeDialog();        
     }
+    
+}
 
+function showNoBridgeDialog(){
+    dialogShowing = true;
+    var getAppsFailMsg = "Anymote Bridge not installed or IP address has not been set.<br><br>"+
+                         "<b>1.</b> On GoogleTV install "+ 
+                         "<a href='https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge' target='_blank' style='padding-left:19px;'>Chromemote Anymote Bridge</a><br><br>"+
+                         "<b>2.</b> Set IP address here";
+    buildDialogBox("Bridge Required", getAppsFailMsg, "Set IP Address", null, function(){
+        
+        if(!settingsActive)
+            setTimeout(function(){ showSettingsMenuPanel();        }, 100 );
+        if(!menuPanelSettingsEnabled)
+            setTimeout(function(){ toggleMenuItemSettings();       }, 600 );
+        if(!menuPanelSettingsMoteIpEnabled)
+            setTimeout(function(){ toggleMenuItemSettingsMoteIp(); }, 1100);
+        
+        setTimeout(function(){ 
+            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").focus();
+            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").select();
+        }, 1600);
+        
+        setTimeout(function(){dialogShowing = false;}, 15000);
+    }, function(){
+        $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").focus();
+        $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").select();
+        setTimeout(function(){dialogShowing = false;}, 15000);
+    });
 }
 
 var discoverDevices = function (callback) {
@@ -65,17 +94,9 @@ var connectSuccessOrFail = function (callback) {
     sendMoteCommand("connectSuccessOrFail", true, callback);
 }
 var sendMBridgeFling = function (flingUrl, callback) {
-    //url = url.replace("#", "%23");
-    //sendMoteCommand("fling", flingUrl, callback);
-
     var url = "http://"+ moteServerAddress +":8085/mote?fling=" + flingUrl.replaceAll("#","%23") + "&time=" + new Date().getTime();
-    $.getJSON(url, function (data) {
-        console.log(JSON.stringify(data));
-        if(callback) callback(JSON.stringify(data));
-    }).fail(function () {
-        console.log("No response.");
-        moteServerActive = false;
-    });
+    console.log(url);
+    sendToBridge(url, callback, moteServerAddress);
 }
 var sendMacro = function (macro, callback) {
     console.log(macro);
@@ -117,21 +138,15 @@ var sendMovement = function (deltaX, deltaY, callback) {
         prevSendMovementTime = time;
         
         var url = "http://" + moteServerAddress + ":8085/mote?sendMovement=true&deltaX=" + deltaX + "&deltaY=" + deltaY + "&time=" + new Date().getTime();
-        $.getJSON(url, function (data) {
-            console.log(JSON.stringify(data));
-            if (callback) callback(JSON.stringify(data));
-        }).fail(function () {
-            console.log("No response.");
-            moteServerActive = false;
-        });
+        sendToBridge(url, callback, moteServerAddress);
     }
 }
 var getInstalledApps = function (callback) {
-    sendMoteCommand("getInstalledApps", true, callback);
+    sendMoteCommand("getInstalledApps", true, callback, backgroundPageWindow.connectedDevice);
 }
 
 var getChannelListing = function (callback) {
-    sendMoteCommand("getChannelListing", true, callback);
+    sendMoteCommand("getChannelListing", true, callback, backgroundPageWindow.connectedDevice);
 }
 
 
@@ -146,11 +161,29 @@ var sendScroll = function (scrollX, scrollY, callback) {
     scrollY = scrollY * -1;
     
     var url = "http://" + moteServerAddress + ":8085/mote?sendScroll=true&scrollX=" + scrollX + "&scrollY=" + scrollY + "&time=" + new Date().getTime();
+    sendToBridge(url, callback, moteServerAddress);
+}
+
+function sendToBridge(url, callback, ip){
+    //console.log(url);
     $.getJSON(url, function (data) {
         console.log(JSON.stringify(data));
         if (callback) callback(JSON.stringify(data));
-    }).fail(function () {
+        moteServerActive = true;
+        $("#mote_server_status").css("background-color", "green");
+
+    }).fail(function () {            
         console.log("No response.");
+        if (callback) callback("error");
         moteServerActive = false;
+        $("#mote_server_status").css("background-color", "red");
+
+    }).error(function() {            
+        console.log("Error.");
+        if (callback) callback("error");
+        moteServerActive = false;
+        $("#mote_server_status").css("background-color", "red");
+
+        showToast("Anymote Bridge didn't respond (" + ip + ")");
     });
 }

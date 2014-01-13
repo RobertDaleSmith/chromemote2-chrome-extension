@@ -118,7 +118,9 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
     initLocalesTexts();
 
     initMoteServerIPSettings();
-
+    
+    initAdCarousel();
+    
     enableKeyBoardEvents();
   
     setTimeout(function(){
@@ -127,7 +129,7 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
         updateChannelsListUI();
         updateAppsListUI();
     },10);   
-    
+
     $(".keycode").on('mousedown', function () {
         var thisButton = $(this);
         setTimeout(function () {             
@@ -164,7 +166,9 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
                         found = true;
                         break;
                     }
-            if(!found) chrome.windows.create({'url': 'chromemote.html?popout', 'type': 'panel', 'width': 320, 'height': 480 + 36, 'focused': true}, function(window) {  });
+            var titleBarHeight = 36;
+            if (backgroundPageWindow.osDetected == 'CrOS') titleBarHeight = 28;
+            if(!found) chrome.windows.create({'url': 'chromemote.html?popout', 'type': 'panel', 'width': 320, 'height': 480 + titleBarHeight, 'focused': true}, function(window) {  });
             window.close();
         });
     });
@@ -438,97 +442,141 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
 
     $("#apps_sync_button").click(function () {
 
-        $("#loaderImage2").css("display", "block");
-        $("#apps_sync_button").css("display", "none");
-        clearTimeout(clearMsgTimeOut);
-        document.getElementById("apps_status_label").textContent = "Updating apps list";
-        appsListUpdated = false;
-        getAppsLoop = setInterval(function () {
-            if (appsListUpdated) {
-                $("#loaderImage2").css("display", "none");
-                $("#apps_sync_button").css("display", "block");
-                clearTimeout(clearMsgTimeOut);
-                document.getElementById("apps_status_label").textContent = "Apps list updated";
-                clearMsgTimeOut = setTimeout(function () { document.getElementById("apps_status_label").textContent = ""; }, 10000);
-                clearInterval(getAppsLoop);
-            }
+        if(backgroundPageWindow.anymoteSessionActive || !anyMotePluginActive){
 
-
-        }, 1000);
-
-        getAppsTimeOut = setTimeout(function () {
-            if (!appsListUpdated) {
-                $("#loaderImage2").css("display", "none");
-                $("#apps_sync_button").css("display", "block");
-                clearTimeout(clearMsgTimeOut);
-                document.getElementById("apps_status_label").textContent = "Unable to get apps list";
-                clearInterval(getAppsLoop);
-            }
-        }, 15000);
-
-        getInstalledApps(function (res) {
-
-            installAppsList = JSON.parse(res);
-
-            installAppsList.sort(function (a, b) {
-                if (a.name < b.name) {
-                    return -1;
+            $("#loaderImage2").css("display", "block");
+            $("#apps_sync_button").css("display", "none");
+            clearTimeout(clearMsgTimeOut);
+            document.getElementById("apps_status_label").textContent = "Updating apps list";
+            appsListUpdated = false;
+            getAppsLoop = setInterval(function () {
+                if (appsListUpdated) {
+                    $("#loaderImage2").css("display", "none");
+                    $("#apps_sync_button").css("display", "block");
+                    clearTimeout(clearMsgTimeOut);
+                    document.getElementById("apps_status_label").textContent = "Apps list updated";
+                    clearMsgTimeOut = setTimeout(function () { document.getElementById("apps_status_label").textContent = ""; }, 10000);
+                    clearInterval(getAppsLoop);
                 }
-                else if (a.name > b.name) {
-                    return 1;
+
+
+            }, 1000);
+
+            getAppsTimeOut = setTimeout(function () {
+                if (!appsListUpdated) {
+                    $("#loaderImage2").css("display", "none");
+                    $("#apps_sync_button").css("display", "block");
+                    clearTimeout(clearMsgTimeOut);
+                    document.getElementById("apps_status_label").textContent = "Unable to get apps list";
+                    clearInterval(getAppsLoop);
                 }
-                return 0;
+            }, 15000);
+
+            getInstalledApps(function (res) {
+
+                if(res != 'error'){
+
+                    installAppsList = JSON.parse(res);
+                    installAppsList.sort(function (a, b) {
+                        if (a.name < b.name) { return -1; } else if (a.name > b.name) { return 1; }
+                        return 0;
+                    });
+                    localStorage.setItem("apps_installed_list", JSON.stringify(installAppsList));
+                    updateAppsListUI();
+                    appsListUpdated = true;
+
+                } else {
+
+                    clearInterval(getAppsTimeOut);
+                    $("#loaderImage2").css("display", "none");
+                    $("#apps_sync_button").css("display", "block");
+                    clearTimeout(clearMsgTimeOut);
+                    document.getElementById("apps_status_label").textContent = "Unable to get apps list";
+                    clearInterval(getAppsLoop);
+
+                    var getAppsFailMsg = "Anymote Bridge not detected on the currently connected device.<br><br>Install or enable it on this Google&nbsp;TV device, then try again.<br><br><a href='http://chromemote.com/faq/anymote-bridge' target='_blank'>learn more..</a>";
+                    buildDialogBox("Bridge Required", getAppsFailMsg, "Install", null, function(){
+                        window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
+                        sendFling("market://details?id=com.motelabs.chromemote.bridge");
+                    });
+                    
+                }           
+
             });
 
-            localStorage.setItem("apps_installed_list", JSON.stringify(installAppsList));
+        } else {
+            console.log("No Google TV's are connected.");
+            showToast("Not Connected");
+        }
 
-            updateAppsListUI();
-
-            appsListUpdated = true;
-        });
     });
 
     var getChannelsLoop, getChannelsTimeOut, clearChMsgTimeOut;
 
     $("#update_channels_button").click(function () {
 
+        if(backgroundPageWindow.anymoteSessionActive || !anyMotePluginActive){
+            $("#loaderImage3").css("display", "block");
+            $("#update_channels_button").css("display", "none");
+            clearTimeout(clearChMsgTimeOut);
+            document.getElementById("channels_status_label").textContent = "Updating channels list";
+            channelsListUpdated = false;
+            getChannelsLoop = setInterval(function () {
+                if (channelsListUpdated) {
+                    $("#loaderImage3").css("display", "none");
+                    $("#update_channels_button").css("display", "block");
+                    clearTimeout(clearChMsgTimeOut);
+                    document.getElementById("channels_status_label").textContent = "Channels list updated";
+                    clearChMsgTimeOut = setTimeout(function () { document.getElementById("channels_status_label").textContent = ""; }, 10000);
+                    clearInterval(getChannelsLoop);
+                }
+            }, 1000);
 
-        $("#loaderImage3").css("display", "block");
-        $("#update_channels_button").css("display", "none");
-        clearTimeout(clearChMsgTimeOut);
-        document.getElementById("channels_status_label").textContent = "Updating channels list";
-        channelsListUpdated = false;
-        getChannelsLoop = setInterval(function () {
-            if (channelsListUpdated) {
-                $("#loaderImage3").css("display", "none");
-                $("#update_channels_button").css("display", "block");
-                clearTimeout(clearChMsgTimeOut);
-                document.getElementById("channels_status_label").textContent = "Channels list updated";
-                clearChMsgTimeOut = setTimeout(function () { document.getElementById("channels_status_label").textContent = ""; }, 10000);
-                clearInterval(getChannelsLoop);
-            }
-        }, 1000);
+            getChannelsTimeOut = setTimeout(function () {
+                if (!channelsListUpdated) {
+                    $("#loaderImage3").css("display", "none");
+                    $("#update_channels_button").css("display", "block");
+                    clearTimeout(clearChMsgTimeOut);
+                    document.getElementById("channels_status_label").textContent = "Unable to get channels list";
+                    clearInterval(getChannelsLoop);
+                }
+            }, 15000);
 
-        getChannelsTimeOut = setTimeout(function () {
-            if (!channelsListUpdated) {
-                $("#loaderImage3").css("display", "none");
-                $("#update_channels_button").css("display", "block");
-                clearTimeout(clearChMsgTimeOut);
-                document.getElementById("channels_status_label").textContent = "Unable to get channels list";
-                clearInterval(getChannelsLoop);
-            }
-        }, 15000);
 
-        getChannelListing(function (res) {
-            console.log(res);
+            getChannelListing(function (res) {
 
-            channelsList = JSON.parse(res);
-            localStorage.setItem("system_channels_list", JSON.stringify(channelsList));
+                if(res != 'error'){
 
-            updateChannelsListUI();
+                    console.log(res);
+                    channelsList = JSON.parse(res);
+                    localStorage.setItem("system_channels_list", JSON.stringify(channelsList));
+                    updateChannelsListUI();
+                    channelsListUpdated = true;
 
-            channelsListUpdated = true;
-        });
+                } else {
+
+                    clearInterval(getChannelsTimeOut);
+                    $("#loaderImage3").css("display", "none");
+                    $("#update_channels_button").css("display", "block");
+                    clearTimeout(clearChMsgTimeOut);
+                    document.getElementById("channels_status_label").textContent = "Unable to get channels list";
+                    clearInterval(getChannelsLoop);
+
+                    var getChannelsFailMsg = "Anymote Bridge not detected on the currently connected device.<br><br>Install or enable it on this Google&nbsp;TV device, then try again.<br><br><a href='http://chromemote.com/faq/anymote-bridge' target='_blank'>learn more..</a>";
+                    buildDialogBox("Bridge Required", getChannelsFailMsg, "Install", null, function(){
+                        window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
+                        sendFling("market://details?id=com.motelabs.chromemote.bridge");                        
+                    });
+                    
+                }    
+                
+            });
+        } else {
+            console.log("No Google TV's are connected.");
+            showToast("Not Connected");
+        }
+
+
     });
 
 });   //END ONLOAD
@@ -680,8 +728,7 @@ var sendPairCodeButtonEvent = function () {
                             $("#enter_pin_code_container").remove();
 
                             discoverDevices();
-
-                            showOptionsPanel();
+                            if (devices_options_active) $("#options_button_devices").click();
 
                         } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
                             //no success, fail
@@ -855,8 +902,8 @@ var showAddNewDeviceBox = function () {
         $("#devices_refresh_button").css("display", "block");
         //discoverDevices();
 
-        $("#ipaddress_abcd__octet_1").focus();
-        $("#ipaddress_abcd__octet_1").select();
+        $("#add_new_device #ipaddress_abcd__octet_1").focus();
+        $("#add_new_device #ipaddress_abcd__octet_1").select();
 
         $(".ip_octet").keypress(function (e) {
             if (e.which == 13) {
@@ -1333,8 +1380,8 @@ var addNewDeviceButtonEvent = function () {
                 setTimeout(function () {
                     $(".ip_container").css("border-color", "");
                     setTimeout(function () {
-                        $("#ipaddress_abcd__octet_1").focus();
-                        $("#ipaddress_abcd__octet_1").select();
+                        $("#add_new_device #ipaddress_abcd__octet_1").focus();
+                        $("#add_new_device #ipaddress_abcd__octet_1").select();
                     }, 150);
                 }, 150);
             }, 150);
@@ -2059,8 +2106,7 @@ var runPairing = function (address) {
                         $("#enter_pin_code_container").remove();
 
                         discoverDevices();
-
-                        showOptionsPanel();
+                        if (devices_options_active) $("#options_button_devices").click();
 
                     } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
                         //no success, fail
@@ -2204,26 +2250,61 @@ var menuPanelSettingsEnabled = false,
     menuPanelAboutEnabled = false,
     menuPanelSettingsCustomThemeEnabled = false,
     menuPanelSettingsSelectThemeEnabled = false,
-    menuPanelSettingsMoteIpEnabled = false;
+    menuPanelSettingsMoteIpEnabled = false,
+    menuPanelSettingsActivateEnabled = false;
+
+function toggleMenuItemSettings(){
+    if(!menuPanelSettingsEnabled){            
+        $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+        $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
+        menuPanelSettingsEnabled = true;
+    } else{            
+        $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
+        menuPanelSettingsEnabled = false;
+    }
+
+    if(menuPanelAboutEnabled){
+        $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
+        menuPanelAboutEnabled = false;
+    }    
+}
+
+function toggleMenuItemSettingsMoteIp(){
+    if(!menuPanelSettingsMoteIpEnabled){
+        closeAllOpenSettingsSubCats(); 
+        $( "#menu_panel_settings_mote_ip" ).stop().slideToggle( 250, function() {});
+        $( '#menu_items' ).animate({ scrollTop: 326 }, 250);
+        menuPanelSettingsMoteIpEnabled = true;
+
+        $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").focus();
+        $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").select();
+    } else{            
+        $( "#menu_panel_settings_mote_ip" ).stop().slideToggle( 250, function() {});
+        $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
+        menuPanelSettingsMoteIpEnabled = false;
+    }
+}
 
 
+function toggleMenuItemSettingsActivate(){
+    if(!menuPanelSettingsActivateEnabled){
+        closeAllOpenSettingsSubCats(); 
+        $( "#menu_panel_settings_activate" ).stop().slideToggle( 250, function() {});
+        $( '#menu_items' ).animate({ scrollTop: 262 }, 250);
+        menuPanelSettingsActivateEnabled = true;
+
+        
+    } else{            
+        $( "#menu_panel_settings_activate" ).stop().slideToggle( 250, function() {});
+        $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
+        menuPanelSettingsActivateEnabled = false;
+    }
+}
 var initMenuItemEvents = function(){
 
     $("#menu_item_settings").click( function () { 
         //TODO: EXPAND SETTINGS MENU
-        if(!menuPanelSettingsEnabled){            
-            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
-            menuPanelSettingsEnabled = true;
-        } else{            
-            $( "#menu_panel_settings" ).stop().slideToggle( 250, function() {});
-            menuPanelSettingsEnabled = false;
-        }
-
-        if(menuPanelAboutEnabled){
-            $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
-            menuPanelAboutEnabled = false;
-        }
+        toggleMenuItemSettings();
     });
 
     $("#menu_item_about").click( function () {         
@@ -2266,19 +2347,14 @@ var initMenuItemEvents = function(){
             $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
             menuPanelSettingsSelectThemeEnabled = false;
         }
-    });
+    });    
 
     $("#menu_item_settings_mote_ip").click( function () {         
-        if(!menuPanelSettingsMoteIpEnabled){
-            closeAllOpenSettingsSubCats(); 
-            $( "#menu_panel_settings_mote_ip" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 326 }, 250);
-            menuPanelSettingsMoteIpEnabled = true;
-        } else{            
-            $( "#menu_panel_settings_mote_ip" ).stop().slideToggle( 250, function() {});
-            $( '#menu_items' ).animate({ scrollTop: 0 }, 250);
-            menuPanelSettingsMoteIpEnabled = false;
-        }
+        toggleMenuItemSettingsMoteIp();
+    });
+
+    $("#menu_item_settings_activate").click( function () {         
+        toggleMenuItemSettingsActivate();
     });
 
     $("#menu_item_settings_toggle_btn_lock").click( function () {         
@@ -2291,18 +2367,27 @@ var initMenuItemEvents = function(){
         else                 enableDarkBack(false);
     });
 
-    $("#menu_item_settings_toggle_npapi_enabled").click( function () {         
-        if(!anyMotePluginActive) {
-            enableNPAPIPlugin();
-            if(gTvPluginLoaded){
-                //backgroundPageWindow.googletvremoteInitializePlugin();
-                googletvremoteInitializePlugin();
-                anymoteConnectToExistingDevice();
-            }
+    $("#menu_item_settings_toggle_npapi_enabled").click( function () {
+        if (backgroundPageWindow.osDetected == 'CrOS') {
+            buildDialogBox("NPAPI Not Supported","Google decided to not support NPAPI plugins on Chrome OS. So we built the Anymote Bridge to enable Chromemote to work on Chrome OS.","Install Bridge",null, function(){
+                window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
+            });
         } else {
-            disableNPAPIPlugin();
+            if(!anyMotePluginActive) {
+                enableNPAPIPlugin();
+                if(gTvPluginLoaded){
+                    //backgroundPageWindow.googletvremoteInitializePlugin();
+                    googletvremoteInitializePlugin();
+                    anymoteConnectToExistingDevice();
+                }
+            } else {
+                disableNPAPIPlugin();
 
+            }
+            document.getElementById("devices_list_saved").innerHTML = "";
+            document.getElementById("devices_list_discovered").innerHTML = "";    
         }
+        
     });
 
     $("#menu_item_settings_reset_default_layout").click( function () {
@@ -2321,6 +2406,10 @@ var initMenuItemEvents = function(){
         }        
     });
 
+    $("#menu_item_settings_install_bridge").click( function () {         
+        window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
+        if(backgroundPageWindow.anymoteSessionActive) sendFling("market://details?id=com.motelabs.chromemote.bridge");
+    });
 
 
     $("#menu_item_help").click( function () { 
@@ -2340,6 +2429,44 @@ var initMenuItemEvents = function(){
     });
     $("#menu_item_blog").click( function () { 
         window.open('http://chromemote.com/blog/','_blank');
+    });
+
+
+    $("#get_key_button").click( function () { 
+        window.open('http://api.chromemote.com/get_key/','_blank');
+    });
+
+
+    $("#check_activation_button").click( function () { 
+        var data = {};
+            data.email = $('.user_email_address_input').val(),
+            data.key = $('.product_key_input').val();
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:8008/get_key/activate',                                                
+                success: function(result) {
+                    //console.log('success');
+                    console.log(result.status);
+                    if(result.status == 0){
+                        //show email not found                        
+
+                    } else if(result.status == 1){
+                        //show success
+                        
+                    } else if(result.status == 2){
+                        //show key does not match
+                        
+                    } else if(result.status == -1){
+                        //show error
+                        
+                    }
+                    
+                    
+                }
+            });
     });
 
 }
@@ -3556,10 +3683,15 @@ function initMoteServerIPSettings(){
     });
 
     $("#save_mote_ip_button").click(function(){
+        
         var ipEntered = document.getElementsByClassName("mote_server_ip_input")[0].value;
 
         if (ipAddressIsValid(ipEntered)) {
-            setMoteServer(ipEntered);
+            setMoteServer(ipEntered);            
+            $("#mote_server_status").css("background-color", "yellow");
+
+            setTimeout(function(){ sendMoteCommand("getDeviceList", true); },250);
+
             $("#save_mote_ip_button").css("display","none");
             $("#cancel_mote_ip_button").css("display","none");
 
@@ -3583,21 +3715,25 @@ function initMoteServerIPSettings(){
     $(function () { $('.mote_server_ip_input').ipaddress({ cidr: true }); });
 
     $("#cancel_mote_ip_button").click(function(){        
-        if(moteServerAddress != null){
+        
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").val('');
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_2").val('');
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_3").val('');
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_4").val('');
+            document.getElementsByClassName("mote_server_ip_input")[0].value = '';
 
-            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").val(moteServerAddress.split('.')[0]);
-            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_2").val(moteServerAddress.split('.')[1]);
-            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_3").val(moteServerAddress.split('.')[2]);
-            $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_4").val(moteServerAddress.split('.')[3]);
-            document.getElementsByClassName("mote_server_ip_input")[0].value = moteServerAddress;
+            if(moteServerAddress != null){
+                $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").val(moteServerAddress.split('.')[0]);
+                $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_2").val(moteServerAddress.split('.')[1]);
+                $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_3").val(moteServerAddress.split('.')[2]);
+                $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_4").val(moteServerAddress.split('.')[3]);
+                document.getElementsByClassName("mote_server_ip_input")[0].value = moteServerAddress;
+            
+            }
 
             $("#save_mote_ip_button").css("display","none");
             $("#cancel_mote_ip_button").css("display","none");
-        }
+        
     });
 
     //Check for user setting, then lock or unlock button dragging.
@@ -3637,7 +3773,7 @@ function buildDialogBox(titleString, bodyHtml, option1String, option2String, opt
     if(option1Event) $("#"+dialogBoxId+" .main").click(option1Event);
     if(option2Event) $("#"+dialogBoxId+" .alt").click(option2Event);
 
-    $("#"+dialogBoxId+" .alt").click(function(){
+    $("#"+dialogBoxId+" .main, #"+dialogBoxId+" .alt").click(function(){
         var thisBoxId = this.parentNode.parentNode.parentNode.id;
         $("#"+thisBoxId).remove();  
     });
@@ -3672,4 +3808,35 @@ function showToast(messageString, showTime){
         $("#"+toastId).remove();
     }, showTime);
 
+}
+
+var currentAdIndex = 0;
+function initAdCarousel(){
+
+    setAd(currentAdIndex);
+    setInterval(function(){ 
+        var adCount = backgroundPageWindow.adsJson.length;
+        currentAdIndex++;
+        if(currentAdIndex >= adCount) currentAdIndex = 0;
+        setAd(currentAdIndex);
+    },5000);
+    
+    //setInterval(updateAdList, 5* 60 * 1000);
+    updateAdList();
+}
+
+function setAd(index){    
+    $('#ad_block').unbind('click'); // just for click events
+    $('#ad_block').unbind(); // for all events
+    $('#ad_block').off();
+    $("#ad_block").click(function () { window.open("http://api.chromemote.com/link/"+backgroundPageWindow.adsJson[index]._id, "_blank"); });
+    $("#ad_block").css("background-image", "url(" + backgroundPageWindow.adsJson[index].img + ")");
+}
+
+function updateAdList(){
+    $.getJSON( "http://api.chromemote.com/ads/", function( data ) {
+        //console.log( JSON.stringify(data) );
+        backgroundPageWindow.adsJson = data;
+        localStorage.setItem("ad_list", JSON.stringify(data));
+    });
 }

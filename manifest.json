@@ -19,6 +19,7 @@
   },
   "background": {
     "scripts": [ "js/background_script.js",
+                 "libs/jquery/jquery.js",
                  "libs/anymote_npapi/js/anymote_session_controller_bg.js",
                  "libs/anymote_npapi/js/googletvremote_constants_bg.js" ]
   },

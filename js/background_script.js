@@ -2,7 +2,8 @@ var appVersion = chrome.i18n.getMessage("version"),
 	connectedDeviceCount = 0,
 	connectedDevice = "",
 	gTvPluginLoaded = false,
-    notConnectedMessage = "You are not connected to any Google TV devices. Please click the Chromemote icon at the top right to connect to a Google TV device on your network.";
+    notConnectedMessage = "You are not connected to any Google TV devices. Please click the Chromemote icon at the top right to connect to a Google TV device on your network.",
+    noMoteServerMessage = "Anymote Bridge IP ha not been set yet. Install the Anymote Bridge on your Google TV and then set the IP in Chromemote's settings menu.";
 
 var osDetected = "Unknown OS", 
     gTvPluginLoaded = false, 
@@ -73,7 +74,7 @@ var googletvremoteInitializePlugin = function() {
 		
 		if (osDetected == 'CrOS') {
 			console.log("Chrome OS does not support the GTVRemote Plugin. Chromemote is not compatible with Google ChromeOS without the Chromemote Bridge.");
-		} else if (osDetected == 'Windows8') {
+		} else if (osDetected == 'Windows8' || osDetected == 'Windows8.1') {
 			console.log("ALERT:: Windows 8 app mode does not support the GTVRemote Plugin used by Chromemote.");
 			console.log("ALERT:: Chromemote is only compatible with the desktop mode.");
 			console.log("ALERT:: Relaunch Chrome on the desktop for GTVRemote Plugin support.");
@@ -98,6 +99,11 @@ var googletvremoteInitializePlugin = function() {
     window.discoveryClient = googletvremote.createDiscoveryClient();
     window.pairingSession  = googletvremote.createPairingSession();
     window.anymoteSession  = googletvremote.createAnymoteSession();
+
+    if(localStorage.getItem("npapi_enabled")!= null) {
+		if(localStorage.getItem("npapi_enabled") == "true") anyMotePluginActive = true;
+		else anyMotePluginActive = false;
+	}
 };
 
 /**
@@ -179,17 +185,9 @@ function initContextMenus() {
 	var linkOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));
-		if(anymoteSessionActive) {
-			sendAnymoteFling(info.linkUrl);
-			flashBadge();			
-			sendGAEvent("Fling", "Link");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-			//TODO: Notify user no devices paired.
-		}
+		//console.log("tab: " + JSON.stringify(tab));
+		sendFling(info.linkUrl);
+		sendGAEvent("Fling", "Link");
 	};
 	var linkId = chrome.contextMenus.create({"title": "Fling Link to Google TV", "contexts":["link"], "onclick": linkOnClick});
 	console.log("'" + "link" + "' item:" + linkId);
@@ -198,18 +196,9 @@ function initContextMenus() {
 	var pageOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));
-		if(anymoteSessionActive) {
-			sendAnymoteFling(tab.url);
-			flashBadge();
-			
-			sendGAEvent("Fling", "Page");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-			//TODO: Notify user no devices paired.
-		}
+		//console.log("tab: " + JSON.stringify(tab));
+		sendFling(tab.url);
+		sendGAEvent("Fling", "Page");
 	};
 	var pageId = chrome.contextMenus.create({"title": "Fling Page to Google TV", "contexts":["page"], "onclick": pageOnClick});
 	console.log("'" + "page" + "' item:" + pageId);
@@ -218,19 +207,11 @@ function initContextMenus() {
 	var selectionOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));		
-		if(anymoteSessionActive) {
-			sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.SEARCH);
-			sendAnymoteStringMessage(info.selectionText);
-			flashBadge();
-			
-			sendGAEvent("Fling", "Selection");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-			//TODO: Notify user no devices paired.
-		}
+		//console.log("tab: " + JSON.stringify(tab));
+		///sendAnymoteKeyEvent(googletvremote.anymote.KeyCode.SEARCH);		
+		sendFling(info.selectionText);
+		sendGAEvent("Fling", "Selection");
+		
 	};
 	var selectId = chrome.contextMenus.create({"title": "Search Selected Text on Google TV", "contexts":["selection"], "onclick": selectionOnClick});
 	console.log("'" + "selection" + "' item:" + selectId);
@@ -239,18 +220,9 @@ function initContextMenus() {
 	var videoOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));		
-		if(anymoteSessionActive) {
-			sendAnymoteFling(info.srcUrl);
-			flashBadge();
-			
-			sendGAEvent("Fling", "HTML5_VIDEO");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-			//TODO: Notify user no devices paired.
-		}
+		//console.log("tab: " + JSON.stringify(tab));
+		sendFling(info.srcUrl);
+		sendGAEvent("Fling", "HTML5_VIDEO");
 	};
 	var videoId = chrome.contextMenus.create({"title": "Fling video to Google TV", "contexts":["video"], "onclick": videoOnClick});
 	console.log("'" + "video" + "' item:" + videoId);
@@ -259,18 +231,9 @@ function initContextMenus() {
 	var audioOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));		
-		if(anymoteSessionActive) {
-			sendAnymoteFling(info.srcUrl);
-			flashBadge();
-			
-			sendGAEvent("Fling", "AUDIO");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-			//TODO: Notify user no devices paired.
-		}
+		//console.log("tab: " + JSON.stringify(tab));		
+		sendFling(info.srcUrl);
+		sendGAEvent("Fling", "AUDIO");
 	};
 	var audioId = chrome.contextMenus.create({"title": "Fling audio to Google TV", "contexts":["audio"], "onclick": audioOnClick});
 	console.log("'" + "audio" + "' item:" + audioId);
@@ -279,17 +242,9 @@ function initContextMenus() {
 	var imageOnClick = function(info, tab) {
 		console.log("item " + info.menuItemId + " was clicked");
 		console.log("info: " + JSON.stringify(info));
-		console.log("tab: " + JSON.stringify(tab));		
-		if(anymoteSessionActive) {
-			sendAnymoteFling(info.srcUrl);
-			flashBadge();
-			
-			sendGAEvent("Fling", "Image");
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-		}
+		//console.log("tab: " + JSON.stringify(tab));		
+		sendFling(info.srcUrl);
+		sendGAEvent("Fling", "Image");
 	};
 	var id = chrome.contextMenus.create({"title": "Fling Image to Google TV", "contexts":["image"], "onclick": imageOnClick});
 	console.log("'" + "image" + "' item:" + id);
@@ -319,19 +274,12 @@ function flashBadge() {
 };
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {	
-	if(request.flingurl) {
-		if(anymoteSessionActive) {
-			//console.log('Fling...');
-			console.log('Fling Success: ' + request.flingurl);
-			chrome.tabs.getSelected(null, function(tab) {sendAnymoteFling(request.flingurl);});
-			flashBadge();
-			// if a callback is given:
-			sendResponse && sendResponse('Fling Success: ' + request.flingurl);
-		} else {
-			console.log("Fling not sent because no anymote session is active.");
-			window.alert(notConnectedMessage);
-			openOptionsPage();
-		}
+	if(request.flingurl) {		
+		console.log('Fling Success: ' + request.flingurl);
+		chrome.tabs.getSelected(null, function(tab) { sendFling(request.flingurl); });
+		
+		// if a callback is given:
+		sendResponse && sendResponse('Fling Success: ' + request.flingurl);
 	}
 	if(request.getVersion) sendResponse && sendResponse(appVersion);
 });
@@ -344,3 +292,96 @@ chrome.tabs.onSelectionChanged.addListener(function(tab) {
 	if (currentTab  == null) { currentTab  = tab; } 
 	else { previousTab = currentTab; currentTab = tab; }
 });
+
+
+//Replaces an occurance of a substring within a string with another substring.
+String.prototype.replaceAll = function( token, newToken, ignoreCase ) {
+    var _token;
+    var str = this + "";
+    var i = -1;
+
+    if ( typeof token === "string" ) {
+
+        if ( ignoreCase ) {
+
+            _token = token.toLowerCase();
+
+            while( (
+                i = str.toLowerCase().indexOf(
+                    token, i >= 0 ? i + newToken.length : 0
+                ) ) !== -1
+            ) {
+                str = str.substring( 0, i ) +
+                    newToken +
+                    str.substring( i + token.length );
+            }
+
+        } else {
+            return this.split( token ).join( newToken );
+        }
+
+    }
+    return str;
+};
+
+//MoteServer API (Background Stuff) -------------------------------------
+var moteServerAddress = null,
+    moteServerActive  = false;
+if(localStorage.getItem("mote_server_ip")!= null) moteServerAddress = localStorage.getItem("mote_server_ip");
+
+var sendMBridgeFling = function (flingUrl, callback) {
+	if(localStorage.getItem("mote_server_ip")!= null) moteServerAddress = localStorage.getItem("mote_server_ip");
+
+	if(moteServerAddress != null){
+		var url = "http://"+ moteServerAddress +":8085/mote?fling=" + flingUrl.replaceAll("#","%23") + "&time=" + new Date().getTime();
+	    //console.log(url);
+	    sendToBridge(url, callback, moteServerAddress);
+	} else {		
+		console.log("Fling not sent because no anymote bridge IP is set.");
+		window.alert(noMoteServerMessage);
+		openOptionsPage();
+	}    
+}
+
+function sendToBridge(url, callback, ip){
+    //console.log(url);
+    $.getJSON(url, function (data) {
+        console.log(JSON.stringify(data));
+        if (callback) callback(JSON.stringify(data));
+        moteServerActive = true;
+
+    }).fail(function () {            
+        console.log("No response.");
+        if (callback) callback("error");
+        moteServerActive = false;
+
+    }).error(function() {            
+        console.log("Error.");
+        if (callback) callback("error");
+        moteServerActive = false;
+
+    });
+}
+
+function sendFling(uri){
+    if(!anyMotePluginActive) { //MoteBridge
+        sendMBridgeFling(uri, function(res){
+        	if(res == "error") window.alert("Fling not sent because Anymote bridge didn't respond.");
+        });
+    } else {                   //AnyMote
+    	if(anymoteSessionActive) {
+			sendAnymoteFling(uri);
+			flashBadge();
+		} else {
+			console.log("Fling not sent because no anymote session is active.");
+			window.alert(notConnectedMessage);
+			openOptionsPage();
+		}
+        
+    }    
+}
+
+var adsJson = [{"url":"http://chromemote.com/support-us/", "img":"../images/ads/ad_1.png"}];
+if( localStorage.getItem("ad_list")!= null ) {
+	adsJson = localStorage.getItem("ad_list");
+}

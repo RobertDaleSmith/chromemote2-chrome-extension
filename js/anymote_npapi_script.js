@@ -61,8 +61,8 @@ window.onunload = function() {
 }
 
 window.onerror = function(e) {
-    backgroundPageWindow.console.log('JavaScript error found.' + e);
-    console.log(e);
+    //backgroundPageWindow.console.log('JavaScript error found.' + e);
+    //console.log(e);
     //sendGAEvent("Error", "JavaScript");
     try {
         backgroundPageWindow.console.log('Checking if embed object has crashed.');

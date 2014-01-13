@@ -130,11 +130,27 @@
                                     <div id="dark_back_checkbox_cover"></div>
                                 </div>
                                 <div class="menu_panel_category">User Settings</div>
-                                <div class="menu_item menu_item_sub_cat" id="">Sign In</div>                            
+
+
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_activate">Activate Pro Key</div> 
+
+                                <div id="menu_panel_settings_activate" class="sub_menu_panel">
+                                    <input name="user_email_address" class="user_email_address_input" type="text" placeholder="email"><br>
+                                    <input name="product_key" class="product_key_input" type="text" placeholder="key"><br>
+                                    <div id="get_key_button">Get Key</div>
+                                    <div id="check_activation_button">Activate</div>
+                                </div>
+
+
+
+
                                 <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings</div> -->
                                 <div class="menu_panel_category">Network Settings</div>
                                 <!-- <div class="menu_item menu_item_sub_cat" id="">Device Name</div> -->
-                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_mote_ip">Chromemote Bridge IP</div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_install_bridge">Install Anymote Bridge</div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_mote_ip">
+                                    Chromemote Anymote Bridge IP <div id="mote_server_status"></div>
+                                </div>
                                 <div id="menu_panel_settings_mote_ip" class="sub_menu_panel">
                                     <div id="cancel_mote_ip_button">cancel</div>
                                     <input name="ipaddress[abcd][]" class="mote_server_ip_input ip-enabled" type="text" placeholder="xxx.xxx.xxx.xxx" style="display: none;">
@@ -149,8 +165,7 @@
                                         <label for="npapi_enabled_checkbox"></label>
                                     </div>
                                     <div id="btn_lock_checkbox_cover"></div>
-                                </div>
-                                <!-- <div class="menu_item menu_item_sub_cat" id="">Sync Settings to Mote Server</div>  -->                           
+                                </div>                                
                                 <div class="menu_panel_category">Other Settings</div>
                                 <div class="menu_item menu_item_sub_cat" id="">View Changelog</div>
                             </div>                        
@@ -191,7 +206,7 @@
                             <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_channel_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up" title="Channel Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down" title="Channel Down"></div></li>
                             <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_stop" title="Media Stop"></li>
                             <li data-row="3" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_pause" title="Pause"></li>
-                            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_live" title="Live"></li>
+                            <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_live" title="Live TV"></li>
                             <li data-row="3" data-col="5" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_volume_rocker"><div class="remote_button keycode rocker_up" id="keycode_volume_up" title="Volume Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_volume_down" title="Volume Down"></div></li>
                         
                             <!--channel_down-->
@@ -353,7 +368,7 @@
 
                 <div id="ad_block_holder">                
                     <div id="ad_block_back"></div>
-                    <a href="http://chromemote.com/support-us/" target="_blank"><div id="ad_block"></div></a>
+                    <div id="ad_block"></div>
                 </div>
 
                 <div id="apps_context_menu" tabindex="-1">
