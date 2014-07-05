@@ -14,6 +14,7 @@ var sendMessage = function() {
 				
 		document.getElementById('extension-is-installed').innerHTML = appVersion;
 		document.getElementById('extension-is-installed').style.visibility = 'hidden';
+		document.getElementById('extension-is-installed').style.display = 'none';
 		
 		if ( document.getElementById('installed-version') )	{
 			document.getElementById('installed-version').innerHTML = appVersion;			

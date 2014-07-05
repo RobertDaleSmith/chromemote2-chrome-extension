@@ -11,8 +11,16 @@ if(chrome.extension.getURL("/").indexOf("bhcjclaangpnjgfllaoodflclpdfcegb") >= 0
     })();
     console.log("__CWS_MODE__");
 }
-else
-    console.log("__DEV_MODE__");
+else console.log("__DEV_MODE__");
+
+function sendGAEvent(category, action) {
+    if(chrome.extension.getURL("/").indexOf("bhcjclaangpnjgfllaoodflclpdfcegb") >= 0)
+        _gaq.push(['_trackEvent', category, action]);
+};
+function sendGAEvent(category, action, optLabel, optValue) {
+    if(chrome.extension.getURL("/").indexOf("bhcjclaangpnjgfllaoodflclpdfcegb") >= 0)
+        _gaq.push(['_trackEvent', category, action, optLabel, optValue]);
+};
 
 var backgroundPageWindow = chrome.extension.getBackgroundPage(),
      anyMotePluginActive = backgroundPageWindow.anyMotePluginActive,
@@ -92,13 +100,19 @@ function undoTimeout(){
 }
 
 var gridster = [];
-var draggableButtonsEnabled = false, darkBackEnabled = false;
+var draggableButtonsEnabled = false, darkBackEnabled = false, adsEnabled = true;
 var defaultButtonLayoutStr = '[{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":1,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":2,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":3,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":4,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":5,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":2,"swap":false},{"col":2,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":6,"size_x":1,"size_y":1,"swap":false},{"col":2,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":3,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":4,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":5,"row":7,"size_x":1,"size_y":1,"swap":false},{"col":1,"row":6,"size_x":1,"size_y":1},{"col":2,"row":6,"size_x":1,"size_y":1},{"col":3,"row":6,"size_x":1,"size_y":2},{"col":4,"row":6,"size_x":1,"size_y":2},{"col":5,"row":6,"size_x":1,"size_y":2},{"col":1,"row":7,"size_x":1,"size_y":1},{"col":2,"row":7,"size_x":1,"size_y":1}]';
 
 
 document.onselectstart = function(){ return false; }
 $(window).bind("load", function() { //Not after DOM, but after everything is loaded.
     
+    initAdCarousel();
+
+    initDonorAuth();
+
+    initRecentAppBar();
+
     initMoteServer();
 
     initAnyMoteNPAPI();
@@ -117,9 +131,9 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
 
     initLocalesTexts();
 
-    initMoteServerIPSettings();
-    
-    initAdCarousel();
+    initMoteServerIPSettings();   
+
+    checkInstallUpdate();
     
     enableKeyBoardEvents();
   
@@ -130,7 +144,10 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
         updateAppsListUI();
     },10);   
 
-    $(".keycode").on('mousedown', function () {
+    
+
+    var buttonDownFunc = function() {
+        console.log('touchstart');
         var thisButton = $(this);
         setTimeout(function () {             
 
@@ -139,9 +156,13 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
             sendKeyCode(thisButton.attr('id').replaceAll("_b2",""), true);
 
         }, 100);
-    });
+    }
+    $(".keycode").on('touchstart', buttonDownFunc);
+    $(".keycode").on('mousedown', buttonDownFunc);
 
-    $(".keycode").on('mouseup', function () {
+
+    var buttonUpFunc = function () {
+        console.log('touchend');
         var thisButton = $(this);
         setTimeout(function () {      
             
@@ -150,13 +171,15 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
             sendKeyCode(thisButton.attr('id').replaceAll("_b2",""), false);
 
         }, 100);
-    });
+    }
+    $(".keycode").on('touchend', buttonUpFunc);
+    $(".keycode").on('mouseup', buttonUpFunc);
     
-    $("#menu_button").click(function () {
+    $("#menu_button").on('tap', function () {
         showSettingsMenuPanel();
     });
 
-    $("#popout_mode_button").click(function () {
+    $("#popout_mode_button").on('tap', function () {
         chrome.windows.getAll({"populate":true}, function(windows){
             var found = false;
             for(var i=0; i<windows.length; i++)
@@ -173,26 +196,26 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
         });
     });
 
-    $("#full_mode_button").click(function () {
+    $("#full_mode_button").on('tap', function () {
         openCrxOptionsPage();
     });
 
-    $("#alt_panel_button").click(function () {
+    $("#alt_panel_button").on('tap', function () {
         showAltPanel();
     });
 
-    $("#touch_pad_open_button").click(function () {
+    $("#touch_pad_open_button").on('tap', function () {
         showTouchPad();
     });
 
-    $("#lock_mouse_button").click(function () {
+    $("#lock_mouse_button").on('tap', function () {
         toggleMouseLock();
     });
 
     var optAniSpeed = 600;
     var animationActive = false;
 
-    $("#options_button_devices").click(function () {
+    $("#options_button_devices").on('tap', function () {
         if (optionsActive && !devices_options_active) {
             if (apps_options_active) {
                 //console.log("SLIDE CONTENT TO THE LEFT");
@@ -277,7 +300,7 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
     $("#options_button_apps").mouseleave(function () { $(".options_button_seperator_left" ).css("border-color","#dcdee0");
                                                        $(".options_button_seperator_right").css("border-color","#dcdee0"); });
 
-    $("#options_button_apps").click(function () {
+    $("#options_button_apps").on('tap', function () {
         if (optionsActive && !apps_options_active) {
             if (devices_options_active) {
                 //console.log("SLIDE CONTENT TO THE LEFT");
@@ -347,7 +370,7 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
         channels_options_active = false;
     });
 
-    $("#options_button_channels").click(function () {
+    $("#options_button_channels").on('tap', function () {
 
         if (optionsActive && !channels_options_active) {
             if (apps_options_active) {
@@ -418,29 +441,29 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
         channels_options_active = true;
     });
 
-    $("#options_close_button").click(function () {
+    $("#options_close_button").on('tap', function () {
         showOptionsPanel();
     });
 
-    $("#devices_refresh_button").click(function () {
+    $("#devices_refresh_button").on('tap', function () {
         runDiscovery();
     });
 
-    $("#devices_add_button").click(function () {
+    $("#devices_add_button").on('tap', function () {
         showAddNewDeviceBox();
     });
 
-    $("#intent_add_button").click(function () {
+    $("#intent_add_button").on('tap', function () {
         showAddNewFlingBox();
     });
 
-    $("#macro_add_button").click(function () {
+    $("#macro_add_button").on('tap', function () {
         showAddNewMacroBox();
     });
 
     var getAppsLoop, getAppsTimeOut, clearMsgTimeOut;
 
-    $("#apps_sync_button").click(function () {
+    $("#apps_sync_button").on('tap', function () {
 
         if(backgroundPageWindow.anymoteSessionActive || !anyMotePluginActive){
 
@@ -513,7 +536,7 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
 
     var getChannelsLoop, getChannelsTimeOut, clearChMsgTimeOut;
 
-    $("#update_channels_button").click(function () {
+    $("#update_channels_button").on('tap', function () {
 
         if(backgroundPageWindow.anymoteSessionActive || !anyMotePluginActive){
             $("#loaderImage3").css("display", "block");
@@ -584,7 +607,7 @@ $(window).bind("load", function() { //Not after DOM, but after everything is loa
 
 //DISABLES right click globally.
 document.oncontextmenu = function() {
-    //return false;
+    return false;
 }
 
 var updateChannelsListUI = function() {
@@ -600,13 +623,15 @@ var updateChannelsListUI = function() {
 
         newAppEl.id = channelsList[i].channel_uri;
 
-        $(newAppEl).click(function() {
+        $(newAppEl).on('tap', function() {
             sendFling(this.id);
             showOptionsPanel();
         });
 
         document.getElementById("system_channels_list").appendChild(newAppEl);
     }
+
+
 }
 
 
@@ -624,7 +649,7 @@ var updateAppsListUI = function() {
         newAppEl.textContent = installAppsList[i].name;
         newAppEl.id = 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=' + installAppsList[i].packageName + '/' + installAppsList[i].activityName + ';end';
 
-        $(newAppEl).click(function() {
+        $(newAppEl).on('tap', function() {
             sendFling(this.id);
             showOptionsPanel();
         });
@@ -650,9 +675,9 @@ var showAddPinInputBox = function(address) {
 
         $("#devices_list").prepend(newDeviceInputEl);
 
-        $("#send_pair_code_button").click( sendPairCodeButtonEvent );
+        $("#send_pair_code_button").on('tap',  sendPairCodeButtonEvent );
 
-        $("#cancel_pair_button").click(function () {
+        $("#cancel_pair_button").on('tap', function () {
 
             if(anyMotePluginActive) {       //AnyMote                
                 cancelChallengeResponse();
@@ -716,6 +741,7 @@ var sendPairCodeButtonEvent = function () {
 
                             setDevicesStatusLabel("Connected to " + pairingTo.replaceAll('_','.'), true);
                             showToast('Connected', 2000);
+                            setTitle(backgroundPageWindow.connectedDevice);
                             $("#loaderImage").css("display", "none");
                             $("#devices_refresh_button").css("display", "block");
 
@@ -728,7 +754,7 @@ var sendPairCodeButtonEvent = function () {
                             $("#enter_pin_code_container").remove();
 
                             discoverDevices();
-                            if (devices_options_active) $("#options_button_devices").click();
+                            if (devices_options_active) $("#options_button_devices").tap();
 
                         } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
                             //no success, fail
@@ -798,6 +824,9 @@ var sendPairCodeButtonEvent = function () {
 
                     setDevicesStatusLabel("Connected to " + pairingTo.replaceAll('_','.'), true);
                     showToast('Connected', 2000);
+                    setTitle(deviceName);
+
+                    
                     $("#loaderImage").css("display", "none");
                     $("#devices_refresh_button").css("display", "block");
 
@@ -891,7 +920,7 @@ var showAddNewDeviceBox = function () {
 
         $("#devices_list").prepend(newDeviceInputEl);
                 
-        $("#connect_new_button").click(addNewDeviceButtonEvent);
+        $("#connect_new_button").on('tap', addNewDeviceButtonEvent);
 
         $(function () {
             $('.new_device_ip_input').ipaddress({ cidr: true });
@@ -926,7 +955,7 @@ var showAddNewFlingBox = function (oldName, oldUrl) {
 
         $("#apps_lists").prepend(newFlingInputEl);
 
-        $("#custom_intent_save_button").click(function () {
+        $("#custom_intent_save_button").on('tap', function () {
 
             var name = document.getElementById("custom_intent_name_input").value,
                 uri = document.getElementById("custom_intent_uri_input").value;
@@ -977,7 +1006,7 @@ var showAddNewFlingBox = function (oldName, oldUrl) {
 
 
         });
-        $("#custom_intent_cancel_button").click(function () {
+        $("#custom_intent_cancel_button").on('tap', function () {
             if (document.getElementById("add_new_fling")) {
                 if (oldUrl != null && oldName != null)
                     refreshCustomIntentListUI();
@@ -997,7 +1026,7 @@ var showAddNewFlingBox = function (oldName, oldUrl) {
         });
         $("#custom_intent_uri_input").keyup(function (e) {
             if (e.keyCode == 13) {
-                $("#custom_intent_save_button").click();
+                $("#custom_intent_save_button").tap();
             }
         });
 
@@ -1045,7 +1074,7 @@ var showAddNewMacroBox = function (oldName, oldMacro) {
 
 
 
-        $("#custom_macro_save_button").click(function () {
+        $("#custom_macro_save_button").on('tap', function () {
 
             var name = document.getElementById("custom_macro_name_input").value,
             keyCodes = document.getElementById("keycode_value_holder").value;
@@ -1100,7 +1129,7 @@ var showAddNewMacroBox = function (oldName, oldMacro) {
 
     }
 
-    $("#custom_macro_cancel_button").click(function () {
+    $("#custom_macro_cancel_button").on('tap', function () {
         if (document.getElementById("add_new_macro")) {
             if (oldMacro != null && oldName != null)
                 refreshCustomMacroListUI();
@@ -1271,11 +1300,11 @@ var showContextMenu = function (x, y, id, name, type) {
         //console.log("Edit " + id);
 
         if (type == "intent") {
-            if (document.getElementById("add_new_fling")) $("#custom_intent_cancel_button").click();
+            if (document.getElementById("add_new_fling")) $("#custom_intent_cancel_button").tap();
             showAddNewFlingBox(name, id);
             document.getElementById(id).remove();
         } else if (type == "macro") {
-            if (document.getElementById("add_new_macro")) $("#custom_macro_cancel_button").click();
+            if (document.getElementById("add_new_macro")) $("#custom_macro_cancel_button").tap();
             showAddNewMacroBox(name, id);
             document.getElementById(id).remove();
         } else if (type == "device") {
@@ -1417,6 +1446,8 @@ var showSettingsMenuPanel = function() {
             $(".touch_pad_filler").stop().animate({ 'background-position-x': "0px" }, 320, function () { });
         }
 
+        if(!isInFullTabMode && userAuth && !adsEnabled) $("#ad_block_holder").stop().animate({ left: "320" }, 320, function () { });
+
         $("#settings_menu_panel").stop().animate({ left: "0" }, 320, function () {
                 // Animation complete.
                 //$("#settings_menu_panel").toggleClass('title_open_alt_button title_close_alt_button');
@@ -1424,7 +1455,7 @@ var showSettingsMenuPanel = function() {
 
                 $("#menu_button").toggleClass('title_open_menu_button title_close_menu_button');
                 $("#touch_pad_open_button").css("display","none");
-                document.getElementById("title_bar_title").textContent = "menu";
+                titleStatus("menu");
                 if(!isInFullTabMode) {                    
                     $("#full_mode_button").css("display","block");
                     $("#title_bar_title").css("width","192px");
@@ -1481,6 +1512,8 @@ var showSettingsMenuPanel = function() {
             $(".touch_pad_filler").stop().animate({ 'background-position-x': "160px" }, 320, function () { });
         }
 
+        if(!isInFullTabMode && userAuth && !adsEnabled) $("#ad_block_holder").stop().animate({ left: "0" }, 320, function () { });
+
         $("#settings_menu_panel").stop().animate({ left: "-320" }, 320, function () {
             // Animation complete.
             //$("#settings_menu_panel").toggleClass('title_close_alt_button title_open_alt_button');
@@ -1492,7 +1525,8 @@ var showSettingsMenuPanel = function() {
             if(!isInFullTabMode) {
                 $("#full_mode_button").css("display","none");
             } else {
-                document.getElementById("title_bar_title").textContent = "full remote";
+                titleStatus("full remote");
+                
                 $("#lock_mouse_button").css("display","block");
             }
             if(!isInPopOutMode) {
@@ -1511,10 +1545,10 @@ var showSettingsMenuPanel = function() {
                 $("#alt_panel_button").css("display","block");
 
                 if(!isInFullTabMode) {
-                    document.getElementById("title_bar_title").textContent = "remote";
+                    titleStatus("remote");                    
                     $("#title_bar_title").css("width","128px");
                 }
-                else document.getElementById("title_bar_title").textContent = "full remote";
+                else titleStatus("full remote");
                 
             });
 
@@ -1525,10 +1559,10 @@ var showSettingsMenuPanel = function() {
                 if(!isInPopUpMode) $("#lock_mouse_button").css("display","block");
 
                 if(!isInFullTabMode) {
-                    document.getElementById("title_bar_title").textContent = "touch pad";
+                    titleStatus("touch pad");
                     $("#title_bar_title").css("width","192px");
                 }
-                else document.getElementById("title_bar_title").textContent = "full remote";
+                else titleStatus("full remote");
             });
 
         } else {
@@ -1538,9 +1572,9 @@ var showSettingsMenuPanel = function() {
                 if(!isInFullTabMode) {
                     $("#alt_panel_button").css("display","block");
                     $("#title_bar_title").css("width","128px");
-                    document.getElementById("title_bar_title").textContent = "remote";
+                    titleStatus("remote");
                 }
-                else document.getElementById("title_bar_title").textContent = "full remote";
+                else titleStatus("full remote");
 
             });
 
@@ -1641,7 +1675,7 @@ var showTouchPad = function () {
         }, 320, function () {
             // Animation complete.
             isAnimated = false;
-            document.getElementById("title_bar_title").textContent = "touch pad";
+            titleStatus("touch pad");            
             if(!isInPopUpMode) $("#lock_mouse_button").css("display", "block");
             if(isInPopUpMode) $("#title_bar_title").css("width", "192px");
             $("#alt_panel_button").css("display", "none");
@@ -1673,7 +1707,7 @@ var showTouchPad = function () {
         }, 320, function () {
             // Animation complete.
             isAnimated = false;
-            document.getElementById("title_bar_title").textContent = "remote";
+            titleStatus("remote");
             $("#lock_mouse_button").css("display", "none");
             if(isInPopUpMode) $("#title_bar_title").css("width", "128px");
             $("#alt_panel_button").css("display", "block");
@@ -1782,13 +1816,14 @@ var showOptionsPanel = function (enable) {
         var closeOffset = 50;
         if(isInFullTabMode) closeOffset = 0;
 
+
         $("#options_panel_container").stop().animate({
             bottom: closeOffset
         }, 320, function () {
             // Animation complete.
             if(!isInFullTabMode) $("#title_bar_title").css("width", "192px");
             else                 $("#title_bar_title").css("width", "832px");
-            document.getElementById("title_bar_title").textContent = "options";
+            titleStatus("options");
             
             $("#options_close_button").css("display", "block");
 
@@ -1820,6 +1855,7 @@ var showOptionsPanel = function (enable) {
 
         var closeOffset = -286;
         if(isInFullTabMode) closeOffset = -432;
+        if(!isInFullTabMode && userAuth && !adsEnabled) closeOffset = closeOffset - 50;
 
         $("#options_panel_container").stop().animate({
             bottom: closeOffset
@@ -1831,20 +1867,20 @@ var showOptionsPanel = function (enable) {
             else                 $("#title_bar_title").css("width", "832px");
 
             if (touchActive) {
-                document.getElementById("title_bar_title").textContent = "touch pad";
+                titleStatus("touch pad");
 
                 $("#lock_mouse_button").css("display", "block");
                 $("#touch_pad_open_button").css("display", "block");
             } else {
                 if(!isInFullTabMode) {
-                    document.getElementById("title_bar_title").textContent = "remote";
+                    titleStatus("remote");
                     $("#lock_mouse_button").css("display", "none");
                     $("#touch_pad_open_button").css("display", "block");
                     $("#alt_panel_button").css("display", "block");
 
                 }
                 else {
-                    document.getElementById("title_bar_title").textContent = "full remote";
+                    titleStatus("full remote");
                     $("#lock_mouse_button").css("display", "block");
                 }
                 
@@ -1903,7 +1939,7 @@ var addDeviceFound = function (name, ip, current, saved) {
                             
     newDeviceEl.innerHTML = "<div class='device_found_ip'>" + ip + "</div><input class='device_found_name_input' value='" + getSavedName(name, ip) + "' disabled></input><div class='device_found_rename_save_button' id='rename_" + deviceFoundID + "'>save</div>";
 
-    newDeviceEl.addEventListener("click", function () {
+    $(newDeviceEl).on("tap", function () {
         if( !hasClass(document.getElementById(deviceFoundID),"device_renaming") ){
             var ipAddress = this.id.replaceAll('_','.'),
                 deviceName = $(this).attr("name");
@@ -1943,12 +1979,12 @@ var addDeviceFound = function (name, ip, current, saved) {
     //KeyPress Listener for Enter press on rename text input.
     $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")).keypress(function (e) {
         if (e.which == 13) { //Enter Press
-            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_rename_save_button")).click();
+            $(document.getElementById(deviceFoundID).getElementsByClassName("device_found_rename_save_button")).tap();
         }
     });
     
     //Click Listener for saving changes to device name.
-    document.getElementById( 'rename_' + deviceFoundID ).addEventListener("click", function () {
+    $(document.getElementById( 'rename_' + deviceFoundID )).on("tap", function () {
 
         var newName = document.getElementById(deviceFoundID).getElementsByClassName("device_found_name_input")[0].value;
         if( newName != "" ){
@@ -2089,6 +2125,7 @@ var runPairing = function (address) {
 
                         setDevicesStatusLabel("Connected to " + pairingTo, true);
                         showToast('Connected', 2000);
+                        setTitle(backgroundPageWindow.connectedDevice);
 
                         console.log("pairingTo "+pairingTo);
                         $("#loaderImage").css("display", "none");
@@ -2106,7 +2143,7 @@ var runPairing = function (address) {
                         $("#enter_pin_code_container").remove();
 
                         discoverDevices();
-                        if (devices_options_active) $("#options_button_devices").click();
+                        if (devices_options_active) $("#options_button_devices").tap();
 
                     } else if (!JSON.parse(response).connectionSuccess && JSON.parse(response).connectionFailed) {
                         //no success, fail
@@ -2198,7 +2235,7 @@ var runDiscovery = function() {
                         } else {
                             //console.log("Mote Server is not Paired");
                             chrome.browserAction.setIcon({path:"images/icons/icon19_grey.png"});            
-                            if (!devices_options_active) $("#options_button_devices").click();
+                            if (!devices_options_active) $("#options_button_devices").tap();
                         }
 
                         var statusMsg = "";
@@ -2302,12 +2339,12 @@ function toggleMenuItemSettingsActivate(){
 }
 var initMenuItemEvents = function(){
 
-    $("#menu_item_settings").click( function () { 
+    $("#menu_item_settings").on('tap',  function () { 
         //TODO: EXPAND SETTINGS MENU
         toggleMenuItemSettings();
     });
 
-    $("#menu_item_about").click( function () {         
+    $("#menu_item_about").on('tap', function () {         
         if(!menuPanelAboutEnabled){            
             $( "#menu_panel_about" ).stop().slideToggle( 250, function() {});
             $( '#menu_items' ).animate({ scrollTop: 35 }, 250);
@@ -2323,7 +2360,7 @@ var initMenuItemEvents = function(){
         }   
     }); 
 
-    $("#menu_item_settings_custom_theme").click( function () {
+    $("#menu_item_settings_custom_theme").on('tap',  function () {
         if(!menuPanelSettingsCustomThemeEnabled){      
             closeAllOpenSettingsSubCats();       
             $( "#menu_panel_settings_custom_theme" ).stop().slideToggle( 250, function() {});
@@ -2336,7 +2373,7 @@ var initMenuItemEvents = function(){
         }
     });
 
-    $("#menu_item_settings_select_theme").click( function () {         
+    $("#menu_item_settings_select_theme").on('tap',  function () {         
         if(!menuPanelSettingsSelectThemeEnabled){
             closeAllOpenSettingsSubCats(); 
             $( "#menu_panel_settings_select_theme" ).stop().slideToggle( 250, function() {});
@@ -2349,25 +2386,30 @@ var initMenuItemEvents = function(){
         }
     });    
 
-    $("#menu_item_settings_mote_ip").click( function () {         
+    $("#menu_item_settings_mote_ip").on('tap',  function () {         
         toggleMenuItemSettingsMoteIp();
     });
 
-    $("#menu_item_settings_activate").click( function () {         
+    $("#menu_item_settings_activate").on('tap',  function () {         
         toggleMenuItemSettingsActivate();
     });
 
-    $("#menu_item_settings_toggle_btn_lock").click( function () {         
+    $("#menu_item_settings_toggle_btn_lock").on('tap',  function () {         
         if(!draggableButtonsEnabled) enableDraggableButtons();            
         else                        disableDraggableButtons();
     });
 
-    $("#menu_item_settings_toggle_dark_back").click( function () {         
+    $("#menu_item_settings_toggle_dark_back").on('tap',  function () {         
         if(!darkBackEnabled) enableDarkBack(true);            
         else                 enableDarkBack(false);
     });
 
-    $("#menu_item_settings_toggle_npapi_enabled").click( function () {
+    $("#menu_item_settings_disable_ads").on('tap',  function () {         
+        if(!adsEnabled) enableAds(false);            
+        else            enableAds(true);
+    });
+
+    $("#menu_item_settings_toggle_npapi_enabled").on('tap',  function () {
         if (backgroundPageWindow.osDetected == 'CrOS') {
             buildDialogBox("NPAPI Not Supported","Google decided to not support NPAPI plugins on Chrome OS. So we built the Anymote Bridge to enable Chromemote to work on Chrome OS.","Install Bridge",null, function(){
                 window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
@@ -2390,7 +2432,11 @@ var initMenuItemEvents = function(){
         
     });
 
-    $("#menu_item_settings_reset_default_layout").click( function () {
+    $("#menu_item_settings_changelog").on('tap',  function () {
+        showFirstInstallDialog();        
+    });
+
+    $("#menu_item_settings_reset_default_layout").on('tap',  function () {
         if(!undoLayoutFound){
             var date = new Date(), time = date.getTime();
             undoButtonLayoutStr = '{"time": "' + time + '", "layout": ' + JSON.stringify(buttonLayoutJson) + ' }';
@@ -2406,116 +2452,320 @@ var initMenuItemEvents = function(){
         }        
     });
 
-    $("#menu_item_settings_install_bridge").click( function () {         
+    $("#menu_item_settings_install_bridge").on('tap',  function () {         
         window.open("https://play.google.com/store/apps/details?id=com.motelabs.chromemote.bridge","_blank");
         if(backgroundPageWindow.anymoteSessionActive) sendFling("market://details?id=com.motelabs.chromemote.bridge");
     });
 
 
-    $("#menu_item_help").click( function () { 
+    $("#menu_item_help").on('tap',  function () { 
         window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#question','_blank');
     });  
-    $("#menu_item_support").click( function () { 
+    $("#menu_item_support").on('tap',  function () { 
         window.open('http://chromemote.com/support-us/','_blank')
     });
-    $("#menu_item_bugs").click( function () { 
+    $("#menu_item_bugs").on('tap',  function () { 
         window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#bug','_blank');
     });
-    $("#menu_item_suggest").click( function () { 
+    $("#menu_item_suggest").on('tap',  function () { 
         window.open('https://chrome.google.com/webstore/support/bhcjclaangpnjgfllaoodflclpdfcegb?hl=en&gl=US#feature','_blank');
     });
-    $("#menu_item_updates").click( function () { 
+    $("#menu_item_updates").on('tap',  function () { 
         window.open('http://chromemote.com/update/','_blank');
     });
-    $("#menu_item_blog").click( function () { 
+    $("#menu_item_blog").on('tap',  function () { 
         window.open('http://chromemote.com/blog/','_blank');
     });
 
 
-    $("#get_key_button").click( function () { 
-        window.open('http://api.chromemote.com/get_key/','_blank');
+    $("#get_key_button").on('tap',  function () { 
+        window.open('http://chromemote.com/get-key/','_blank');
     });
 
+    
+    $('[name="user_email_address"]').keypress(function (e) {
+        if (e.which == 13 && $('.user_email_address_input').val() != "") {
+            $('[name="product_key"]').focus();
+        }
+    });
 
-    $("#check_activation_button").click( function () { 
-        var data = {};
-            data.email = $('.user_email_address_input').val(),
-            data.key = $('.product_key_input').val();
+    $('[name="product_key"]').keypress(function (e) {
+        if (e.which == 13 & $('.product_key_input').val() != "") {
+            $('[name="product_key"]').blur();
+            $("#check_activation_button").tap();
+        }
+    });
+
+    var activationStatusLoop = null, activationStatusTimeout = null;
+    $("#check_activation_button").on('tap',  function () { 
+
+        var keyIn = $('.product_key_input').val();
+            keyIn = keyIn.replaceAll("-","");
+            keyIn = keyIn.toLowerCase();
+            keyIn = insertNthChar(keyIn,'-',4);
+            keyIn = keyIn.substring(0,19);
+
+        $('.product_key_input').val(keyIn);
+
+        if( $('.user_email_address_input').val() == "" ) {
+
+            $(".user_email_address_input").css("border-color", "#f00");
+            setTimeout(function () {
+                $(".user_email_address_input").css("border-color", "");
+                setTimeout(function () {
+                    $(".user_email_address_input").css("border-color", "#f00");
+                    setTimeout(function () {
+                        $(".user_email_address_input").css("border-color", "");
+                        setTimeout(function () {                                
+                            $(".user_email_address_input").focus();
+                            setInputSelection(document.getElementById("custom_theme_color_input"), 1, 6);
+                        }, 150);
+                    }, 150);
+                }, 150);
+            }, 150);
+
+        } else if( keyIn == "" || keyIn.length != 19 ) {
+            
+            $(".product_key_input").css("border-color", "#f00");
+            setTimeout(function () {
+                $(".product_key_input").css("border-color", "");
+                setTimeout(function () {
+                    $(".product_key_input").css("border-color", "#f00");
+                    setTimeout(function () {
+                        $(".product_key_input").css("border-color", "");
+                        setTimeout(function () {                                
+                            $(".product_key_input").focus();
+                            setInputSelection(document.getElementById("custom_theme_color_input"), 1, 6);
+                        }, 150);
+                    }, 150);
+                }, 150);
+            }, 150);
+            
+        } else {
+            
+            clearInterval(activationStatusLoop);
+            clearTimeout(activationStatusTimeout);
+            activationStatusLoop = setInterval(function () {                
+                if(  $("#activation_status").css("background-color") == "rgb(0, 127, 0)")
+                     $("#activation_status").css("background-color",  "rgb(255, 255, 0)");
+                else $("#activation_status").css("background-color",  "rgb(  0, 127, 0)");
+            }, 250);
+            activationStatusTimeout = setTimeout(function(){ 
+                showToast("Error 03 :(<br>The server and I are not talking.<br>Please try again later...");
+                clearInterval(activationStatusLoop);                
+                $("#activation_status").css("background-color", "rgb(255, 0, 0)");                
+            },10000);
+
+            var data = {};
+            data.email = $('.user_email_address_input').val().toLowerCase(),
+            data.key = keyIn;
 
             $.ajax({
                 type: 'POST',
                 data: JSON.stringify(data),
                 contentType: 'application/json',
-                url: 'http://localhost:8008/get_key/activate',                                                
+                url: 'http://chromemote.com/get-key/activate',                                                
                 success: function(result) {
                     //console.log('success');
+                    userAuth = false;
                     console.log(result.status);
                     if(result.status == 0){
-                        //show email not found                        
+                        //show email not found
+                        showToast("Not Activated :(<br>Email address not found.");
+                        clearInterval(activationStatusLoop);
+                        clearTimeout(activationStatusTimeout);
+                        $("#activation_status").css("background-color", "rgb(255, 0, 0)");
+                        localStorage.setItem("donor_act", JSON.stringify({"email":data.email, "key":"", "auth": "" }));
 
                     } else if(result.status == 1){
                         //show success
+                        showToast("Activated! :)<br>You Rock!");
+                        clearInterval(activationStatusLoop);
+                        clearTimeout(activationStatusTimeout);
+                        $("#activation_status").css("background-color", "rgb(0, 127, 0)");
+                        localStorage.setItem("donor_act", JSON.stringify({"email":data.email, "key":data.key, "auth": auth.getAuth(data.email+"chromemote"+ data.key)+"" }));
+                        userAuth = true;
                         
                     } else if(result.status == 2){
                         //show key does not match
+                        showToast("Not Activated :(<br>Incorrect product key.");
+                        clearInterval(activationStatusLoop);
+                        clearTimeout(activationStatusTimeout);
+                        $("#activation_status").css("background-color", "rgb(255, 255, 0)");
+                        localStorage.setItem("donor_act", JSON.stringify({"email":data.email, "key":"", "auth": "" }));
                         
                     } else if(result.status == -1){
                         //show error
+                        showToast("Error 01 :(<br>The server and I are not talking.<br>Please try again later...");
+                        clearInterval(activationStatusLoop);
+                        clearTimeout(activationStatusTimeout);
+                        $("#activation_status").css("background-color", "rgb(255, 0, 0)");
+                        localStorage.setItem("donor_act", JSON.stringify({"email":data.email, "key":"", "auth": "" }));
+
+                    } else {
+                        //show shit aint right
+                        showToast("Error 02 :(<br>The server and I are not talking.<br>Please try again later...");
+                        clearInterval(activationStatusLoop);
+                        clearTimeout(activationStatusTimeout);
+                        $("#activation_status").css("background-color", "rgb(255, 0, 0)");
+                        localStorage.setItem("donor_act", JSON.stringify({"email":data.email, "key":"", "auth": "" }));
+
                         
+
                     }
                     
                     
                 }
             });
+
+        }
+            
     });
 
 }
 
-var initAppIntents = function(){
-
-    //$("#app_amazon").click(    function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.amazon.avod/.MainActivity;end');  showOptionsPanel();   });
-
-    $("#app_chrome").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');  showOptionsPanel();   });
-
-    $("#app_clock").click(       function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.deskclock/.DeskClock;end');  showOptionsPanel();   });
-
-    //$("#app_cnbc").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbc.cnbc.android.googletv/.ui.Splash;end');  showOptionsPanel();   });
-
-    $("#app_downloads").click(   function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.providers.downloads.ui/.DownloadList;end');  showOptionsPanel();   });
-
-    $("#app_search").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.quicksearchbox/.SearchActivity;end');  showOptionsPanel();   });
-
-    //$("#app_mgo").click(       function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.technicolor.navi.mgo.gtv/com.technicolor.navi.mgo.gtv.MainActivity;end');  showOptionsPanel();   });
-    
-    $("#app_movies").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.videos/com.google.android.youtube.videos.EntryPoint;end');  showOptionsPanel();   });
-
-    $("#app_music").click(       function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.music/com.android.music.activitymanagement.TopLevelActivity;end');  showOptionsPanel();   });
-
-    //$("#app_nba").click(       function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbadigital.gametimegtv/.ActivityManager;end');  showOptionsPanel();   });
-    
-    $("#app_netflix").click(     function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');  showOptionsPanel();   });
-
-    //$("#app_onlive").click(    function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.onlive.clientgtv/.OnLiveClientGTVActivity;end');  showOptionsPanel();   });
-    
-    $("#app_pandora").click(     function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.pandora.android.gtv/com.pandora.android.Main;end');  showOptionsPanel();   });
-
-    $("#app_photos").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.mediabrowser/com.google.tv.mediabrowser.newui.MainActivity;end');  showOptionsPanel();   });
-
-    //$("#app_plex").click(      function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.plexapp.gtv/com.plexapp.gtv.activities.MyPlexActivity;end');  showOptionsPanel();   });
-
-    $("#app_primetime").click(   function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.alf/com.google.tv.alf.ui.MainActivity;end');  showOptionsPanel();   });
-
-    $("#app_store").click(       function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.vending/com.android.vending.AssetBrowserActivity;end');  showOptionsPanel();   });
-
-    $("#app_tv").click(          function () { sendFling('tv://');  showOptionsPanel();   });
-
-    $("#app_twitter").click(     function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.twitter.android.tv/com.twitter.android.LoginActivity;end');  showOptionsPanel();   });
-
-    $("#app_youtube").click(     function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.youtube.googletv/com.google.android.youtube.googletv.MainActivity;end');  showOptionsPanel();   });
-
-    $("#app_settings").click(    function () { sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.settings/com.google.tv.settings.Settings;end');  showOptionsPanel();   });
+function insertNthChar(string,chr,nth) {
+    var output = '';
+    for (var i=0; i<string.length; i++) { if (i>0 && i%4 == 0) {output += chr;} output += string.charAt(i); }
+    return output;
 }
 
+function openApp(appCode) {
+    //console.log("!!!!"+appCode);
+    switch(appCode){
+
+        case "app_chrome":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.chrome/com.google.tv.chrome.HubActivity;end');
+            break;
+        case "app_clock":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.deskclock/.DeskClock;end');
+            break;
+        case "app_downloads":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.providers.downloads.ui/.DownloadList;end');
+            break;
+        case "app_search":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.quicksearchbox/.SearchActivity;end');
+            break;
+        case "app_movies":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.videos/com.google.android.youtube.videos.EntryPoint;end');
+            break;
+        case "app_music":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.music/com.android.music.activitymanagement.TopLevelActivity;end');
+            break;
+        case "app_netflix":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.netflix/com.google.tv.netflix.NetflixActivity;end');
+            break;
+        case "app_pandora":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.pandora.android.gtv/com.pandora.android.Main;end');
+            break;
+        case "app_photos":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.mediabrowser/com.google.tv.mediabrowser.newui.MainActivity;end');
+            break;
+        case "app_primetime":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.alf/com.google.tv.alf.ui.MainActivity;end');
+            break;
+        case "app_store":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.android.vending/com.android.vending.AssetBrowserActivity;end');
+            break;
+        case "app_tv":
+            sendFling('tv://');
+            break;
+        case "app_twitter":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.twitter.android.tv/com.twitter.android.LoginActivity;end');
+            break;
+        case "app_youtube":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.android.youtube.googletv/com.google.android.youtube.googletv.MainActivity;end');
+            break;
+        case "app_settings":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.google.tv.settings/com.google.tv.settings.Settings;end');
+            break;
+        case "app_amazon":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.amazon.avod/.MainActivity;end');
+            break;
+        case "app_cnbc":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbc.cnbc.android.googletv/.ui.Splash;end');
+            break;
+        case "app_mgo":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.technicolor.navi.mgo.gtv/com.technicolor.navi.mgo.gtv.MainActivity;end');
+            break;
+        case "app_nba":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.nbadigital.gametimegtv/.ActivityManager;end');
+            break;
+        case "app_onlive":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.onlive.clientgtv/.OnLiveClientGTVActivity;end');
+            break;
+        case "app_plex":
+            sendFling('intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;launchFlags=0x10200000;component=com.plexapp.gtv/com.plexapp.gtv.activities.MyPlexActivity;end');
+            break;
+    }
+    
+}
+
+
+
+var initAppIntents = function(){
+
+    $(".app_icon_item").on('tap',  function(){ 
+        openApp(this.id); 
+        showOptionsPanel();
+        addToRecentAppBar(this.id, true);
+    });
+    
+}
+
+function enableAds(bool) {
+    if(bool == null) bool = true;
+    
+    $("#disable_ads_enabled_checkbox").prop("checked", bool);
+    localStorage.setItem("sponsors_status", bool);
+
+    if(userAuth){
+        if(bool) {
+            //disableSponsor
+            adsEnabled = false;
+            stopAdCarousel();
+            if(!isInFullTabMode) {
+                $("#ad_block_holder").css("bottom","46px");
+                if(settingsActive) $("#ad_block_holder").css("left","320px");
+                $("#options_panel_container").css("bottom","-336px");
+                $("#options_panel_container").css("z-index","60");
+                $("#devices_list").css("height","calc(100% - 36px)");
+                $("#apps_lists").css("height","calc(100% - 36px)");                
+                $("#channels_list").css("height","calc(100% - 36px)");
+                $("#settings_menu_panel").css("height","calc(100% - 94px)");
+
+                
+            }
+
+           
+        } else {
+            //enableSponsor
+            adsEnabled = true;
+            initAdCarousel();
+            if(!isInFullTabMode) {
+                $("#ad_block_holder").css("bottom","");
+                $("#ad_block_holder").css("left","");
+                $("#options_panel_container").css("bottom","");
+                $("#options_panel_container").css("z-index","");
+                $("#devices_list").css("height","");
+                $("#apps_lists").css("height","");
+                $("#channels_list").css("height","");
+                $("#settings_menu_panel").css("height","");
+
+                
+            }
+
+        }
+
+    } else {
+        showToast("Feature requires donor activation.");
+        adsEnabled = true;
+        $("#disable_ads_enabled_checkbox").prop("checked", false);
+        localStorage.setItem("sponsors_status", false);
+    }
+
+    
+}
 
 function enableDarkBack(bool) {
     if(bool == null) bool = true;
@@ -2532,6 +2782,36 @@ function initDarkBackSetting() {
         //console.log(isDarkBackString);
         if(isDarkBackString === "true") enableDarkBack(true);
         else enableDarkBack(false);
+    }
+}
+
+var userAuth = false;
+function initDonorAuth(){
+    if( localStorage.getItem("donor_act") ){
+        var authObject = JSON.parse( localStorage.getItem("donor_act") );
+        $(".user_email_address_input").val(authObject.email);        
+        if(authObject.auth == auth.getAuth(authObject.email+"chromemote"+authObject.key)){            
+            $("#activation_status").css("background-color",  "rgb(  0, 127, 0)");
+            $(".product_key_input").val(authObject.key);
+            userAuth = true;
+        } else {
+            $("#activation_status").css("background-color",  "rgb( 255, 0, 0)");
+            userAuth = false;
+        }
+        
+    }
+
+    if( localStorage.getItem("sponsors_status") ){
+        var sponsorsDisabled = false;
+        console.log(localStorage.getItem("sponsors_status"));
+        if(localStorage.getItem("sponsors_status") == "true" && userAuth){ 
+            sponsorsDisabled = true;
+            //console.log(sponsorsDisabled);
+
+
+        }
+        if(userAuth) enableAds(sponsorsDisabled);
+        
     }
 }
 
@@ -3325,7 +3605,7 @@ function initColorPicker(){
                                   .keyup(colorPickerInputChangeEvent)
                                   .bind('keypress', colorPickerInputKeyPressEvent);
 
-    $("#border_color_checkbox_holder").click(function () { toggleCustomBorderColors(); });
+    $("#border_color_checkbox_holder").on('tap', function () { toggleCustomBorderColors(); });
 
     //Init presets.
     for( var i = 0 ; i < document.getElementsByClassName("theme_color_preset").length; i++ ){
@@ -3341,7 +3621,7 @@ function initColorPicker(){
         
         //console.log(thisEl.getAttribute("color"));
 
-        $(thisEl).click(function(){
+        $(thisEl).on('tap', function(){
             if((this.getAttribute("border") == "true" && !borderColorsEnabled) || (this.getAttribute("border") == "false" && borderColorsEnabled)){
                 toggleCustomBorderColors();
             }
@@ -3499,6 +3779,7 @@ function changeThemeColor(hex) {
                 '#macro_add_button{background-color:' + balanceSaturation(hex,"#f5f6f6") + '} \n' + 
                 '.remote_button:not(.remote_button_no_border){ border-top-color:' + borderColor + '} \n' + 
                 '.remote_button{border-left-color:' + borderColor + '} \n' + 
+                '.app_bar_icon_item{border-left-color:' + borderColor + '} \n' + 
                 '.remote_button_rocker{border-top-color:' + borderColor + '} \n' + 
                 '.remote_button_rocker{border-left-color:' + borderColor + '} \n' + 
                 '.touch_pad_filler{border-top-color:' + borderColor + '} \n' + 
@@ -3682,17 +3963,17 @@ function initMoteServerIPSettings(){
         $("#cancel_mote_ip_button").css("display","block");
     });
 
-    $("#save_mote_ip_button").click(function(){
+    $("#save_mote_ip_button").on('tap', function(){
         
         var ipEntered = document.getElementsByClassName("mote_server_ip_input")[0].value;
 
         if (ipAddressIsValid(ipEntered)) {
             setMoteServer(ipEntered);            
             $("#mote_server_status").css("background-color", "yellow");
+            
+            setTimeout(function(){  sendMoteCommand("getDeviceList", true); },1000);
 
-            setTimeout(function(){ sendMoteCommand("getDeviceList", true); },250);
-
-            $("#save_mote_ip_button").css("display","none");
+            //$("#save_mote_ip_button").css("display","none");
             $("#cancel_mote_ip_button").css("display","none");
 
         } else {
@@ -3714,7 +3995,7 @@ function initMoteServerIPSettings(){
     });
     $(function () { $('.mote_server_ip_input').ipaddress({ cidr: true }); });
 
-    $("#cancel_mote_ip_button").click(function(){        
+    $("#cancel_mote_ip_button").on('tap', function(){        
         
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_1").val('');
             $("#menu_panel_settings_mote_ip #ipaddress_abcd__octet_2").val('');
@@ -3731,7 +4012,7 @@ function initMoteServerIPSettings(){
             
             }
 
-            $("#save_mote_ip_button").css("display","none");
+            //$("#save_mote_ip_button").css("display","none");
             $("#cancel_mote_ip_button").css("display","none");
         
     });
@@ -3770,10 +4051,10 @@ function buildDialogBox(titleString, bodyHtml, option1String, option2String, opt
                             "</div>";
     $("body").append(newDialogEl);
 
-    if(option1Event) $("#"+dialogBoxId+" .main").click(option1Event);
-    if(option2Event) $("#"+dialogBoxId+" .alt").click(option2Event);
+    if(option1Event) $("#"+dialogBoxId+" .main").on('tap', option1Event);
+    if(option2Event) $("#"+dialogBoxId+" .alt").on('tap', option2Event);
 
-    $("#"+dialogBoxId+" .main, #"+dialogBoxId+" .alt").click(function(){
+    $("#"+dialogBoxId+" .main, #"+dialogBoxId+" .alt").on('tap', function(){
         var thisBoxId = this.parentNode.parentNode.parentNode.id;
         $("#"+thisBoxId).remove();  
     });
@@ -3796,10 +4077,10 @@ function showToast(messageString, showTime){
         $("#main_container").append(newToastEl);
     } else {        
         clearTimeout( toastTimeOut );
-        $(".toast_msg_content").text(messageString);
+        $(".toast_msg_content").html(messageString);
     }
 
-    $("#"+toastId).click(function(){
+    $("#"+toastId).on('tap', function(){
         this.remove();
         var i = parseInt( this.id.replaceAll("toast_msg_","") );
         clearTimeout( toastTimeOut );
@@ -3810,33 +4091,136 @@ function showToast(messageString, showTime){
 
 }
 
-var currentAdIndex = 0;
-function initAdCarousel(){
+function setTitle(text){
+    document.getElementById("title_bar_title").textContent = text;
+}
 
+function titleStatus(text){
+    //document.getElementById("title_bar_title").textContent = text;
+}
+
+var currentAdIndex = 0, adCarouselLoop = null;
+function initAdCarousel(){
+    $("#ad_block").css("display","block");
+    $("#app_bar").css("display","none");
     setAd(currentAdIndex);
-    setInterval(function(){ 
+    adCarouselLoop = setInterval(function(){ 
         var adCount = backgroundPageWindow.adsJson.length;
         currentAdIndex++;
         if(currentAdIndex >= adCount) currentAdIndex = 0;
         setAd(currentAdIndex);
-    },5000);
+    },120000);
     
-    //setInterval(updateAdList, 5* 60 * 1000);
     updateAdList();
 }
 
-function setAd(index){    
-    $('#ad_block').unbind('click'); // just for click events
-    $('#ad_block').unbind(); // for all events
-    $('#ad_block').off();
-    $("#ad_block").click(function () { window.open("http://api.chromemote.com/link/"+backgroundPageWindow.adsJson[index]._id, "_blank"); });
-    $("#ad_block").css("background-image", "url(" + backgroundPageWindow.adsJson[index].img + ")");
+function stopAdCarousel(){
+    $("#ad_block").css("display","none");
+    $("#app_bar").css("display","block");
+    clearInterval(adCarouselLoop);
+}
+
+function setAd(index){
+    //console.log(backgroundPageWindow.adsJson);
+    if(backgroundPageWindow.adsJson != null && backgroundPageWindow.adsJson.length > 0){
+        
+        var urlPath = "http://chromemote.com/link/" + backgroundPageWindow.adsJson[index]._id;
+        var imgPath = backgroundPageWindow.adsJson[index].img;
+
+        if(backgroundPageWindow.adsJson[index].img == undefined){
+            console.log(undefined);
+            //load defaults
+            imgPath = "/ads/ad_1.png";
+            urlPath = "http://chromemote.com/support-us/";
+        }
+
+        $('#ad_block').unbind('tap'); // just for click events
+        $('#ad_block').unbind(); // for all events
+        $('#ad_block').off();
+        $("#ad_block").on('tap', function () { window.open(urlPath, "_blank"); });
+        $("#ad_block").css("background-image", "url(" + imgPath + ")");
+    } else {
+
+
+        $('#ad_block').unbind('tap'); // just for click events
+        $('#ad_block').unbind(); // for all events
+        $('#ad_block').off();
+        $("#ad_block").on('tap', function () { window.open("http://chromemote.com/support/", "_blank"); });
+        $("#ad_block").css("background-image", "url('/ads/ad_1.png')");
+    }
+    
 }
 
 function updateAdList(){
-    $.getJSON( "http://api.chromemote.com/ads/", function( data ) {
+    $.getJSON( "http://chromemote.com/ads/", function( data ) {
         //console.log( JSON.stringify(data) );
         backgroundPageWindow.adsJson = data;
         localStorage.setItem("ad_list", JSON.stringify(data));
+    });
+}
+
+function cAuth(){function e(e,t){var o=e[0],u=e[1],a=e[2],f=e[3];o=n(o,u,a,f,t[0],7,-88888888);f=n(f,o,u,a,t[1],12,-987654321);a=n(a,f,o,u,t[2],17,123456789);u=n(u,a,f,o,t[3],22,-1044525330);o=n(o,u,a,f,t[4],7,-176418897);f=n(f,o,u,a,t[5],12,1200080426);a=n(a,f,o,u,t[6],17,-1473231341);u=n(u,a,f,o,t[7],22,-45705983);o=n(o,u,a,f,t[8],7,1770035416);f=n(f,o,u,a,t[9],12,-1958414417);a=n(a,f,o,u,t[10],17,-42063);u=n(u,a,f,o,t[11],22,-1990404162);o=n(o,u,a,f,t[12],7,1804603682);f=n(f,o,u,a,t[13],12,-40341101);a=n(a,f,o,u,t[14],17,-1502002290);u=n(u,a,f,o,t[15],22,1236535329);o=r(o,u,a,f,t[1],5,-165796510);f=r(f,o,u,a,t[6],9,-1069501632);a=r(a,f,o,u,t[11],14,643717713);u=r(u,a,f,o,t[0],20,-373897302);o=r(o,u,a,f,t[5],5,-701558691);f=r(f,o,u,a,t[10],9,38016083);a=r(a,f,o,u,t[15],14,-660478335);u=r(u,a,f,o,t[4],20,-405537848);o=r(o,u,a,f,t[9],5,568446438);f=r(f,o,u,a,t[14],9,-1019803690);a=r(a,f,o,u,t[3],14,-187363961);u=r(u,a,f,o,t[8],20,1163531501);o=r(o,u,a,f,t[13],5,-1444681467);f=r(f,o,u,a,t[2],9,-51403784);a=r(a,f,o,u,t[7],14,1735328473);u=r(u,a,f,o,t[12],20,-1926607734);o=i(o,u,a,f,t[5],4,-378558);f=i(f,o,u,a,t[8],11,-2022574463);a=i(a,f,o,u,t[11],16,1839030562);u=i(u,a,f,o,t[14],23,-35309556);o=i(o,u,a,f,t[1],4,-1530992060);f=i(f,o,u,a,t[4],11,1272893353);a=i(a,f,o,u,t[7],16,-155497632);u=i(u,a,f,o,t[10],23,-1094730640);o=i(o,u,a,f,t[13],4,681279174);f=i(f,o,u,a,t[0],11,-358537222);a=i(a,f,o,u,t[3],16,-722521979);u=i(u,a,f,o,t[6],23,76029189);o=i(o,u,a,f,t[9],4,-640364487);f=i(f,o,u,a,t[12],11,-421815835);a=i(a,f,o,u,t[15],16,530742520);u=i(u,a,f,o,t[2],23,-995338651);o=s(o,u,a,f,t[0],6,-198630844);f=s(f,o,u,a,t[7],10,1126891415);a=s(a,f,o,u,t[14],15,-1416354905);u=s(u,a,f,o,t[5],21,-57434055);o=s(o,u,a,f,t[12],6,1700485571);f=s(f,o,u,a,t[3],10,-1894986606);a=s(a,f,o,u,t[10],15,-1051523);u=s(u,a,f,o,t[1],21,-2054922799);o=s(o,u,a,f,t[8],6,1873313359);f=s(f,o,u,a,t[15],10,-30611744);a=s(a,f,o,u,t[6],15,-1560198380);u=s(u,a,f,o,t[13],21,1309151649);o=s(o,u,a,f,t[4],6,-145523070);f=s(f,o,u,a,t[11],10,-1120210379);a=s(a,f,o,u,t[2],15,718787259);u=s(u,a,f,o,t[9],21,-343485551);e[0]=h(o,e[0]);e[1]=h(u,e[1]);e[2]=h(a,e[2]);e[3]=h(f,e[3])}function t(e,t,n,r,i,s){t=h(h(t,e),h(r,s));return h(t<<i|t>>>32-i,n)}function n(e,n,r,i,s,o,u){return t(n&r|~n&i,e,n,s,o,u)}function r(e,n,r,i,s,o,u){return t(n&i|r&~i,e,n,s,o,u)}function i(e,n,r,i,s,o,u){return t(n^r^i,e,n,s,o,u)}function s(e,n,r,i,s,o,u){return t(r^(n|~i),e,n,s,o,u)}function o(t){txt="";var n=t.length,r=[1732584193,-271733879,-1732584194,271733878],i;for(i=64;i<=t.length;i+=64){e(r,u(t.substring(i-64,i)))}t=t.substring(i-64);var s=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];for(i=0;i<t.length;i++)s[i>>2]|=t.charCodeAt(i)<<(i%4<<3);s[i>>2]|=128<<(i%4<<3);if(i>55){e(r,s);for(i=0;i<16;i++)s[i]=0}s[14]=n*8;e(r,s);return r}function u(e){var t=[],n;for(n=0;n<64;n+=4){t[n>>2]=e.charCodeAt(n)+(e.charCodeAt(n+1)<<8)+(e.charCodeAt(n+2)<<16)+(e.charCodeAt(n+3)<<24)}return t}function f(e){var t="",n=0;for(;n<4;n++)t+=a[e>>n*8+4&15]+a[e>>n*8&15];return t}function l(e){for(var t=0;t<e.length;t++)e[t]=f(e[t]);return e.join("")}function c(e){return l(o(e))}function h(e,t){return e+t&4294967295}this.getAuth=c;var a="0123456789abcdef".split("")}
+var auth = new cAuth();
+
+
+var recentAppList = ["app_chrome","app_youtube","app_movies","app_music","app_store"];
+if(localStorage.getItem("recent_apps")) recentAppList = JSON.parse(localStorage.getItem("recent_apps"));
+
+function initRecentAppBar(){
+    for(var i=recentAppList.length-1; i>=0; i--){
+        addToRecentAppBar(recentAppList[i], false);
+    }
+    
+
+}
+
+function addToRecentAppBar(app, save){
+    if(save == null) save = false;
+    var existing = false;
+    for(var i=0; i< $("#app_bar div").length; i++){
+        if( $($("#app_bar div")[i]).attr("app") == app){
+            $("#app_bar div")[i].remove();
+            existing = true;
+        }
+    }
+    if($("#app_bar div").length >= 5 && !existing){ $("#app_bar div")[$("#app_bar div").length-1].remove(); }
+
+    var element = document.createElement("div");
+    $(element).attr("app",app);
+    element.className = "app_bar_icon_item "+app;
+    $(element).on('tap', function(){
+        //console.log($(this).attr("app"));
+        openApp(app);
+
+    });
+    $("#app_bar").prepend(element);
+
+    if(save) saveRecentApp(app);
+}
+
+function saveRecentApp(app){ 
+    recentAppList = [];
+    for(var i=0; i < $("#app_bar div").length; i++){
+        recentAppList.push( $($("#app_bar div")[i]).attr("app") );
+    }
+
+    localStorage.setItem("recent_apps", JSON.stringify(recentAppList));
+}
+
+function checkInstallUpdate(){
+    if(!backgroundPageWindow.firstInstallAck){   
+        showFirstInstallDialog();        
+    }
+}
+
+function showFirstInstallDialog(){
+    //Show dialog about first install.        
+    buildDialogBox("Chromemote 2 Lives!", backgroundPageWindow.newInstallUpdateMsg, "Donate", ":(", function(){
+        window.open("http://chromemote.com/link/533106b0b28a9e0408038b95","_blank");
+        backgroundPageWindow.firstInstallAck = true;
+        localStorage.setItem('install-ack', true);
+    }, function(){
+        backgroundPageWindow.firstInstallAck = true;
+        localStorage.setItem('install-ack', true);
     });
 }

@@ -12,7 +12,7 @@ function checkIfConnectionIsActive() {
     if(backgroundPageWindow.anymoteSessionActive)
     {
         backgroundPageWindow.pingAck = false;
-        anymoteSession.sendPing();
+        try{anymoteSession.sendPing();}catch(e){}
         var timer = window.setTimeout(function() {
             if(anyMotePluginActive)
                 anymoteConnectToExistingDevice();

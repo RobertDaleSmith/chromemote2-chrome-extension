@@ -123,7 +123,8 @@ function initFullTabMode(){
 				'				        height: 530px; \n' +
 				'				        background-image: url("images/bg_full_remote.png"); \n' +
 				'				        background-size: 960px 530px; }\n' +
-				'#settings_menu_panel{ background-image:  none; } \n' + 
+				'#settings_menu_panel{ background-image:  none; \n' + 
+				' 					   height: 100%; } \n' + 
 				'#remote_button_panel_main{ background-image:  none; } \n' + 
 				'#remote_button_panel_alt{ background-image:  none; \n' + 
 				'				           display: none; }         \n' +

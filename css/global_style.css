@@ -187,7 +187,7 @@ body::-webkit-scrollbar {
     padding-top: 48px;
     width: 320px;
     min-height: 336px; 
-    height:100%;
+    height:calc(100% - 144px);
     max-height:482px;
     
     background-image: url("../images/bg_settings.png");
@@ -246,7 +246,7 @@ body::-webkit-scrollbar {
     padding: 0px;
     
     width: 100%;
-    height: 144px;
+    height: 150px;
 
     border-style: solid;
     border-width: 0px;
@@ -325,6 +325,28 @@ body::-webkit-scrollbar {
     text-decoration: underline;
     border-bottom: 1px solid #ffffff;
 }
+
+
+#menu_panel_about_team{
+    display: block;
+    position: absolute;
+
+    top:  130px;
+    left: 25px;
+
+    width:270px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-family: RobotoRegular;
+}
+
+#menu_panel_about_team img{
+    width:270px;
+}
+
+
 
 #menu_panel_settings_custom_theme{
     display: none;
@@ -505,6 +527,8 @@ body::-webkit-scrollbar {
 }
 
 #main_button_list {
+    display: block;
+    position: relative;
     padding: 0px;
     margin: 0px;
     width: 320px;
@@ -856,17 +880,17 @@ body::-webkit-scrollbar {
 }
 
 
-#keycode_media_rewind {
+#keycode_media_previous {
     background-position:0px -48px; 
 }
-#keycode_media_rewind:active {
+#keycode_media_previous:active {
     background-position:0px -384px; 
 }
 
-#keycode_media_previous {
+#keycode_media_rewind {
     background-position:-64px -48px; 
 }
-#keycode_media_previous:active {
+#keycode_media_rewind:active {
     background-position:-64px -384px; 
 }
 
@@ -877,17 +901,17 @@ body::-webkit-scrollbar {
     background-position:-128px -384px; 
 }
 
-#keycode_media_next {
+#keycode_media_fast_forward {
     background-position:-192px -48px; 
 }
-#keycode_media_next:active {
+#keycode_media_fast_forward:active {
     background-position:-192px -384px; 
 }
 
-#keycode_media_fast_forward {
+#keycode_media_next {
     background-position:-256px -48px; 
 }
-#keycode_media_fast_forward:active {
+#keycode_media_next:active {
     background-position:-256px -384px; 
 }
 
@@ -1255,24 +1279,24 @@ body::-webkit-scrollbar {
 
 
 
-#keycode_1 {
+#keycode_num1 {
     background-position:-320px -96px; 
 }
-#keycode_1:active {
+#keycode_num1:active {
     background-position:-320px -432px; 
 }
 
-#keycode_2 {
+#keycode_num2 {
     background-position:-384px -96px; 
 }
-#keycode_2:active {
+#keycode_num2:active {
     background-position:-384px -432px; 
 }
 
-#keycode_3 {
+#keycode_num3 {
     background-position:-448px -96px; 
 }
-#keycode_3:active {
+#keycode_num3:active {
     background-position:-448px -432px; 
 }
 
@@ -1291,24 +1315,24 @@ body::-webkit-scrollbar {
 }
 
 
-#keycode_4 {
+#keycode_num4 {
     background-position:-320px -144px; 
 }
-#keycode_4:active {
+#keycode_num4:active {
     background-position:-320px -480px; 
 }
 
-#keycode_5 {
+#keycode_num5 {
     background-position:-384px -144px; 
 }
-#keycode_5:active {
+#keycode_num5:active {
     background-position:-384px -480px; 
 }
 
-#keycode_6 {
+#keycode_num6 {
     background-position:-448px -144px; 
 }
-#keycode_6:active {
+#keycode_num6:active {
     background-position:-448px -480px; 
 }
 
@@ -1334,24 +1358,24 @@ body::-webkit-scrollbar {
 }
 
 
-#keycode_7 {
+#keycode_num7 {
     background-position:-320px -192px; 
 }
-#keycode_7:active {
+#keycode_num7:active {
     background-position:-320px -528px; 
 }
 
-#keycode_8 {
+#keycode_num8 {
     background-position:-384px -192px; 
 }
-#keycode_8:active {
+#keycode_num8:active {
     background-position:-384px -528px; 
 }
 
-#keycode_9 {
+#keycode_num9 {
     background-position:-448px -192px; 
 }
-#keycode_9:active {
+#keycode_num9:active {
     background-position:-448px -528px; 
 }
 
@@ -1394,10 +1418,10 @@ body::-webkit-scrollbar {
     background-position:-320px -576px; 
 }
 
-#keycode_0 {
+#keycode_num0 {
     background-position:-384px -240px; 
 }
-#keycode_0:active {
+#keycode_num0:active {
     background-position:-384px -576px; 
 }
 
@@ -2364,7 +2388,7 @@ body::-webkit-scrollbar {
     color:    rgba(255, 255, 255, 0.25);
 }
 #save_mote_ip_button {
-    display: none;
+    display: block;
     position: absolute;
     right: 0px;
     top: 9px;
@@ -3271,6 +3295,13 @@ body::-webkit-scrollbar {
 }
 
 
+
+
+
+
+
+
+
 #apps_context_menu {
     display: none;
     position: absolute;
@@ -3287,7 +3318,7 @@ body::-webkit-scrollbar {
     background-color: rgba(240, 240, 240, 1);
     box-shadow: 2px 2px 5px rgba(136, 136, 136, 0.62);
     
-    z-index: 40;
+    z-index: 100;
     
     padding: 4px;
 }
@@ -3853,6 +3884,22 @@ body::-webkit-scrollbar {
     right:15px;
 }
 
+#disable_ads_enabled_checkbox_cover{
+    position: absolute;
+    display: block;
+    top:0px;
+    right:0px;
+    width:15%;
+    height:100%;
+
+}
+#disable_ads_enabled_checkbox_holder{
+    position: absolute;
+    display: block;
+    top:7px;
+    right:15px;
+}
+
 input[type=checkbox] {
     visibility: hidden;
 }
@@ -4050,7 +4097,7 @@ input[type=checkbox] {
     background-color:rgba(0,0,0,1);
     background-image: url("../images/bg_full_remote.png");
     background-size: 960px 530px;
-    z-index: 3;
+    z-index: 80;
 }
 .options_tabs_bottom_filler_inner{
     display: block;
@@ -4170,6 +4217,8 @@ input[type=checkbox] {
     font-family: RobotoRegular;
     cursor: default;
 
+    max-height: 220px;
+    overflow-x: hidden;
 }
 
 .dialog_box_content a{
@@ -4267,4 +4316,145 @@ input[type=checkbox] {
     border-radius: 2px; 
 
     background-color:red;
+}
+
+#activation_status{
+    display:inline-block;
+    position: absolute;
+    top:0px;
+    left:0px;
+
+    height:6px;
+    width: 6px;
+    margin:14px 15px 15px 14px;
+    
+    -webkit-border-radius: 2px; 
+    -moz-border-radius: 2px; 
+    border-radius: 2px; 
+
+    background-color:red;
+}
+
+
+/*Defaul layout if some random error happens in the JS*/
+#remote_button_panel_main [data-col="16"] { left:960px;} #remote_button_panel_main [data-col="15"] { left:896px;} #remote_button_panel_main [data-col="14"] { left:832px;} #remote_button_panel_main [data-col="13"] { left:768px;} #remote_button_panel_main [data-col="12"] { left:704px;} #remote_button_panel_main [data-col="11"] { left:640px;} #remote_button_panel_main [data-col="10"] { left:576px;} #remote_button_panel_main [data-col="9"] { left:512px;} #remote_button_panel_main [data-col="8"] { left:448px;} #remote_button_panel_main [data-col="7"] { left:384px;} #remote_button_panel_main [data-col="6"] { left:320px;} #remote_button_panel_main [data-col="5"] { left:256px;} #remote_button_panel_main [data-col="4"] { left:192px;} #remote_button_panel_main [data-col="3"] { left:128px;} #remote_button_panel_main [data-col="2"] { left:64px;} #remote_button_panel_main [data-col="1"] { left:0px;} #remote_button_panel_main [data-row="11"] { top:480px;} #remote_button_panel_main [data-row="10"] { top:432px;} #remote_button_panel_main [data-row="9"] { top:384px;} #remote_button_panel_main [data-row="8"] { top:336px;} #remote_button_panel_main [data-row="7"] { top:288px;} #remote_button_panel_main [data-row="6"] { top:240px;} #remote_button_panel_main [data-row="5"] { top:192px;} #remote_button_panel_main [data-row="4"] { top:144px;} #remote_button_panel_main [data-row="3"] { top:96px;} #remote_button_panel_main [data-row="2"] { top:48px;} #remote_button_panel_main [data-row="1"] { top:0px;} #remote_button_panel_main [data-sizey="1"] { height:48px;}#remote_button_panel_main [data-sizey="2"] { height:96px;}#remote_button_panel_main [data-sizey="3"] { height:144px;}#remote_button_panel_main [data-sizey="4"] { height:192px;}#remote_button_panel_main [data-sizey="5"] { height:240px;}#remote_button_panel_main [data-sizey="6"] { height:288px;}#remote_button_panel_main [data-sizey="7"] { height:336px;}#remote_button_panel_main [data-sizey="8"] { height:384px;}#remote_button_panel_main [data-sizey="9"] { height:432px;}#remote_button_panel_main [data-sizey="10"] { height:480px;}#remote_button_panel_main [data-sizex="1"] { width:64px;}#remote_button_panel_main [data-sizex="2"] { width:128px;}#remote_button_panel_main [data-sizex="3"] { width:192px;}#remote_button_panel_main [data-sizex="4"] { width:256px;}#remote_button_panel_main [data-sizex="5"] { width:320px;}#remote_button_panel_main [data-sizex="6"] { width:384px;}#remote_button_panel_main [data-sizex="7"] { width:448px;}#remote_button_panel_main [data-sizex="8"] { width:512px;}#remote_button_panel_main [data-sizex="9"] { width:576px;}#remote_button_panel_main [data-sizex="10"] { width:640px;}#remote_button_panel_main [data-sizex="11"] { width:704px;}#remote_button_panel_main [data-sizex="12"] { width:768px;}#remote_button_panel_main [data-sizex="13"] { width:832px;}#remote_button_panel_main [data-sizex="14"] { width:896px;}#remote_button_panel_main [data-sizex="15"] { width:960px;}
+
+
+#app_bar {
+    display: none; position: absolute;
+    bottom: 0px;    left: 0px;
+    width: 320px;   height: 50px;
+
+
+}
+
+.app_bar_icon_item {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height:45px;
+    padding:1px 6px 0 6px;
+    background-color: transparent;
+    
+    float:left;
+    clear:none;
+    
+    background-image: url("../images/app_icon_sprites.png");
+    background-size:250px 250px;
+    background-repeat:no-repeat;
+
+    -moz-background-clip: content;     /* Firefox 3.6 */
+    -webkit-background-clip: content;  /* Safari 4? Chrome 6? */
+    background-clip: content-box;      /* Firefox 4, Safari 5, Opera 10, IE 9 */
+    
+    
+    cursor: pointer;
+    
+    border-style: solid;    
+    border-width: 1px;
+    border-color: transparent;
+
+    border-left-color: rgba(0, 0, 0, 0.25);  
+}
+.app_bar_icon_item:hover {
+    background-color: rgba(232,232,232,0.1);
+}
+.app_bar_icon_item:active {
+    background-color: #e0f5fa;
+    background-color: rgba(224,245,250,0.25);
+    
+    border-style: solid;    
+    border-width: 1px;
+    /*border-color: #3ea8b8;*/
+}
+
+.app_amazon {
+    background-position: 6px  -1px; 
+}
+.app_chrome {
+    background-position:-44px -1px;
+}
+.app_cnbc {
+    background-position:-94px -1px; 
+}
+.app_search {
+    background-position:-144px -1px; 
+}
+.app_mgo {
+    background-position:-194px -1px; 
+}
+
+.app_movies {
+    background-position: 6px -51px; 
+}
+.app_music {
+    background-position: -44px -51px; 
+}
+.app_nba {
+    background-position:-94px -51px; 
+}
+.app_netflix {
+    background-position:-144px -51px; 
+}
+.app_onlive {
+    background-position:-194px -51px; 
+}
+
+.app_pandora {
+    background-position: 6px -101px; 
+}
+.app_photos {
+    background-position:-44px -101px; 
+}
+.app_plex {
+    background-position:-94px -101px; 
+}
+.app_primetime {
+    background-position:-144px -101px; 
+}
+.app_twitter {
+    background-position:-194px -101px 
+}
+
+.app_youtube {
+    background-position: 6px -151px; 
+}
+.app_clock {
+    background-position:-44px -151px; 
+}
+.app_downloads {
+    background-position:-94px -151px; 
+}
+.app_store {
+    background-position:-144px -151px; 
+}
+.app_tv {
+    background-position:-194px -151px 
+}
+.app_settings {
+    background-position:-194px -201px 
+}
+
+.whats_new_message{
+    font-size: 15px;
 }

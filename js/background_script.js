@@ -15,6 +15,48 @@ if(localStorage.getItem("npapi_enabled")!= null) {
 	else anyMotePluginActive = false;
 }
 
+
+
+var firstInstallAck = false;
+var installAck = localStorage.getItem('install-ack');
+if (installAck != null) {
+	if (installAck == 'false') 		firstInstallAck = false;
+	else if (installAck == 'true') 	firstInstallAck = true;	
+	console.log('Restored Acknowledgement Status to ' + firstInstallAck);
+}
+var firstInstall = function() {
+	firstInstallAck = false;
+	localStorage.setItem('install-ack', firstInstallAck);
+	console.log("New Install / Update detected ... Showing whats new dialog until acknowledgment received.");
+}
+try { chrome.runtime.onInstalled.addListener(firstInstall); }
+catch(err) { console.log("Update Chrome to 23+ for best support."); }
+var newInstallUpdateMsg = "Welcome to Chromemote&nbsp;2. <br>"+
+	"<p class='whats_new_message'>"+
+	"<br><b>What's new:</b>"+
+	"<br>- ChromeOS support through new Anymote Bridge app for Google TV."+
+	"<br>- New User Interface with custom color themes."+
+	"<br>- Rearrangeable, draggable remote buttons."+
+	"<br>- Sync installed apps list with Google TV's."+
+	"<br>- Add custom links and Android intents to apps tab."+
+	"<br>- Sync channel list with Google TV's."+
+	"<br>- Create button macros in channels tab."+
+	"<br>- Full mode has larger touch-pad and has all buttons."+
+	"<br>- New pop-out window mode."+
+	"<br>- Donor activation with ability to disable ads."+
+	"<br><br>"+
+	"<b>Existing features renewed:</b>"+
+	"<br>- Customizable Google TV remote control."+
+	"<br>- Keyboard and mouse control of Google TV."+
+	"<br>- Right click and fling web links to TV."+
+	"<br>- YouTube video page embedded fling button."+
+	"<br>- Rename connected GTV devices."+
+	"<br><br>"+
+	"Chromemote is honor-ware so you pay what you want. Love it and find it useful? Then show us some <a href='http://chromemote.com/support-us/' target='_blank'><b> love</b></a> in any way you can. Your help keeps us fine tuning and adding new features."+
+	"</p>";
+
+
+
 window.onload = function() {
 
 	userAgent = window.navigator.appVersion;
@@ -86,19 +128,22 @@ var googletvremoteInitializePlugin = function() {
 			console.log("ALERT:: If you see this message and your operating system is compatible, then please contact the developer. Visit www.chromemote.com");
 		}
 	}
-		
-	var cert = localStorage.getItem('cert');
-    if (!cert || !googletvremote.loadCert(cert, 'chromemote')) {
-		console.log('First launch.  Made a new certificate.');
-		var uid = (((1 + Math.random()) * 0x10000000) | 0).toString(16);
-		cert = googletvremote.generateSelfSignedCert('chrome-gtv-' + uid, 'chromemote');
-		localStorage.setItem('cert', cert);
-		localStorage.removeItem(STORAGE_KEY_PAIRED_DEVICES);
-    }
-    
-    window.discoveryClient = googletvremote.createDiscoveryClient();
-    window.pairingSession  = googletvremote.createPairingSession();
-    window.anymoteSession  = googletvremote.createAnymoteSession();
+	
+	try{
+		var cert = localStorage.getItem('cert');
+	    if (!cert || !googletvremote.loadCert(cert, 'chromemote')) {
+			console.log('First launch.  Made a new certificate.');
+			var uid = (((1 + Math.random()) * 0x10000000) | 0).toString(16);
+			cert = googletvremote.generateSelfSignedCert('chrome-gtv-' + uid, 'chromemote');
+			localStorage.setItem('cert', cert);
+			localStorage.removeItem(STORAGE_KEY_PAIRED_DEVICES);
+	    }
+	    
+	    window.discoveryClient = googletvremote.createDiscoveryClient();
+	    window.pairingSession  = googletvremote.createPairingSession();
+	    window.anymoteSession  = googletvremote.createAnymoteSession();
+	} catch(e){}
+	
 
     if(localStorage.getItem("npapi_enabled")!= null) {
 		if(localStorage.getItem("npapi_enabled") == "true") anyMotePluginActive = true;
@@ -381,7 +426,7 @@ function sendFling(uri){
     }    
 }
 
-var adsJson = [{"url":"http://chromemote.com/support-us/", "img":"../images/ads/ad_1.png"}];
+var adsJson = [{"url":"http://chromemote.com/support-us/", "img":"../ads/ad_1.png"}];
 if( localStorage.getItem("ad_list")!= null ) {
 	adsJson = localStorage.getItem("ad_list");
 }

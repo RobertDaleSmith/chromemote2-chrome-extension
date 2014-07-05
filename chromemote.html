@@ -13,6 +13,7 @@
         <script type="text/javascript" src="libs/jquery/jquery.ipaddress.js"></script>
         <script type="text/javascript" src="libs/jquery/jquery-ui.js"></script>
         <script type="text/javascript" src="libs/jquery/jquery.sortable.js"></script>
+        <script type="text/javascript" src="libs/jquery/jquery.mobile.touch.min.js"></script>
        <!--jQuery Lib and Plugins | END   -->
 
        <!--Gridster Lib | START | prereq:jQuery-->
@@ -121,7 +122,7 @@
                                         <div id="border_color_checkbox_label">Borders</div>                                    
                                     </div>
                                 </div>
-                                <!-- <div class="menu_item menu_item_sub_cat" id="">Disable Ads</div> -->
+                                
                                 <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_dark_back" style="display:none;">Dark Background (Full Mode)
                                     <div class="checkBoxSquaredThree" id="dark_back_checkbox_holder">    
                                         <input type="checkbox" value="None" id="dark_back_checkbox" name="check" />
@@ -132,15 +133,23 @@
                                 <div class="menu_panel_category">User Settings</div>
 
 
-                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_activate">Activate Pro Key</div> 
-
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_activate">
+                                    Donor Activation<div id="activation_status"></div>
+                                </div>
                                 <div id="menu_panel_settings_activate" class="sub_menu_panel">
                                     <input name="user_email_address" class="user_email_address_input" type="text" placeholder="email"><br>
-                                    <input name="product_key" class="product_key_input" type="text" placeholder="key"><br>
+                                    <input name="product_key" class="product_key_input" type="text" placeholder="key" maxlength="19"><br>
                                     <div id="get_key_button">Get Key</div>
                                     <div id="check_activation_button">Activate</div>
                                 </div>
 
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_disable_ads">Disable Ads
+                                    <div class="checkBoxSquaredThree" id="disable_ads_enabled_checkbox_holder">    
+                                        <input type="checkbox" value="None" id="disable_ads_enabled_checkbox" name="check" />
+                                        <label for="disable_ads_enabled_checkbox"></label>
+                                    </div>
+                                    <div id="btn_lock_checkbox_cover"></div>
+                                </div>    
 
 
 
@@ -157,7 +166,7 @@
                                     <div class="ip_container" style="display: inline-block;">
                                         <input type="text" class="ip_octet" id="ipaddress_abcd__octet_1" maxlength="3" placeholder="192" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_2" maxlength="3" placeholder="168" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_3" maxlength="3" placeholder="10" value="">.<input type="text" class="ip_octet" id="ipaddress_abcd__octet_4" maxlength="3" placeholder="12" value="">
                                     </div>
-                                    <div id="save_mote_ip_button">save</div>
+                                    <div id="save_mote_ip_button">connect</div>
                                 </div>
                                 <div class="menu_item menu_item_sub_cat" id="menu_item_settings_toggle_npapi_enabled">GTV NPAPI Plugin Enabled
                                     <div class="checkBoxSquaredThree" id="npapi_enabled_checkbox_holder">    
@@ -167,16 +176,17 @@
                                     <div id="btn_lock_checkbox_cover"></div>
                                 </div>                                
                                 <div class="menu_panel_category">Other Settings</div>
-                                <div class="menu_item menu_item_sub_cat" id="">View Changelog</div>
+                                <div class="menu_item menu_item_sub_cat" id="menu_item_settings_changelog">View Changelog</div>
                             </div>                        
                             <div class="menu_item" id="menu_item_about"><div class="menu_item_icon"></div>About</div>
                             <div id="menu_panel_about" class="sub_menu_panel">
                                 <div id="menu_panel_about_logo"></div>
                                 <div id="menu_panel_about_by">By <a href="http://motelabs.com/" target="_blank">Mote Labs</a></div>
                                 <div id="menu_panel_about_version">v. <div id="menu_panel_about_version_number"></div></div>
-                                <!-- <img src="images/team.png" style="display:block;position:absolute;top:76px;left:15px;" width="200"> -->
+                                
 
-                                <div id="menu_panel_about_copyright">© 2012 - 2014 <a href="http://motelabs.com/" target="_blank" title="MoteLabs.com">Mote Labs</a></div> 
+                                <div id="menu_panel_about_copyright">© 2012 - 2014 <a href="http://motelabs.com/" target="_blank" title="MoteLabs.com">Mote Labs</a></div>
+                                
 
                             </div>
                             <div class="menu_item" id="menu_item_support"><div class="menu_item_icon"></div>Support Us</div>
@@ -197,11 +207,11 @@
                             <li data-row="1" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_stb_power" title="Set-Top Box Power"></li>
                             <li data-row="1" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="fling_tab" title="Fling page to Google TV"></li>
 
-                            <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_rewind" title="Meida Rewind"></li>
-                            <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_previous" title="Media Previous"></li>
+                            <li data-row="2" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_previous" title="Media Previous"></li>
+                            <li data-row="2" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_rewind" title="Media Rewind"></li>                            
                             <li data-row="2" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_play" title="Media Play"></li>
-                            <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_next" title="Media Next"></li>
-                            <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_fast_forward" title="Media Fast Forward"></li>
+                            <li data-row="2" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_fast_forward" title="Media Fast Forward"></li>
+                            <li data-row="2" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_next" title="Media Next"></li>
                         
                             <li data-row="3" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker"  id="keycode_channel_rocker">CH<div class="remote_button keycode rocker_up" id="keycode_channel_up" title="Channel Up"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_channel_down" title="Channel Down"></div></li>
                             <li data-row="3" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_media_stop" title="Media Stop"></li>
@@ -255,17 +265,17 @@
                             <li data-row="3" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_red" title="Program Red"></li>
                             <li data-row="3" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_prog_green" title="Program Green"></li>
 
-                            <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_1"></li>
-                            <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_2"></li>
-                            <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_3"></li>
-                            <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_4"></li>
-                            <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_5"></li>
+                            <li data-row="4" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num1"></li>
+                            <li data-row="4" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num2"></li>
+                            <li data-row="4" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num3"></li>
+                            <li data-row="4" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num4"></li>
+                            <li data-row="4" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num5"></li>
 
-                            <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_6"></li>
-                            <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_7"></li>
-                            <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_8"></li>
-                            <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_9"></li>
-                            <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_0"></li>
+                            <li data-row="5" data-col="1" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num6"></li>
+                            <li data-row="5" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num7"></li>
+                            <li data-row="5" data-col="3" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num8"></li>
+                            <li data-row="5" data-col="4" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num9"></li>
+                            <li data-row="5" data-col="5" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_num0"></li>
                         
                             <li data-row="6" data-col="1" data-sizex="1" data-sizey="2" swap="false" class="drag_btn remote_button_rocker" id="keycode_zoom_rocker">ZOOM<div class="remote_button keycode rocker_up" id="keycode_zoom_in" title="Zoom In"></div><div class="remote_button keycode rocker_down remote_button_no_border" id="keycode_zoom_out" title="Zoom Out"></div></li>
                             <li data-row="6" data-col="2" data-sizex="1" data-sizey="1" swap="false" class="drag_btn remote_button keycode" id="keycode_all_power" title="AVR + STB + TV Power"></li>
@@ -369,6 +379,7 @@
                 <div id="ad_block_holder">                
                     <div id="ad_block_back"></div>
                     <div id="ad_block"></div>
+                    <div id="app_bar"></div>
                 </div>
 
                 <div id="apps_context_menu" tabindex="-1">
